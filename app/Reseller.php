@@ -11,4 +11,6 @@ class Reseller extends Model
     //Primary key
     //public $primaryKey = 'id'
     protected $primaryKey = 'reseller_id';
+    // protected $fillable =['name', 'email', 'address', 'contact_no'];
+    // protected $guarded = [];
 }

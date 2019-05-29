@@ -2,7 +2,9 @@
 @section('content')             
         <div class="column auto" style="">
           {{-- title--}}
-          <h1 class="title is-3"><a id="iconPicker" href="/reseller/edit" class="is-4"> <i class="fas fa-arrow-left"></i> </a>Edit Reseller Account</h1>
+          <h1 class="title is-3">
+              {{-- <a id="iconPicker" href="#" class="is-4"> <i class="fas fa-arrow-left"></i>  --}}
+        </a>Edit Reseller Account</h1>
           {{-- START OF PARENT FORM TAG--}}          
                 {{-- <form action="{{action('update')}}" method="post"> --}}
                 {{-- <form action="{{ 'ResellerController@store', $reseller->id) }}" method="POST" > --}}
@@ -118,7 +120,7 @@
                     {{-- form start--}}
                         <div class="field is-horizontal">
                             <div class="field-label is-normal">
-                                <label class="label">Confirm Password</label>
+                                <label class="label" style="white-space: nowrap">Confirm Password</label>
                             </div>
                             <div class="field-body">
                                 <div class="field">
@@ -188,7 +190,7 @@
                             </button>                  
                         </p>
                         <p class="control">
-                            <a class="button is-light" href="/editRacct">
+                            <a class="button is-light" href="/reseller/{{$reseller->reseller_id}}/edit">
                                 Cancel
                             </a>
                         </p> 

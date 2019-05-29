@@ -42,7 +42,7 @@
                     @if(count($reseller) > 1)
                         @foreach($reseller as $resellers)                          
                             <tr class="">
-                                <th>{{$resellers->name}}</th>                        
+                                <th style="white-space: nowrap">{{$resellers->name}}</th>                        
                                 <td>{{$resellers->email}}</td>
                                 <td>{{$resellers->address}}</td>
                                 <td>{{$resellers->contact_no}}</td>

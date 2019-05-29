@@ -65,6 +65,8 @@ class ResellerController extends Controller
         //     ->with('error', 'Please Fill Up Fields Correctly');
             
         // }
+        //MASS ASSIGNMENT NOT WORKING WITH CREATED_AT AND UPDATED_AT ON DB
+        // Reseller::create(request(['Name', 'Email', 'Address', 'Contact']));
 
         $resellers = new Reseller;
         $resellers->name = $request->input('Name');
@@ -74,6 +76,7 @@ class ResellerController extends Controller
         $resellers->password = \Hash::make('*pass@csi');
         $resellers->profile_pic = 'profile_pic';
         $resellers->save();
+
         // return 123;
 
         

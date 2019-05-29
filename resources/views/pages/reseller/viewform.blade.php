@@ -88,7 +88,30 @@
                     </div>
                   </div>
                 </div>
-              {{-- form end--}}                                   
+              {{-- form end--}}
+
+
+              {{-- form start--}}
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                                  
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                      <div class="file is-info has-name">
+                        <p class="control is-centered">                    
+                          <a class="button is-success" href="/reseller/{{$reseller->reseller_id}}/edit">
+                              <span class="file-icon">
+                                  <i class="fa fa-edit"></i>
+                              </span>
+                                  Edit Reseller
+                          </a>
+                      </p> 
+                        </div>
+                  </div>
+                </div>
+              </div>
+            {{-- form end--}}                                                
       </div>   
     </div>
 @endsection
