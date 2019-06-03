@@ -1,7 +1,7 @@
 @extends('testing.appTest')
 @section('content')        
         <div class="column auto" style=" overflow-x: auto;">
-            <div class="box">
+
           {{-- title--}}
           <h1 class="title is-3">
             {{-- <a id="iconPicker" href="#" class="is-4"> <i class="fas fa-arrow-left"></i>  --}}
@@ -200,39 +200,22 @@
                   {{-- form end--}}           
         </form>
         {{-- END OF PARENT FORM TAG--}}   
-    </div>
-    <div class="box">
+            
 
           {{-- title--}}
-          <h1 class="title is-3">Reseller Accounts</h1> 
-          <a href="/reseller/create" class="button is-success"><span class="file-icon"><i class="fas fa-plus"></i></span>Create</a>                     
+          <h1 class="title is-3">Reseller Accounts</h1>        
             {{-- start of search bar--}}    
             <div class="field has-addons is-grouped is-grouped-right">
                     <div class="control">
-                            {{-- <form action="/test2" method="GET"> --}}
-                            <form action="/reseller/search" method="GET">
-                            <input class="input is-small" type="text" name="Search" placeholder="Find Reseller">
-                            @csrf
-                        </div>
-                        <div class="control">
-                            <button class="button is-info is-small" type="submit"> Search</button>
-                            </form>
-                        </div>
-                            {{-- <a class="button is-info is-small" type="submit">
-                                Search
-                            </a> --}}
-                        {{-- <div class="control">
-                        </div>                     --}}
-                        {{-- <div class="control">
-                            <input class="input is-small" type="text" placeholder="Find a repository">
-                        </div>
-                        <div class="control">
-                            <a class="button is-info is-small">
-                                Search
-                            </a>
-                        </div> --}}
+                        <input class="input is-small" type="text" placeholder="Find a repository">
+                    </div>
+                    <div class="control">
+                        <a class="button is-info is-small">
+                            Search
+                        </a>
+                    </div>
                 </div>      
-                {{-- end of search bar--}} 
+            {{-- end of search bar--}}  
             {{-- start of table--}}          
             <table class="table is-clear-fix is-bordered is-fullwidth is-striped" style="margin-bottom: 1.5em">
                 <thead>
@@ -272,7 +255,7 @@
                                             <a class="button is-rounded" href="/reseller/{{$reseller_tmp->reseller_id}}">View</a>                                            
                                         </div>
                                         <div class="control">
-                                            <a class="button is-rounded" href="/reseller/{{$reseller_tmp->reseller_id}}/edit">Edit</a>
+                                            <a class="button is-rounded">Edit</a>
                                         </div>
                                         <div class="control">
                                             <a class="button is-rounded">Hold</a>
@@ -382,7 +365,6 @@
             </div> --}}
           {{-- form end--}}          
           {{$resellers->links()}}
-        </div>
       </div>         
     </div>         
 @endsection

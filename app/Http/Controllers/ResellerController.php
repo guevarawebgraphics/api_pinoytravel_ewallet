@@ -24,8 +24,12 @@ class ResellerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {        
-        return view('pages.reseller.create');
+    {    
+        $reseller = Reseller::orderBy('created_at', 'desc')
+        ->where('is_blocked', '0')            
+        ->paginate(20);
+        // return view('pages.reseller.create');
+        return view('pages.reseller.create', compact('reseller'));             
     }
 
     /**
@@ -100,7 +104,13 @@ class ResellerController extends Controller
         // return view('pages.viewRacct_form');    
         // $resellers = Reseller::find($id);
         // return $reseller;
-        return view('pages.reseller.viewform', compact('reseller')); 
+        //USED
+        // return view('pages.reseller.viewform', compact('reseller')); 
+        //TEST
+        $resellers = Reseller::orderBy('created_at', 'desc')
+        ->where('is_blocked', '0')            
+        ->paginate(20);
+        return view('pages.reseller.viewform', compact('reseller','resellers'));
     }
 
     /**
@@ -114,7 +124,14 @@ class ResellerController extends Controller
         // $resellers = Reseller::findOrFail($id);
         // echo $resellers; die;
         // return $resellers;
-         return view('pages.reseller.editform', compact('reseller'));
+        //USED
+        //  return view('pages.reseller.editform', compact('reseller'));
+         //TEST
+         $resellers = Reseller::orderBy('created_at', 'desc')
+         ->where('is_blocked', '0')            
+         ->paginate(20);
+         return view('pages.reseller.editform', compact('reseller','resellers')); 
+        //  return view('testing.test2', compact('reseller'));
     }
 
     /**
@@ -221,10 +238,11 @@ class ResellerController extends Controller
         //Use the model of reseller to get all the data of the reseller table
         // $resellers = Reseller::all();
         // $resellers = Reseller::orderBy('name', 'desc')->paginate(1);
+        $searched = 0;
         $reseller = Reseller::orderBy('created_at', 'desc')
         ->where('is_blocked', '0')            
         ->paginate(20);
-        return view('pages.reseller.view', compact('reseller'));    
+        return view('pages.reseller.view', compact('reseller', 'searched'));    
     }
     //View on Edit
     public function all_edit()
@@ -253,11 +271,65 @@ class ResellerController extends Controller
         return view('pages.reseller.hold', compact('reseller')); 
     }
     public function wallet()
+    {   
+        $searched = 0;
+        $reseller = Reseller::orderBy('created_at', 'desc')
+        ->where('is_blocked', '0')            
+        ->paginate(20);
+        return view('pages.reseller.wallet', compact('reseller', 'searched'));   
+        // return Reseller::where('name', 'Jon Snow')->get(); 
+    }
+    public function testall()
     {
         $reseller = Reseller::orderBy('created_at', 'desc')
         ->where('is_blocked', '0')            
         ->paginate(20);
-        return view('pages.reseller.wallet', compact('reseller'));   
-        // return Reseller::where('name', 'Jon Snow')->get(); 
+        return view('testing.test1', compact('reseller'));   
+    }
+    // public function testall2(Request $request)
+    // {
+    //     // dd('SAD');
+    //     // $search = $request->input('Search');
+    //     // // dd($search);
+    //     // $reseller = Reseller::orderBy('created_at', 'desc')
+    //     // ->where('Name', 'like', '%'.$search.'%')
+    //     // ->paginate(20);
+        
+    //     // return view('testing.test1', compact('reseller'));        
+
+
+        
+    //     // $reseller = Reseller::orderBy('created_at', 'desc')
+    //     // ->where('is_blocked', '0')            
+    //     // ->paginate(20);
+    //     // return view('testing.test2', compact('reseller'));   
+    // }
+    public function search(Request $request)
+    {
+        // echo "sad"; die;
+        // $search = $request->input('search');
+        // $reseller = Reseller::orderBy('created_at', 'desc')
+        // ->where('name', 'like', '%'.$search.'%')
+        // ->paginate(20);
+        // return view('testing.test1', compact('reseller'));
+        // dd('SAD');
+        $search = $request->input('Search');
+        if($search == "")
+            {$searched = 0;}
+        else
+            {$searched = 1;}
+                        
+        // dd($search);
+        $reseller = Reseller::orderBy('created_at', 'desc')
+        ->where('Name', 'like', '%'.$search.'%')
+        ->paginate(20);
+        //CHECK IF THE ADMIN IS SEARCHING IN THE WALLET PAGE OR NOT
+        if($request->input('wallet_search') == 1){            
+            return view('pages.reseller.wallet', compact('reseller', 'searched'));         
+            
+        } else            
+            return view('pages.reseller.view', compact('reseller', 'searched'));         
+        
+
     }
 }

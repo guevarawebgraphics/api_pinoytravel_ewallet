@@ -1,18 +1,46 @@
 @extends('layouts.appAdmin')
 @section('content')           
         <div class="column auto" style="">
+            <div class="box">
           {{-- title--}}
           <h1 class="title is-3">Get Total Wallet Value</h1>          
             {{-- start of search bar--}}    
             <div class="field has-addons is-grouped is-grouped-right">
-                <div class="control">
-                    <input class="input is-small" type="text" placeholder="Find a repository">
-                </div>
-                <div class="control">
-                    <a class="button is-info is-small"> Search </a>
-                </div>
-            </div>      
-            {{-- end of search bar--}}  
+                @if($searched == 0)                   
+                    <div class="control"> 
+                        {{-- <span class="tag">{{Request::input('Search')}}</span>--}}
+                    </div>
+                @else
+                    <div class="control"> 
+                            <span class="tag is-link">{{Request::input('Search')}} <a class="delete is-small" href="/reseller/wallet"></a></span>                    
+                    </div>
+                @endif
+                    <div class="control">
+                            {{-- <form action="/test2" method="GET"> --}}
+                            <form action="/reseller/search" method="GET">
+                            <input class="input is-small" type="text" name="Search" placeholder="Find Reseller">
+                            @csrf
+                        </div>
+                        <div class="control">
+                            <button class="button is-info is-small" type="submit"> Search</button>
+                            <input type="hidden" name="wallet_search" value="1">
+                            </form>
+                        </div>
+                            {{-- <a class="button is-info is-small" type="submit">
+                                Search
+                            </a> --}}
+                        {{-- <div class="control">
+                        </div>                     --}}
+                        {{-- <div class="control">
+                            <input class="input is-small" type="text" placeholder="Find a repository">
+                        </div>
+                        <div class="control">
+                            <a class="button is-info is-small">
+                                Search
+                            </a>
+                        </div> --}}
+                </div>      
+                {{-- end of search bar--}}  
 
             {{-- start of table--}}          
             <table class="table is-clear-fix is-bordered" style="margin-bottom: 1.5em; width:100%;">
@@ -33,7 +61,7 @@
                         </tr>
                     </tfoot> --}}
                     {{-- START CHECK RESELLER TABLE FOR DATA --}}
-                @if(count($reseller) > 1)
+                @if(count($reseller) >= 1)
                     @foreach($reseller as $resellers)                    
                         <tbody>
                             <tr class="">
@@ -47,7 +75,9 @@
                 @else  
                         </tbody>
             </table>
-                <p class="title is-5 has-text-centered">No Reseller Accounts Found </p>
+                <p class="title is-5 has-text-centered">No Reseller Accounts Found 
+                        <a class=" is-link" href="/reseller/wallet">Go Back</a>
+                </p>
                 @endif                     
                         </tbody>
             </table>
@@ -99,6 +129,7 @@
             </div> --}}
           {{-- form end--}}          
           {{$reseller->links()}}
+        </div>
       </div>   
     </div>
 @endsection

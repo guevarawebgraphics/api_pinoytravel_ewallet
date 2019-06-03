@@ -41,9 +41,9 @@
                                 Administrator
                             </a>            
                             <div class="navbar-dropdown">
-                                <a class="navbar-item" href="/reseller/view">
+                                {{-- <a class="navbar-item" href="/reseller/view">
                                     Administrator
-                                </a>
+                                </a> --}}
                                 <hr class="navbar-divider">                
                                 <a class="navbar-item" href="/reseller/wallet">
                                     Reseller Wallet Value

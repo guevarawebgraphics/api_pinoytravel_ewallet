@@ -45,18 +45,15 @@
                                     Administrator
                                 </a>
                                 <hr class="navbar-divider">                
-                                <a class="navbar-item" href="/reseller/wallet">
-                                    Reseller Wallet Value
-                                </a>
                                 <a class="navbar-item" href="#">
-                                    Reports
+                                    Reseller Acct 1
                                 </a>
-                                {{-- <a class="navbar-item" href="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX7056622.jpg">
+                                <a class="navbar-item" href="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX7056622.jpg">
                                     Reseller Acct 2
                                 </a>
                                 <a class="navbar-item" href="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX7056622.jpg">
                                     Reseller Acct 3                    
-                                </a> --}}
+                                </a>
                             </div>
                         </div>          
                             <div class="buttons">
@@ -68,8 +65,8 @@
                     </div>
                     </div>
                 </nav>
-                <div class="columns is-clearfix" style="margin: 1em;margin-bottom: 2em;">
-                        {{-- <aside class="menu column is-3">
+                <div class="columns is-clearfix" style="margin: 1em">
+                        <aside class="menu column is-3">
                         <p class="menu-label">
                             Admin
                         </p>
@@ -82,7 +79,7 @@
                             <li><a href="/reseller/wallet">Get Total Wallet Value</a></li>        
                             <li><a href="#">Reports</a></li>        
                         </ul>
-                        </aside>                 --}}
+                        </aside>                
             @yield('content')
             
         </div>

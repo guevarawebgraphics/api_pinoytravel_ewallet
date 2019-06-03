@@ -1,19 +1,46 @@
-@extends('layouts.appAdmin')
+@extends('testing.appTest')
 @section('content')        
         <div class="column auto" style=" overflow-x: auto;">
+            <div class="box">
           {{-- title--}}
-          <h1 class="title is-3">View Reseller Accounts</h1>        
+          <h1 class="title is-3">Reseller Accounts</h1>      
+          <a href="/reseller/create" class="button is-success"><span class="file-icon"><i class="fas fa-plus"></i></span>Create</a>    
+          
             {{-- start of search bar--}}    
             <div class="field has-addons is-grouped is-grouped-right">
+                @if($searched == 0)                   
+                    <div class="control"> 
+                        {{-- <span class="tag">{{Request::input('Search')}}</span>--}}
+                    </div>
+                @else
+                    <div class="control"> 
+                            <span class="tag is-link">{{Request::input('Search')}} <a class="delete is-small" href="/reseller/view"></a></span>                    
+                    </div>
+                @endif
+                <div class="control">
+                        {{-- <form action="/test2" method="GET"> --}}
+                        <form action="/reseller/search" method="GET">
+                        <input class="input is-small" type="text" name="Search" placeholder="Find Reseller">
+                        @csrf
+                    </div>
                     <div class="control">
+                        <button class="button is-info is-small" type="submit"> Search</button>
+                        </form>
+                    </div>
+                        {{-- <a class="button is-info is-small" type="submit">
+                            Search
+                        </a> --}}
+                    {{-- <div class="control">
+                    </div>                     --}}
+                    {{-- <div class="control">
                         <input class="input is-small" type="text" placeholder="Find a repository">
                     </div>
                     <div class="control">
                         <a class="button is-info is-small">
                             Search
                         </a>
-                    </div>
-                </div>      
+                    </div> --}}
+            </div>      
             {{-- end of search bar--}}  
             {{-- start of table--}}          
             <table class="table is-clear-fix is-bordered is-fullwidth is-striped" style="margin-bottom: 1.5em">
@@ -24,6 +51,7 @@
                         <th>Address</th>
                         <th>Contact</th>
                         <th>Image</th>  
+                        <th>Actions</th>  
                         {{-- <th></th>--}}
                     </tr>
                 </thead>
@@ -39,14 +67,40 @@
                     </tfoot> --}}
                 <tbody>
                     {{-- START CHECK RESELLER TABLE FOR DATA --}}
-                    @if(count($reseller) > 1)
+                    @if(count($reseller) >= 1)
                         @foreach($reseller as $resellers)
                             <tr class="">
-                                <td><a href="/reseller/{{$resellers->reseller_id}}">{{ $resellers->name}}</a></td>                        
+                                <td>{{ $resellers->name}}</td>                        
                                 <td>{{$resellers->email}}</td>
                                 <td>{{$resellers->address}}</td>
                                 <td>{{$resellers->contact_no}}</td>
                                 <td><img src="" alt="{{$resellers->profile_pic}}" height="25px" width="100px"></td>                                                                        
+                                <td>
+                                    <div class="field is-grouped">
+                                        <div class="control">
+                                            <a class="button is-rounded" href="/reseller/{{$resellers->reseller_id}}"> <p class="is-link">View</p></a>                                            
+                                        </div>
+                                        <div class="control">
+                                            <a class="button is-rounded" href="/reseller/{{$resellers->reseller_id}}/edit">Edit</a>
+                                        </div>
+                                        <div class="control">
+                                            <a class="button is-rounded">Hold</a>
+                                        </div>
+                                        <div class="control">
+                                            <a class="button is-rounded">Delete</a>
+                                        </div>
+                                      </div>     
+                                    {{--  TIPS --}}
+                        {{-- <ul class="menu-list">
+                            <li><a href="/reseller/create">Create Reseller Account</a></li>
+                            <li><a href="/reseller/edit">Edit Reseller Information</a></li>
+                            <li><a href="/reseller/delete">Delete Reseller</a></li>        
+                            <li><a href="/reseller/hold">Hold Reseller</a></li>               
+                            <li><a href="/reseller/view">View Reseller Account</a></li>        
+                            <li><a href="/reseller/wallet">Get Total Wallet Value</a></li>        
+                            <li><a href="#">Reports</a></li>        
+                        </ul>                                    
+                                </td>
                                 {{-- <td>
                                     <p class="control is-centered">                    
                                         <a class="button is-success" href="/viewRacctForm">
@@ -65,7 +119,11 @@
                         {{-- <tr></tr> --}}
                     </tbody>
             </table>
-                <p class="title is-5 has-text-centered">No Reseller Account Found </p>
+                <p class="title is-5 has-text-centered">
+                    No Reseller Account Found. 
+                    <a class=" is-link" href="/reseller/view">Go Back</a>
+                </p>
+                
                     @endif
                 
                 
@@ -137,6 +195,7 @@
             </div> --}}
           {{-- form end--}}          
           {{$reseller->links()}}
+          </div>
       </div>         
     </div>         
 @endsection

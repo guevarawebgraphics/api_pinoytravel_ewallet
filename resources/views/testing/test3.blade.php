@@ -1,185 +1,111 @@
 @extends('testing.appTest')
 @section('content')        
         <div class="column auto" style=" overflow-x: auto;">
-
-
-            
-                {{-- title--}}
-                <h1 class="title is-3">Create Reseller Account</h1>
-                {{-- START OF PARENT FORM TAG--}}
-                <form action="{{ route('reseller.store') }}" method="post">
-                {{-- <form action="/" method="post"> --}}
-                {{--CSRF token--}}
-                {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
-        
-                {{-- form start--}}
-                    {{-- {{ csrf_field() }} --}}
-                    @csrf
+            <div class="box">
+                    {{-- title--}}
+                    <h1 class="title is-3">Reseller Account Profile</h1>
+                    {{-- form start--}}
                     <div class="field is-horizontal">
-                        <div class="field-label is-normal">
+                          <div class="field-label is-normal">
                             <label class="label">Name</label>
-                        </div>
-                        <div class="field-body">
-                            <div class="field">
+                          </div>
+                            <div class="field-body">
+                              <div class="field">
                                 <p class="control">
-                                    <input type="name" style="text-transform: capitalize;" name="Name" class="input" placeholder="Enter Name" value="{{ old('Name') }}">
-                                        @if ($errors->has('Name'))
-                                            <p class="help is-danger">{{ $errors->first('Name') }}</p>                      
-                                        @endif
+                                  <input class="input" type="name" placeholder="Enter Name" value="{{$reseller->name}}" readonly>
                                 </p>
+                              </div>
                             </div>
-                        </div>
-                    </div>
-                    {{-- form end--}}
-        
-                    {{-- form start--}}
-                    <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label class="label">Email</label>
-                        </div>
-                        <div class="field-body">
-                            <div class="field">
+                          </div>
+                        {{-- form start--}}
+                          <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                              <label class="label">Email</label>
+                            </div>
+                            <div class="field-body">
+                              <div class="field">
                                 <p class="control">
-                                    <input type="email" name="Email" class="input" placeholder="Enter Email" value="{{ old('Email') }}">
-                                        @if ($errors->has('Email'))
-                                            <p class="help is-danger">{{ $errors->first('Email') }}</p>                      
-                                        @endif
+                                  <input class="input" type="email" placeholder="Enter Email" value="{{$reseller->email}}" readonly>
                                 </p>
+                              </div>
                             </div>
-                        </div>
-                    </div>
-                    {{-- form end--}}
-        
-                    {{-- form start--}}
-                    <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label class="label">Address</label>
-                        </div>
-                        <div class="field-body">
-                            <div class="field">
+                          </div>
+                        {{-- form end--}}
+                        {{-- form start--}}
+                          <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                              <label class="label">Address</label>
+                            </div>
+                            <div class="field-body">
+                              <div class="field">
                                 <p class="control">
-                                    <input type="text" style="text-transform: capitalize;" name="Address" class="input" placeholder="Enter Address" value="{{ old('Address') }}">
-                                        @if ($errors->has('Address'))
-                                            <p class="help is-danger">{{ $errors->first('Address') }}</p>                      
-                                        @endif
+                                  <input class="input" type="text" placeholder="Enter Address" value="{{$reseller->address}}" readonly>
                                 </p>
+                              </div>
                             </div>
-                        </div>
-                    </div>
-                    {{-- form end--}}
-        
-                    {{-- form start--}}
-                    <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label class="label">Contact No.</label>
-                        </div>
-                        <div class="field-body">
-                            <div class="field">
+                          </div>
+                        {{-- form end--}}
+                        {{-- form start--}}
+                          <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                              <label class="label">Contact No.</label>
+                            </div>
+                            <div class="field-body">
+                              <div class="field">
                                 <p class="control">
-                                    <input type="text" name="Contact" class="input" placeholder="Enter Contact No." value="{{ old('Contact') }}">
-                                        @if ($errors->has('Contact'))
-                                            <p class="help is-danger">{{ $errors->first('Contact') }}</p>                      
-                                        @endif
+                                  <input class="input" type="number" placeholder="Enter Contact No." value="{{$reseller->contact_no}}" readonly>
                                 </p>
+                              </div>
                             </div>
-                        </div>
-                    </div>
-                    {{-- form end--}}
-        
-                    {{-- form start--}}
-                    <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label class="label">Password</label>
-                        </div>
-                        <div class="field-body">
-                            <div class="field">
+                          </div>
+                        {{-- form end--}}
+                        {{-- form start--}}
+                          {{-- <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                              <label class="label">Password</label>
+                            </div>
+                            <div class="field-body">
+                              <div class="field">
                                 <p class="control">
-                                    <input type="text" name="Password" class="input" placeholder="Default('*pass@csi')" value="*pass@csi" disabled>                      
+                                  <input class="input" type="text" placeholder="Default('*pass@csi')" value="{{$reseller->password}}" readonly>
                                 </p>
+                              </div>
                             </div>
-                        </div>
-                    </div>
-                    {{-- form end--}}
-        
-                    {{-- form start--}}
-                    <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label class="label">Image</label>
-                        </div>
-                        <div class="field-body">
-                            <div class="field">
-                                <div class="file is-info has-name">
-                                    <label class="file-label">
-                                        <input type="file" name="resume" class="file-input">
-                                            <span class="file-cta">
-                                                <span class="file-icon"><i class="fas fa-upload"></i></span>
-                                                <span class="file-label"> Upload File</span>
-                                            </span>
-                                            <span class="file-name"> image.png </span>
-                                    </label>
-                                </div>
-                                <p class="help is-danger">This image is invalid</p>
+                          </div> --}}
+                        {{-- form end--}}
+                        {{-- form start--}}
+                          <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                              <label class="label">Image</label>                    
                             </div>
-                        </div>
-                    </div>
-                    {{-- form end--}}
-        
-                    {{-- form start--}}
-                    <div class="field is-grouped is-grouped-centered" style="margin-top:1em">
-                            <p class="control">                    
-                                <button type='submit' class="button is-success">
-                                        <span class="file-icon">
-                                                <i class="fas fa-plus"></i>
-                                        </span>
-                                        Save
-                                </button>                    
-                            </p>
-                            {{-- <p class="control">
-                            <a class="button is-light">
-                                Cancel
-                            </a>
-                            </p> --}}                                  
-                    </div>
-                        @include('includes.createNotifs')
-                    {{-- form end--}} 
-                                                 
-                </form>
-                {{-- END OF PARENT FORM TAG--}}
-            
-
+                            <div class="field-body">
+                              <div class="field">
+                                  <div class="file is-info has-name">
+                                      <label class="file-label">                              
+                                              {{-- <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAAB9CAMAAABH0HuwAAAAM1BMVEX///8EBARBQUHu7u4TExNgYGBQUFC/v7+fn5/f398xMTGurq4iIiLOzs5vb2+Pj49/f39vBQ4DAAAB7UlEQVR4nO2a3ZLCIAxGCxT6p7Xv/7Rr6apbW0iVEDqz37ncG88kJiRZqwoAAAAAAAAAAADDqJVHj0NZEzPV6g/1ZMq53FYqXudWSMXodxWfrSLBuW7C8huc63lcStiYS8hFqYt0plzYRSkn6zLEXJSS7TiRJPlESbq0cRelWkGZnpLp5Vw6ykWpTkyGzJJkniwtY8Vkdh+lNfp/ytAuSonJEC1vRq7tnSpNp5KZaJlJTIZ4s2fk3m1DywjOV9HRakZyvGoomUZQ5lTDFRUa0cCcayCvTHBtui9O4kvlNSxTYKUMjnuSwzhlU8TlnqmdAr8UyNGCGd9dxoLXoqpbzeZWbkHZx7TWr3S9bUtGBYBP6EYXfJkbN0pWVePXA7f7kUuxa6khonluKm4zdg/P0UJEx6wmmdq2z/h0rV3NFS573xl25hjt2f69zryvHLjMrN6HjCqGvOW902dL1ecu+Wy+cclm85VLpivsh9/dFxm+xQfOrSHYp+IusidR1NxPFXl3iMG8YZJnhzi879SBK14M1gtfYmB4Q/N1WT9gLO8DNzwKvj6c0GMe8PWapLpe4KvudBe+f2wk19IMVz3dOGS4fj6SXNgzXMWd2H4XuJpwwoP9omaS4XBhKyfIhNAsMMkAAAAAAAAAAABbfgCCshA8UlE1ggAAAABJRU5ErkJggg==" height="100px" width="150px"> --}}
+                                        <img src="" alt="{{$reseller->profile_pic}}" height="100px" width="150px">
+                                      </label>
+                                    </div>
+                              </div>
+                            </div>
+                          </div>
+                        {{-- form end--}}  
+            </div> 
+            <div class="box">                 
           {{-- title--}}
-          <h1 class="title is-3">Reseller Accounts</h1>
-          <button type='submit' class="button is-success">
-                <span class="file-icon">
-                        <i class="fas fa-plus"></i>
-                </span>
-                Create Reseller
-        </button>
+          <h1 class="title is-3">Reseller Accounts</h1>  
+          <a href="/reseller/create" class="button is-success"><span class="file-icon"><i class="fas fa-plus"></i></span>Create</a>         
             {{-- start of search bar--}}    
             <div class="field has-addons is-grouped is-grouped-right">
-                <form action="/test2" method="GET">
                     <div class="control">
-                        <input class="input is-small" type="text" name="Search" placeholder="Find Reseller">
-                        @csrf
-                    </div>
-                    <div class="control">
-                        <button class="button is-info is-small" type="submit"> Search</button>
-                    </div>
-                        {{-- <a class="button is-info is-small" type="submit">
-                            Search
-                        </a> --}}
-                    {{-- <div class="control">
-                    </div>                     --}}
-                </form>
-                    {{-- <div class="control">
                         <input class="input is-small" type="text" placeholder="Find a repository">
                     </div>
                     <div class="control">
                         <a class="button is-info is-small">
                             Search
                         </a>
-                    </div> --}}
-            </div>      
+                    </div>
+                </div>      
             {{-- end of search bar--}}  
             {{-- start of table--}}          
             <table class="table is-clear-fix is-bordered is-fullwidth is-striped" style="margin-bottom: 1.5em">
@@ -206,18 +132,18 @@
                     </tfoot> --}}
                 <tbody>
                     {{-- START CHECK RESELLER TABLE FOR DATA --}}
-                    @if(count($reseller) >= 1)
-                        @foreach($reseller as $resellers)
+                    @if(count($resellers) > 1)
+                        @foreach($resellers as $reseller_temp)
                             <tr class="">
-                                <td>{{ $resellers->name}}</td>                        
-                                <td>{{$resellers->email}}</td>
-                                <td>{{$resellers->address}}</td>
-                                <td>{{$resellers->contact_no}}</td>
-                                <td><img src="" alt="{{$resellers->profile_pic}}" height="25px" width="100px"></td>                                                                        
+                                <td>{{ $reseller_temp->name}}</td>                        
+                                <td>{{$reseller_temp->email}}</td>
+                                <td>{{$reseller_temp->address}}</td>
+                                <td>{{$reseller_temp->contact_no}}</td>
+                                <td><img src="" alt="{{$reseller_temp->profile_pic}}" height="25px" width="100px"></td>                                                                        
                                 <td>
                                     <div class="field is-grouped">
                                         <div class="control">
-                                            <a class="button is-rounded" href="/reseller/{{$resellers->reseller_id}}">View</a>                                            
+                                            <a class="button is-rounded" href="/reseller/{{$reseller_temp->reseller_id}}">View</a>                                            
                                         </div>
                                         <div class="control">
                                             <a class="button is-rounded">Edit</a>
@@ -329,7 +255,8 @@
                 </p> 
             </div> --}}
           {{-- form end--}}          
-          {{$reseller->links()}}
+          {{$resellers->links()}}
+        </div>  
       </div>         
     </div>         
 @endsection
