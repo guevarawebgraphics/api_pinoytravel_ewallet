@@ -1,4 +1,4 @@
-@extends('testing.appTest')
+@extends('layouts.appAdmin')
 @section('content')        
         <div class="column auto" style=" overflow-x: auto;">
             <div class="box">
@@ -84,10 +84,10 @@
                                             <a class="button is-rounded" href="/reseller/{{$resellers->reseller_id}}/edit">Edit</a>
                                         </div>
                                         <div class="control">
-                                            <a class="button is-rounded">Hold</a>
+                                            <a class="button is-rounded modal-button" data-target="modalHold{{$resellers->reseller_id}}">Hold</a>
                                         </div>
                                         <div class="control">
-                                            <a class="button is-rounded">Delete</a>
+                                            <a class="button is-rounded modal-button" data-target="modalDelete{{$resellers->reseller_id}}">Delete</a>
                                         </div>
                                       </div>     
                                     {{--  TIPS --}}
@@ -111,6 +111,43 @@
                                         </a>
                                     </p>
                                 </td> --}}
+                            {{-- MODAL FOR HOLD --}}
+                            <div class="modal animated fadeIn" id="modalHold{{$resellers->reseller_id}}">
+                                    <div class="modal-background"></div>
+                                        <div class="modal-card">
+                                            <header class="modal-card-head is-warning">
+                                                <p class="modal-card-title"><span class="file-icon is-inline"><i class="fas fa-lock"></i></span>Hold Account</p>
+                                                <button class="delete" aria-label="close"></button>
+                                            </header>
+                                            <section class="modal-card-body">
+                                            The account of <p class="has-text-weight-bold is-inline">{{$resellers->name}}</p> will not be able to perform any transactions.
+                                        </section>
+                                        <footer class="modal-card-foot">
+                                            <button class="button is-success is-warning has-text-weight-bold">Hold</button>
+                                            <button class="button">Cancel</button>
+                                        </footer>
+                                        </div>
+                                    </div>
+                                    {{-- END OF MODAL FOR HOLD --}}
+                                {{-- MODAL FOR DELETE --}}
+                                <div class="modal animated fadeIn" id="modalDelete{{$resellers->reseller_id}}">
+                                    <div class="modal-background"></div>
+                                        <div class="modal-card">
+                                            <header class="modal-card-head">
+                                            <p class="modal-card-title"><span class="file-icon is-inline"><i class="fas fa-trash"></i></span>Delete Account</p> 
+                                                <button class="delete" aria-label="close"></button>
+                                            </header>
+                                            <section class="modal-card-body">
+                                            Delete the account of <p class="has-text-weight-bold is-inline">{{$resellers->name}}</p>?
+                                            <p class="has-text-danger has-text-weight-bold">Warning!</p> This action is irreversible.
+                                        </section>
+                                        <footer class="modal-card-foot">
+                                            <button class="button is-danger has-text-weight-bold">Delete</button>
+                                            <button class="button">Cancel</button>
+                                        </footer>
+                                        </div>
+                                    </div>
+                                    {{-- END OF MODAL FOR DELETE --}}
                             </tr>
                         @endforeach
                         
@@ -197,7 +234,9 @@
           {{$reseller->links()}}
           </div>
       </div>         
-    </div>         
+    </div>    
+
+        
 @endsection
 
 

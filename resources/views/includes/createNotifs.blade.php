@@ -8,21 +8,33 @@
     {{-- @endforeach --}}
 {{-- @endif --}}
 @if(count($errors) > 0)
-    <div class="columns is-mobile is-centered">
+    {{-- <div class="columns is-mobile is-centered">
         <p class="help is-danger is-size-7">Please Fill Up Fields Correctly</p>
+    </div> --}}
+
+
+    <div id="notif" class="columns is-mobile is-centered notification">
+            <button id="notifDelete"class="delete"></button>
+           <p class="help is-danger is-size-7">Please Fill Up Fields Correctly</p>
     </div>
 @endif  
 
 @if(session('success'))
-    <div class="columns is-mobile is-centered alert alert-success">
-            {{-- <button class="delete"></button> --}}
-            <p class="help is-success is-size-5">{{session('success')}}</p>            
-            
-        </div>
-        @endif
-        @if(session('error'))
-        <div class="columns is-mobile is-centered alert alert-danger">
-            {{-- <button class="delete"></button> --}}            
+    <div class="columns is-mobile is-centered alert alert-success notification">
+        <button class="delete"></button>
+            <p class="help is-success is-size-5">{{session('success')}}</p>
+    </div>
+        {{-- <div class="columns is-mobile is-centered alert alert-success">            
+            <p class="help is-success is-size-5">{{session('success')}}</p>                        
+        </div> --}}
+@endif
+@if(session('error'))
+    <div class="columns is-mobile is-centered alert alert-danger notification">
+        <button class="delete"></button>
             <p class="help is-danger is-size-5">{{session('error')}}</p>                        
-        </div>
+    </div>            
+        {{-- <div class="columns is-mobile is-centered alert alert-danger"> --}}
+            {{-- <button class="delete"></button> --}}            
+            {{-- <p class="help is-danger is-size-5">{{session('error')}}</p>--}}
+        {{-- </div> --}}
 @endif

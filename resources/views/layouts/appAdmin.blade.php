@@ -59,8 +59,9 @@
                                 </a> --}}
                             </div>
                         </div>          
-                            <div class="buttons">
-                            <a class="button is-danger is-small" href="/admin/login">
+                            <div class="buttons">                                    
+                            <a class="button is-danger is-small modal-button" data-target="modalLogout">
+                            {{-- <a class="button is-danger is-small modal-button" data-target="modalLogout" href="/admin/login"> --}}
                             <strong>Log Out</strong>
                             </a>
                         </div>
@@ -84,6 +85,25 @@
                         </ul>
                         </aside>                 --}}
             @yield('content')
+
+        {{-- MODAL FOR LOGOUT --}}
+        <div class="modal animated fadeIn" id="modalLogout">
+                <div class="modal-background"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title"><span class="file-icon is-inline"><i class="fas fa-sign-out-alt"></i></span>Log Out</p>
+                            <button class="delete" aria-label="close"></button>
+                        </header>
+                        <section class="modal-card-body">
+                        Are you sure?
+                    </section>
+                    <footer class="modal-card-foot">
+                        <a class="button is-danger" href="/admin/login">Logout</a>
+                        <button class="button">Cancel</button>
+                    </footer>
+                </div>
+        </div>
+                {{-- END OF MODAL FOR LOGOUT --}}            
             
         </div>
         {{-- <script src="{{asset('/node_modules/bulma-extensions/bulma-tooltip/dist/css/bulma-tooltip.min.css')}}"></script> --}}
