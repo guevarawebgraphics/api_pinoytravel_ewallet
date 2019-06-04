@@ -92,7 +92,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control">
-                                    <input type="text" name="Password" class="input" placeholder="Default('*pass@csi')" value="*pass@csi" disabled>                      
+                                    <input type="text" name="Password" class="input" placeholder="Enter Password" value="">                      
                                 </p>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                     {{-- form end--}}
         
                     {{-- form start--}}
-                    <div class="field is-horizontal">
+                    {{-- <div class="field is-horizontal">
                         <div class="field-label is-normal">
                             <label class="label">Image</label>
                         </div>
@@ -119,7 +119,7 @@
                                 <p class="help is-danger">This image is invalid</p>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- form end--}}
         
                     {{-- form start--}}
@@ -361,11 +361,14 @@
                 </p> 
             </div> --}}
           {{-- form end--}}          
-          {{$reseller->links()}}
-          
+          {{-- <div class="level"> --}}
+              {{-- <div class="level-left"> --}}
+                  {{$reseller->links()}}
+              {{-- </div> --}}
+          {{-- </div> --}}
         </div>            
-      </div>         
-    </div>            
+    </div>         
+</div>            
 @endsection
 
 

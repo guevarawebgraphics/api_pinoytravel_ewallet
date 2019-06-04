@@ -58,6 +58,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
   // $('#notifDelete').click(function(){
-  //     $('#notif').addClass('animated fadeOut')
+  //     $('#notif').fadeOut();
 
   // });

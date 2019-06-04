@@ -47,11 +47,12 @@ class ResellerController extends Controller
         ];
         $this->validate($request, [
             'Name' => 'required|regex:/^[\pL\s\-]+$/u|min:3|max:70',
-            'Email' => 'required|email|unique:resellers,email',
+            'Email' => 'required|email|unique:resellers,email|max:70',
             'Address' => 'required',
             'Contact' => array(
                         'required',
-                        'regex:/^(09|\+639)\d{9}$/')
+                        'regex:/^(09|\+639)\d{9}$/'),
+            'Password' => 'required|min:8'
         ], $messages);
         // $validator = \Validator::make($request->all(), [
         //     'Name' => 'required',
