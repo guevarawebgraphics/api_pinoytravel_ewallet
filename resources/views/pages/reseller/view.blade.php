@@ -50,7 +50,7 @@
                         <th>Email</th>
                         <th>Address</th>
                         <th>Contact</th>
-                        <th>Image</th>  
+                        {{-- <th>Image</th>   --}}
                         <th>Actions</th>  
                         {{-- <th></th>--}}
                     </tr>
@@ -74,7 +74,7 @@
                                 <td>{{$resellers->email}}</td>
                                 <td>{{$resellers->address}}</td>
                                 <td>{{$resellers->contact_no}}</td>
-                                <td><img src="" alt="{{$resellers->profile_pic}}" height="25px" width="100px"></td>                                                                        
+                                {{-- <td><img src="" alt="{{$resellers->profile_pic}}" height="25px" width="100px"></td>                                                                         --}}
                                 <td>
                                     <div class="field is-grouped">
                                         <div class="control">

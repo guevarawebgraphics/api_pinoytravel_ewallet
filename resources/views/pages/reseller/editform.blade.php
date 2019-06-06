@@ -112,7 +112,7 @@
                           <div class="field-body">
                               <div class="field">
                                   <p class="control">
-                                      <input class="input" type="password" name="Password" placeholder="Default('*pass@csi')" value="">
+                                      <input class="input" type="password" name="Password" placeholder="Enter a Password" value="">
                                   </p>
                               </div>
                           </div>
@@ -135,7 +135,7 @@
                   {{-- form end--}}
 
                   {{-- form start--}}
-                      <div class="field is-horizontal">
+                      {{-- <div class="field is-horizontal">
                           <div class="field-label is-normal">
                               <label class="label">Image</label>                    
                           </div>
@@ -148,13 +148,12 @@
                                   </div>
                               </div>
                           </div>
-                      </div>
+                      </div> --}}
                   {{-- form end--}}   
 
                   {{-- form start--}}
-                      <div class="field is-horizontal">
+                      {{-- <div class="field is-horizontal">
                           <div class="field-label is-normal">
-                              {{-- <label class="label">Image</label>--}}
                           </div>
                           <div class="field-body">
                               <div class="field">
@@ -170,7 +169,7 @@
                                   </div>
                               </div>
                           </div>
-                      </div>
+                      </div> --}}
                   {{-- form end--}}          
             
 
@@ -242,7 +241,7 @@
                         <th>Email</th>
                         <th>Address</th>
                         <th>Contact</th>
-                        <th>Image</th>  
+                        {{-- <th>Image</th>   --}}
                         <th>Actions</th>  
                         {{-- <th></th>--}}
                     </tr>
@@ -266,7 +265,7 @@
                                 <td>{{$reseller_tmp->email}}</td>
                                 <td>{{$reseller_tmp->address}}</td>
                                 <td>{{$reseller_tmp->contact_no}}</td>
-                                <td><img src="" alt="{{$reseller_tmp->profile_pic}}" height="25px" width="100px"></td>                                                                        
+                                {{-- <td><img src="" alt="{{$reseller_tmp->profile_pic}}" height="25px" width="100px"></td>                                                                         --}}
                                 <td>
                                     <div class="field is-grouped">
                                         <div class="control">

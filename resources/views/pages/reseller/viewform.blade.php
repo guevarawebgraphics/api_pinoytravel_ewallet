@@ -74,21 +74,20 @@
                           </div> --}}
                         {{-- form end--}}
                         {{-- form start--}}
-                          <div class="field is-horizontal">
+                          {{-- <div class="field is-horizontal">
                             <div class="field-label is-normal">
                               <label class="label">Image</label>                    
                             </div>
                             <div class="field-body">
                               <div class="field">
                                   <div class="file is-info has-name">
-                                      <label class="file-label">                              
-                                              {{-- <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAAB9CAMAAABH0HuwAAAAM1BMVEX///8EBARBQUHu7u4TExNgYGBQUFC/v7+fn5/f398xMTGurq4iIiLOzs5vb2+Pj49/f39vBQ4DAAAB7UlEQVR4nO2a3ZLCIAxGCxT6p7Xv/7Rr6apbW0iVEDqz37ncG88kJiRZqwoAAAAAAAAAAADDqJVHj0NZEzPV6g/1ZMq53FYqXudWSMXodxWfrSLBuW7C8huc63lcStiYS8hFqYt0plzYRSkn6zLEXJSS7TiRJPlESbq0cRelWkGZnpLp5Vw6ykWpTkyGzJJkniwtY8Vkdh+lNfp/ytAuSonJEC1vRq7tnSpNp5KZaJlJTIZ4s2fk3m1DywjOV9HRakZyvGoomUZQ5lTDFRUa0cCcayCvTHBtui9O4kvlNSxTYKUMjnuSwzhlU8TlnqmdAr8UyNGCGd9dxoLXoqpbzeZWbkHZx7TWr3S9bUtGBYBP6EYXfJkbN0pWVePXA7f7kUuxa6khonluKm4zdg/P0UJEx6wmmdq2z/h0rV3NFS573xl25hjt2f69zryvHLjMrN6HjCqGvOW902dL1ecu+Wy+cclm85VLpivsh9/dFxm+xQfOrSHYp+IusidR1NxPFXl3iMG8YZJnhzi879SBK14M1gtfYmB4Q/N1WT9gLO8DNzwKvj6c0GMe8PWapLpe4KvudBe+f2wk19IMVz3dOGS4fj6SXNgzXMWd2H4XuJpwwoP9omaS4XBhKyfIhNAsMMkAAAAAAAAAAABbfgCCshA8UlE1ggAAAABJRU5ErkJggg==" height="100px" width="150px"> --}}
+                                      <label class="file-label">                                                                            
                                         <img src="" alt="{{$reseller->profile_pic}}" height="100px" width="150px">
                                       </label>
                                     </div>
                               </div>
                             </div>
-                          </div>
+                          </div> --}}
                         {{-- form end--}}  
             </div> 
             <div class="box">                 
@@ -130,7 +129,7 @@
                         <th>Email</th>
                         <th>Address</th>
                         <th>Contact</th>
-                        <th>Image</th>  
+                        {{-- <th>Image</th>   --}}
                         <th>Actions</th>  
                         {{-- <th></th>--}}
                     </tr>
@@ -154,7 +153,7 @@
                                 <td>{{$reseller_temp->email}}</td>
                                 <td>{{$reseller_temp->address}}</td>
                                 <td>{{$reseller_temp->contact_no}}</td>
-                                <td><img src="" alt="{{$reseller_temp->profile_pic}}" height="25px" width="100px"></td>                                                                        
+                                {{-- <td><img src="" alt="{{$reseller_temp->profile_pic}}" height="25px" width="100px"></td>                                                                         --}}
                                 <td>
                                     <div class="field is-grouped">
                                         <div class="control">

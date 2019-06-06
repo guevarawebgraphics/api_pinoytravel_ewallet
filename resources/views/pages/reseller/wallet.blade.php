@@ -48,7 +48,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Image</th>  
+                        {{-- <th>Image</th>   --}}
                         <th>Wallet Value</th>                                              
                     </tr>
                 </thead>
@@ -67,7 +67,7 @@
                             <tr class="">
                                 <td>{{ $resellers->name}}</td>                        
                                 <td>{{$resellers->email}}</td>
-                                <td><img src="" alt="{{$resellers->profile_pic}}" height="25px" width="100px"></td>
+                                {{-- <td><img src="" alt="{{$resellers->profile_pic}}" height="25px" width="100px"></td> --}}
                                 <td> ₱ {{$resellers->wallet_bal}}.00</td>
                             </tr>
                     @endforeach                        
