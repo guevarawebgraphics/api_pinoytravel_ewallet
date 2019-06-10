@@ -1,10 +1,12 @@
 @extends('layouts.appAdmin')
-@section('content')        
+@section('content') 
+       
         <div class="column auto" style=" overflow-x: auto;">
+                @include('includes.createNotifs') 
             <div class="box">
           {{-- title--}}
           <h1 class="title is-3">Reseller Accounts</h1>      
-          <a href="/reseller/create" class="button is-success"><span class="file-icon"><i class="fas fa-plus"></i></span>Create</a>    
+          <a href="/admin/create/reseller" class="button is-success"><span class="file-icon"><i class="fas fa-plus"></i></span>Create</a>    
           
             {{-- start of search bar--}}    
             <div class="field has-addons is-grouped is-grouped-right">
@@ -14,12 +16,13 @@
                     </div>
                 @else
                     <div class="control"> 
-                            <span class="tag is-link">{{Request::input('Search')}} <a class="delete is-small" href="/reseller/view"></a></span>                    
+                            <span class="tag is-link">{{Request::input('Search')}} <a class="delete is-small" href="/admin/view/all"></a></span>                    
                     </div>
                 @endif
                 <div class="control">
                         {{-- <form action="/test2" method="GET"> --}}
-                        <form action="/reseller/search" method="GET">
+                        <form action="/admin/search/reseller" method="GET">
+                        {{-- <form action="/reseller/search" method="GET"> --}}
                         <input class="input is-small" type="text" name="Search" placeholder="Find Reseller">
                         @csrf
                     </div>
@@ -70,7 +73,7 @@
                     @if(count($reseller) >= 1)
                         @foreach($reseller as $resellers)
                             <tr class="">
-                                <td>{{ $resellers->name}}</td>                        
+                                <td>{{$resellers->name}}</td>                        
                                 <td>{{$resellers->email}}</td>
                                 <td>{{$resellers->address}}</td>
                                 <td>{{$resellers->contact_no}}</td>
@@ -78,16 +81,21 @@
                                 <td>
                                     <div class="field is-grouped">
                                         <div class="control">
-                                            <a class="button is-rounded" href="/reseller/{{$resellers->reseller_id}}"> <p class="is-link">View</p></a>                                            
+                                            <a class="button is-rounded" href="/admin/reseller/{{$resellers->id}}"> <p class="is-link">View</p></a>                                            
+                                            {{-- <a class="button is-rounded" href="/reseller/{{$resellers->reseller_id}}"> <p class="is-link">View</p></a>                                             --}}
                                         </div>
                                         <div class="control">
-                                            <a class="button is-rounded" href="/reseller/{{$resellers->reseller_id}}/edit">Edit</a>
+                                            <a class="button is-rounded" href="/admin/edit/reseller/{{$resellers->id}}">Edit</a>
                                         </div>
                                         <div class="control">
-                                            <a class="button is-rounded modal-button" data-target="modalHold{{$resellers->reseller_id}}">Hold</a>
+                                            @if($resellers->on_hold == 1)
+                                            <a class="button is-rounded modal-button" data-target="modalHold{{$resellers->id}}">Unhold</a>
+                                            @else
+                                            <a class="button is-rounded modal-button" data-target="modalHold{{$resellers->id}}">Hold</a>
+                                            @endif
                                         </div>
                                         <div class="control">
-                                            <a class="button is-rounded modal-button" data-target="modalDelete{{$resellers->reseller_id}}">Delete</a>
+                                            <a class="button is-rounded modal-button" data-target="modalDelete{{$resellers->id}}">Delete</a>
                                         </div>
                                       </div>     
                                     {{--  TIPS --}}
@@ -112,10 +120,11 @@
                                     </p>
                                 </td> --}}
                             {{-- MODAL FOR HOLD --}}
-                            <div class="modal animated fadeIn" id="modalHold{{$resellers->reseller_id}}">
+                            <div class="modal animated fadeIn" id="modalHold{{$resellers->id}}">
                                     <div class="modal-background"></div>
                                         <div class="modal-card">
                                             <header class="modal-card-head is-warning">
+                                                    @if($resellers->on_hold == 0)
                                                 <p class="modal-card-title"><span class="file-icon is-inline"><i class="fas fa-lock"></i></span>Hold Account</p>
                                                 <button class="delete" aria-label="close"></button>
                                             </header>
@@ -123,14 +132,37 @@
                                             The account of <p class="has-text-weight-bold is-inline">{{$resellers->name}}</p> will not be able to perform any transactions.
                                         </section>
                                         <footer class="modal-card-foot">
-                                            <button class="button is-success is-warning has-text-weight-bold">Hold</button>
+                                            <form id="form{{$resellers->id}}" method="post" action="/admin/update/{{$resellers->id}}">
+                                            @method('PUT')
+                                            @csrf                                            
+                                            <input type="hidden" name="Edit" value="3">
+                                        </form>
+                                            <button class="button is-success is-warning has-text-weight-bold" onclick="$('#form{{$resellers->id}}').submit();">Hold</button>
                                             <button class="button">Cancel</button>
                                         </footer>
+                                        @else
+
+                                        <p class="modal-card-title"><span class="file-icon is-inline"><i class="fas fa-lock"></i></span>Unhold Account</p>
+                                        <button class="delete" aria-label="close"></button>
+                                    </header>
+                                    <section class="modal-card-body">
+                                    The account of <p class="has-text-weight-bold is-inline">{{$resellers->name}}</p> will be able to perform transactions immediately.
+                                </section>
+                                <footer class="modal-card-foot">
+                                    <form id="form{{$resellers->id}}" method="post" action="/admin/update/{{$resellers->id}}">
+                                    @method('PUT')
+                                    @csrf                                            
+                                    <input type="hidden" name="Edit" value="4">
+                                    </form>
+                                <button class="button is-success is-warning has-text-weight-bold" onclick="$('#form{{$resellers->id}}').submit();">Unhold</button>
+                                    <button class="button">Cancel</button>
+
+                                        @endif
                                         </div>
                                     </div>
                                     {{-- END OF MODAL FOR HOLD --}}
                                 {{-- MODAL FOR DELETE --}}
-                                <div class="modal animated fadeIn" id="modalDelete{{$resellers->reseller_id}}">
+                                <div class="modal animated fadeIn" id="modalDelete{{$resellers->id}}">
                                     <div class="modal-background"></div>
                                         <div class="modal-card">
                                             <header class="modal-card-head">
@@ -142,7 +174,12 @@
                                             <p class="has-text-danger has-text-weight-bold">Warning!</p> This action is irreversible.
                                         </section>
                                         <footer class="modal-card-foot">
-                                            <button class="button is-danger has-text-weight-bold">Delete</button>
+                                                <form id="form{{$resellers->id}}Delete" method="post" action="/admin/update/{{$resellers->id}}">
+                                                @method('PUT')
+                                                @csrf                                            
+                                                <input type="hidden" name="Edit" value="2">
+                                                </form>
+                                            <button class="button is-danger has-text-weight-bold" onclick="$('#form{{$resellers->id}}Delete').submit();">Delete</button>
                                             <button class="button">Cancel</button>
                                         </footer>
                                         </div>
@@ -158,7 +195,7 @@
             </table>
                 <p class="title is-5 has-text-centered">
                     No Reseller Account Found. 
-                    <a class=" is-link" href="/reseller/view">Go Back</a>
+                    <a class=" is-link" href="/admin/view/all">Go Back</a>
                 </p>
                 
                     @endif

@@ -22,7 +22,7 @@
             {{-- DEFAULT VIEW FOR DASHBOARD IS RESERVATIONS--}}
             <nav class="navbar" role="navigation" aria-label="main navigation">
                     <div class="navbar-brand">
-                    <a class="navbar-item" href="/reseller/view">
+                    <a class="navbar-item" href="/admin/view/all">
                         <img src="{{asset('img/icon/pt_logo.png')}}" alt="PinoyTravel" width="112" height="28">
                     </a>
                 
@@ -38,18 +38,25 @@
                         <div class="navbar-item">
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a class="navbar-link">
-                                Administrator
+                                    {{ Auth::user()->name }}
                             </a>            
                             <div class="navbar-dropdown">
-                                <a class="navbar-item" href="/reseller/view">
-                                    Administrator
+                                    Logged in as
+                                <a class="navbar-item has-text-link has-text-weight-bold" aria-disabled="true">
+                                {{-- <a class="navbar-item has-text-link has-text-weight-bold" href="/admin/view/all"> --}}
+                                 {{-- {{ Auth::user()->name }} --}}
+                                 Administrator
                                 </a>
                                 <hr class="navbar-divider">                
-                                <a class="navbar-item" href="/reseller/wallet">
+                                <a class="navbar-item" href="/admin/wallet/reseller">
+                                {{-- <a class="navbar-item" href="/reseller/wallet"> --}}
                                     Reseller Wallet Value
                                 </a>
                                 <a class="navbar-item" href="#">
                                     Reports
+                                </a>
+                                <a class="navbar-item" href="#">
+                                    Register a New Admin
                                 </a>
                                 {{-- <a class="navbar-item" href="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX7056622.jpg">
                                     Reseller Acct 2
@@ -97,9 +104,12 @@
                         <section class="modal-card-body">
                         Are you sure?
                     </section>
-                    <footer class="modal-card-foot">
-                        <a class="button is-danger" href="/admin/login">Logout</a>
+                    <footer class="modal-card-foot">                            
+                        <button class="button is-danger" onclick="$('#out').submit();">Logout</button>
                         <button class="button">Cancel</button>
+                        <form id="out"action="{{route('logout')}}" method="POST">
+                                @csrf                                                                                              
+                            </form>
                     </footer>
                 </div>
         </div>

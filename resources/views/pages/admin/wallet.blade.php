@@ -12,12 +12,12 @@
                     </div>
                 @else
                     <div class="control"> 
-                            <span class="tag is-link">{{Request::input('Search')}} <a class="delete is-small" href="/reseller/wallet"></a></span>                    
+                            <span class="tag is-link">{{Request::input('Search')}} <a class="delete is-small" href="/admin/wallet/reseller"></a></span>                    
                     </div>
                 @endif
                     <div class="control">
                             {{-- <form action="/test2" method="GET"> --}}
-                            <form action="/reseller/search" method="GET">
+                            <form action="/admin/search/reseller" method="GET">
                             <input class="input is-small" type="text" name="Search" placeholder="Find Reseller">
                             @csrf
                         </div>
@@ -76,7 +76,7 @@
                         </tbody>
             </table>
                 <p class="title is-5 has-text-centered">No Reseller Accounts Found 
-                        <a class=" is-link" href="/reseller/wallet">Go Back</a>
+                        <a class=" is-link" href="/admin/wallet/reseller">Go Back</a>
                 </p>
                 @endif                     
                         </tbody>

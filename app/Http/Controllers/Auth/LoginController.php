@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use App\User;
+use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     /*
@@ -25,7 +26,20 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected function authenticated(Request $request, User $user){
+        // dd($user->is_admin);
+        if($user->is_admin == 1){
+            return  redirect('/admin/view/all');
+        }
+        else{
+            return redirect('/reseller/reservation/view');
+        }
+        // IF THE ADMIN WILL NOT BE ALLOWED TO ACCESS RESELLER ACCOUNT
+        // else if($user->is_admin == 0){
+        //     return redirect('/reseller/reservation/view');
+        // }
+    }
+    // protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.

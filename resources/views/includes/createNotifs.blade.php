@@ -43,3 +43,12 @@
             {{-- <p class="help is-danger is-size-5">{{session('error')}}</p>--}}
         {{-- </div> --}}
 @endif
+@if(session('hold'))
+    <div class="columns is-mobile is-centered alert alert-success notification is-warning" style="margin-top:0.5em">
+        <button class="delete"></button>
+            <p class="help is-size-5">{{session('hold')}}</p>
+    </div>
+        {{-- <div class="columns is-mobile is-centered alert alert-success">            
+            <p class="help is-success is-size-5">{{session('success')}}</p>                        
+        </div> --}}
+@endif
