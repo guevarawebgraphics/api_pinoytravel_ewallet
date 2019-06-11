@@ -28,13 +28,13 @@ class ResellerController extends Controller
      */
     public function create()
     {    
-        $reseller = User::orderBy('created_at', 'desc')
+        $resellers = User::orderBy('created_at', 'desc')
         ->where('is_blocked', '0')
         ->where('is_admin', '0')            
         ->paginate(20);
         // return view('pages.reseller.create');
-        // return view('pages.reseller.create', compact('reseller'));             
-        return view('pages.admin.create', compact('reseller'));             
+        // return view('pages.reseller.create', compact('resellers'));     x        
+        return view('pages.admin.create', compact('resellers'));             
     }
 
     /**
@@ -263,11 +263,11 @@ class ResellerController extends Controller
         // $resellers = Reseller::orderBy('name', 'desc')->paginate(1);
         $searched = 0;
         // $reseller = Reseller::orderBy('created_at', 'desc')
-        $reseller = User::orderBy('created_at', 'desc')
+        $resellers = User::orderBy('created_at', 'desc')
         ->where('is_blocked', '0')  
         ->where('is_admin', '0')          
         ->paginate(20);
-        return view('pages.admin.view', compact('reseller', 'searched'));    
+        return view('pages.admin.view', compact('resellers', 'searched'));    
     }
     //View on Edit
     public function all_edit()
@@ -298,11 +298,11 @@ class ResellerController extends Controller
     public function wallet()
     {   
         $searched = 0;
-        $reseller = User::orderBy('created_at', 'desc')
+        $resellers = User::orderBy('created_at', 'desc')
         ->where('is_blocked', '0')
         ->where('is_admin', '0')            
         ->paginate(20);
-        return view('pages.admin.wallet', compact('reseller', 'searched'));   
+        return view('pages.admin.wallet', compact('resellers', 'searched'));   
         // return Reseller::where('name', 'Jon Snow')->get(); 
     }
     public function testall()
@@ -347,16 +347,16 @@ class ResellerController extends Controller
             {$searched = 1;}
                         
         // dd($search);
-        $reseller = User::orderBy('created_at', 'desc')
+        $resellers = User::orderBy('created_at', 'desc')
         ->where('Name', 'like', '%'.$search.'%')
         ->where('is_admin', 0)
         ->paginate(20);
         //CHECK IF THE ADMIN IS SEARCHING IN THE WALLET PAGE OR NOT
         if($request->input('wallet_search') == 1){            
-            return view('pages.admin.wallet', compact('reseller', 'searched'));         
+            return view('pages.admin.wallet', compact('resellers', 'searched'));         
             
         } else            
-            return view('pages.admin.view', compact('reseller', 'searched'));         
+            return view('pages.admin.view', compact('resellers', 'searched'));         
         
 
     }

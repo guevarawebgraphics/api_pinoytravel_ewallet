@@ -148,66 +148,66 @@
                 <tbody>
                     {{-- START CHECK RESELLER TABLE FOR DATA --}}
                     @if(count($resellers) >= 1)
-                        @foreach($resellers as $reseller_temp)
+                        @foreach($resellers as $reseller)
                             <tr class="">
-                                <td>{{$reseller_temp->name}}</td>                        
-                                <td>{{$reseller_temp->email}}</td>
-                                <td>{{$reseller_temp->address}}</td>
-                                <td>{{$reseller_temp->contact_no}}</td>
+                                <td>{{$reseller->name}}</td>                        
+                                <td>{{$reseller->email}}</td>
+                                <td>{{$reseller->address}}</td>
+                                <td>{{$reseller->contact_no}}</td>
                                 {{-- <td><img src="" alt="{{$reseller_temp->profile_pic}}" height="25px" width="100px"></td>                                                                         --}}
                                 <td>
                                     <div class="field is-grouped">
                                         <div class="control">
-                                            <a class="button is-rounded" href="/admin/reseller/{{$reseller_temp->id}}">View</a>                                            
+                                            <a class="button is-rounded" href="/admin/reseller/{{$reseller->id}}">View</a>                                            
                                         </div>
                                         <div class="control">
-                                            <a class="button is-rounded" href="/admin/edit/reseller/{{$reseller_temp->id}}">Edit</a>
+                                            <a class="button is-rounded" href="/admin/edit/reseller/{{$reseller->id}}">Edit</a>
                                         </div>
                                         <div class="control">
-                                            @if($reseller_temp->on_hold == 1)
-                                              <a class="button is-rounded modal-button" data-target="modalHold{{$reseller_temp->id}}">Unhold</a>
+                                            @if($reseller->on_hold == 1)
+                                              <a class="button is-rounded modal-button" data-target="modalHold{{$reseller->id}}">Unhold</a>
                                               @else
-                                              <a class="button is-rounded modal-button" data-target="modalHold{{$reseller_temp->id}}">Hold</a>
+                                              <a class="button is-rounded modal-button" data-target="modalHold{{$reseller->id}}">Hold</a>
                                             @endif
                                         </div>
                                         <div class="control">
-                                            <a class="button is-rounded modal-button" data-target="modalDelete{{$reseller_temp->id}}">Delete</a>
+                                            <a class="button is-rounded modal-button" data-target="modalDelete{{$reseller->id}}">Delete</a>
                                         </div>
                                       </div>  
                             {{-- MODAL FOR HOLD --}}
-                            <div class="modal animated fadeIn" id="modalHold{{$reseller_temp->id}}">
+                            <div class="modal animated fadeIn" id="modalHold{{$reseller->id}}">
                                 <div class="modal-background"></div>
                                     <div class="modal-card">
                                         <header class="modal-card-head is-warning">
-                                            @if($reseller_temp->on_hold == 0)
+                                            @if($reseller->on_hold == 0)
                                             <p class="modal-card-title"><span class="file-icon is-inline"><i class="fas fa-lock"></i></span>Hold Account</p>
                                             <button class="delete" aria-label="close"></button>
                                         </header>
                                         <section class="modal-card-body">
-                                        The account of <p class="has-text-weight-bold is-inline">{{$reseller_temp->name}}</p> will not be able to perform any transactions.
+                                        The account of <p class="has-text-weight-bold is-inline">{{$reseller->name}}</p> will not be able to perform any transactions.
                                     </section>
                                     <footer class="modal-card-foot">
-                                        <form id="form{{$reseller_temp->id}}" method="post" action="/admin/update/{{$reseller_temp->id}}">
+                                        <form id="form{{$reseller->id}}" method="post" action="/admin/update/{{$reseller->id}}">
                                             @method('PUT')
                                             @csrf                                            
                                             <input type="hidden" name="Edit" value="3">
                                         </form>                                      
-                                        <button class="button is-success is-warning has-text-weight-bold" onclick="$('#form{{$reseller_temp->id}}').submit();">Hold</button>
+                                        <button class="button is-success is-warning has-text-weight-bold" onclick="$('#form{{$reseller->id}}').submit();">Hold</button>
                                         <button class="button">Cancel</button>
                                         @else
                                         <p class="modal-card-title"><span class="file-icon is-inline"><i class="fas fa-lock"></i></span>Unhold Account</p>
                                         <button class="delete" aria-label="close"></button>
                                     </header>
                                     <section class="modal-card-body">
-                                    The account of <p class="has-text-weight-bold is-inline">{{$reseller_temp->name}}</p>  will be able to perform transactions immediately.
+                                    The account of <p class="has-text-weight-bold is-inline">{{$reseller->name}}</p>  will be able to perform transactions immediately.
                                 </section>
                                 <footer class="modal-card-foot">
-                                    <form id="form{{$reseller_temp->id}}" method="post" action="/admin/update/{{$reseller_temp->id}}">
+                                    <form id="form{{$reseller->id}}" method="post" action="/admin/update/{{$reseller->id}}">
                                         @method('PUT')
                                         @csrf                                            
                                         <input type="hidden" name="Edit" value="4">
                                     </form> 
-                                    <button class="button is-success is-warning has-text-weight-bold" onclick="$('#form{{$reseller_temp->id}}').submit();">Unhold</button>
+                                    <button class="button is-success is-warning has-text-weight-bold" onclick="$('#form{{$reseller->id}}').submit();">Unhold</button>
                                     <button class="button">Cancel</button>
 
                                         @endif
@@ -216,7 +216,7 @@
                                 </div>
                                 {{-- END OF MODAL FOR HOLD --}}
                             {{-- MODAL FOR DELETE --}}
-                            <div class="modal animated fadeIn" id="modalDelete{{$reseller_temp->id}}">
+                            <div class="modal animated fadeIn" id="modalDelete{{$reseller->id}}">
                                 <div class="modal-background"></div>
                                     <div class="modal-card">
                                         <header class="modal-card-head">
@@ -224,16 +224,16 @@
                                             <button class="delete" aria-label="close"></button>
                                         </header>
                                         <section class="modal-card-body">
-                                        Delete the account of <p class="has-text-weight-bold is-inline">{{$reseller_temp->name}}</p>?
+                                        Delete the account of <p class="has-text-weight-bold is-inline">{{$reseller->name}}</p>?
                                         <p class="has-text-danger has-text-weight-bold">Warning!</p> This action is irreversible.
                                     </section>
                                     <footer class="modal-card-foot">
-                                        <form id="form{{$reseller_temp->id}}Delete" method="post" action="/admin/update/{{$reseller_temp->id}}">
+                                        <form id="form{{$reseller->id}}Delete" method="post" action="/admin/update/{{$reseller->id}}">
                                             @method('PUT')
                                             @csrf                                            
                                             <input type="hidden" name="Edit" value="2">
                                             </form>
-                                        <button class="button is-danger has-text-weight-bold" onclick="$('#form{{$reseller_temp->id}}Delete').submit();">Delete</button>
+                                        <button class="button is-danger has-text-weight-bold" onclick="$('#form{{$reseller->id}}Delete').submit();">Delete</button>
                                         <button class="button">Cancel</button>                                        
                                     </footer>
                                     </div>

@@ -149,6 +149,13 @@
                 </div>
         </div>        
 </div>
+<footer class="footer animated bounceIn has-background-white">
+    <div class="has-text-centered">
+      <p>
+        <strong>v0.2</strong> - PinoyTravelReseller
+      </p>
+    </div>
+  </footer>
 
 @endsection
 

@@ -61,14 +61,14 @@
                         </tr>
                     </tfoot> --}}
                     {{-- START CHECK RESELLER TABLE FOR DATA --}}
-                @if(count($reseller) >= 1)
-                    @foreach($reseller as $resellers)                    
+                @if(count($resellers) >= 1)
+                    @foreach($resellers as $reseller)                    
                         <tbody>
                             <tr class="">
-                                <td>{{ $resellers->name}}</td>                        
-                                <td>{{$resellers->email}}</td>
-                                {{-- <td><img src="" alt="{{$resellers->profile_pic}}" height="25px" width="100px"></td> --}}
-                                <td> ₱ {{$resellers->wallet_bal}}.00</td>
+                                <td>{{ $reseller->name}}</td>                        
+                                <td>{{$reseller->email}}</td>
+                                {{-- <td><img src="" alt="{{$reseller->profile_pic}}" height="25px" width="100px"></td> --}}
+                                <td> ₱ {{$reseller->wallet_bal}}.00</td>
                             </tr>
                     @endforeach                        
                     {{-- IF THERE WERE NO reseller TO FETCH --}}                    
@@ -128,7 +128,7 @@
                 </p> 
             </div> --}}
           {{-- form end--}}          
-          {{$reseller->links()}}
+          {{$resellers->links()}}
         </div>
       </div>   
     </div>
