@@ -373,8 +373,8 @@ class ResellerController extends Controller
     //    return 'this is commission method in reseller controller';
         return view('pages.reseller.commission');
     }
-    public function topup()
+    public function topup(User $reseller)
     {
-        return view('pages.reseller.topup');
+        return view('pages.reseller.topup', compact('reseller'));
     }
 }

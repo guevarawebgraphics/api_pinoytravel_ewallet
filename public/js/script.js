@@ -61,3 +61,31 @@ document.addEventListener('DOMContentLoaded', function () {
   //     $('#notif').fadeOut();
 
   // });
+
+
+  //TABS ON RESELLER TOP UP
+  $(document).ready(function() {
+    $('#tabs li').on('click', function() {
+      var tab = $(this).data('tab');
+  
+      $('#tabs li').removeClass('is-active');
+      $(this).addClass('is-active');
+  
+      $('#tab-content p').removeClass('is-active');
+      $('p[data-content="' + tab + '"]').addClass('is-active');
+    });
+  });
+  //END OF TABS
+
+//SELECT TABS ON RESELLER TOP UP
+$("#paymentAmount").change(function(){
+  // alert($("#paymentAmount option:selected").index());
+  // alert($("select[name='paymentAmount'] option:selected").index());
+  if($("#paymentAmount option:selected").index() == 9){
+    $('#customForm').fadeIn();
+  } else {
+    $('#customForm').fadeOut();    
+  }
+
+});
+// END OF SELECT TABS ON RESELLER TOP UP

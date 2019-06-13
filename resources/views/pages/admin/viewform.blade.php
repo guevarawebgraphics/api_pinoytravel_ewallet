@@ -165,7 +165,7 @@
                                         </div>
                                         <div class="control">
                                             @if($reseller->on_hold == 1)
-                                              <a class="button is-rounded modal-button" data-target="modalHold{{$reseller->id}}">Unhold</a>
+                                              <a class="button is-warning is-rounded modal-button" data-target="modalHold{{$reseller->id}}">On Hold</a>
                                               @else
                                               <a class="button is-rounded modal-button" data-target="modalHold{{$reseller->id}}">Hold</a>
                                             @endif

@@ -93,13 +93,14 @@
                                                 <label class="is-left">Email</label>
                                                 <div class="control">
                                                         <p class="control has-icons-left">
-                                                                <input id="email" class="input is-primary tooltip @error('email') is-invalid @enderror" name="email" data-tooltip="Tooltip Text" value="{{ old('email') }}" type="text" placeholder="Enter Email/Username" required autocomplete="email" autofocus> <span class="icon is-small is-left"><i class="far fa-envelope"></i></span>
+                                                                <input id="email" class="input is-primary tooltip @error('email') is-invalid  @enderror " name="email" data-tooltip="Tooltip Text" value="{{ old('email') }}" type="text" placeholder="Enter Email/Username" required autocomplete="email" autofocus> <span class="icon is-small is-left"><i class="far fa-envelope"></i></span>
 
                                                                 {{-- <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus> --}}
                                                                 @error('email')
-                                                                <span class="invalid-feedback" role="alert">
+                                                                {{-- <span class="invalid-feedback has" role="alert">
                                                                     <strong>{{ $message }}</strong>
-                                                                </span>
+                                                                </span> --}}
+                                                                <span class="help is-danger">{{ $message }} </span>
                                                                 @enderror
                                                         </p>
                                                 </div>                            
@@ -114,9 +115,10 @@
                                                                         {{-- <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password"> --}}
                                                                         
                                                                         @error('password')
-                                                                        <span class="invalid-feedback" role="alert">
+                                                                        {{-- <span class="invalid-feedback" role="alert">
                                                                                 <strong>{{ $message }}</strong>
-                                                                            </span>
+                                                                            </span> --}}
+                                                                            <span class="help is-danger">{{ $message }} </span>
                                                                             @enderror
                                                                         </p>                            
                                                                     </div>                           
