@@ -1,7 +1,20 @@
-#tab-content p {
-    display: none;
+#tab-content div {
+  display : none;
   }
   
-#tab-content p.is-active {
+#tab-content div.is-active{
     display: block;
   }
+  #tab-content div.control{
+    display: flex;
+  }
+  #tab-content div.select{    
+    display: block;
+  }
+  #tab-content div.box{    
+    display: block;
+  }
+  #tab-content div.media-content{    
+    display: block;
+  }
+  

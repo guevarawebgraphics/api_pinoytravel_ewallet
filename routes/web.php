@@ -45,6 +45,11 @@ Route::group(['middleware'=> ['auth']], function(){
     Route::get('/reseller/commission/view','ResellerController@commission');
     Route::get('/reseller/reservation/view','ResellerController@reservation');
     Route::get('/reseller/topup','ResellerController@topup');
+    // Route::post('/reseller/topup/payment','TopupController@topupPayment')->name('/reseller/topup/payment');
+    // Route::get('/reseller/topup/success','TopupController@executePayment')->name('/reseller/topup/success');
+    // Route::get('/reseller/topup/cancel','TopupController@cancelPayment')->name('/reseller/topup/cancel');
+    // Route::get('/execute-payment', 'TopupController@execute')->name('/execute-payment');
+    // Route::get('/dragonpaytest', 'TopupController@dragonPayTest');
 });
     // Route::get('/rese','ResellerController@create');
     // Route::get('/reseller/view','ResellerController@all');
@@ -59,6 +64,7 @@ Route::group(['middleware'=> ['auth']], function(){
 //Testing
 
 // Route::get('/reseller/view','ResellerController@all')->middleware('auth');
+Route::get('/test','HomeController@test')->middleware('auth');
 Route::get('/test','HomeController@test')->middleware('auth');
 
 // Route::get('/test','ResellerController@testall');

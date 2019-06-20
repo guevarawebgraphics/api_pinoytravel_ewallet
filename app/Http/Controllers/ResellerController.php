@@ -374,7 +374,29 @@ class ResellerController extends Controller
         return view('pages.reseller.commission');
     }
     public function topup(User $reseller)
-    {
-        return view('pages.reseller.topup', compact('reseller'));
+    {   
+        //API RESPONSE FOR PROCESSORS
+        $procType1url = file_get_contents("https://www.pigglywiggly.com.ph/api/v1/dragonpay/processors?type=1");
+        $procType2url = file_get_contents("https://www.pigglywiggly.com.ph/api/v1/dragonpay/processors?type=2");
+        $procType4url = file_get_contents("https://www.pigglywiggly.com.ph/api/v1/dragonpay/processors?type=4");
+        
+        //TO FETCH RESPONSE (ON VIEW)
+        $responseProc1 = json_decode($procType1url);
+        $responseProc2 = json_decode($procType2url);
+        $responseProc4 = json_decode($procType4url);
+
+        // foreach($responseProc1 as $obj){
+        //     echo $obj->longName;                     
+        //  }
+        //  die;            
+
+        //dd($responseProc1);
+        // foreach($responseProc1 as $response){
+        //     $longName = $response['longName'];
+        //     echo $longName;
+        // }
+        
+        //COMPACT WILL PASS VARIABLES TO THE VIEW
+        return view('pages.reseller.topup', compact('reseller', 'responseProc1', 'responseProc2', 'responseProc4'));
     }
 }
