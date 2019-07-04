@@ -55,7 +55,7 @@
                                 <a class="navbar-item" href="#">
                                     Reports
                                 </a>
-                                <a class="navbar-item" href="#">
+                                <a class="navbar-item" href="/register">
                                     Register a New Admin
                                 </a>
                                 {{-- <a class="navbar-item" href="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX7056622.jpg">

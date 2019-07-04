@@ -2,7 +2,9 @@
 @section('content') 
 <div class="is-pulled-right">
   <p class="is-large" style="margin-top:1em">Balance: <strong> ₱ 3000.00</strong></p>   
-  <p class="is-large" style="margin-top:1em"><a href="#">Top Up History </a></p>    
+  {{-- <p class="is-large" style="margin-top:1em">Balance: <strong> <a href="/reseller/wallet" title="Go To Wallet">₱ 3000.00</a></strong></p>    --}}
+  <p class="is-large" style="margin-top:1em"><a href="/reseller/transactions">Top Up History </a></p>    
+  {{-- <button class="button is-link field" style="margin-top:1em">Go To Wallet</button> --}}
 </div>       
 <div style="margin:1.5em 1.5em 1.5em 0">
         <h1 class="title is-1">Top Up E-Wallet</h1>
@@ -26,8 +28,7 @@
                     <p class="control">
                         <a href="" class="button is-success">Top Up</a>
                     </p>
-                </div> --}}
-
+                </div> --}}                
                 {{-- START OF RESELLER PAYMENT DETAILS--}}
                 <div class="box">
                   <article class="media">
@@ -45,19 +46,13 @@
                           <br>
                           
                         </p>
-                      </div>
-
-
-
-
-                      
-                          
+                      </div>                                                
                           <div class="field has-addons">
                             <div class="control">
                               <div class="select">
                                 {{-- START OF PAYPAL PAYMENT FORM--}}
                                 {{-- <form action="{{route('/reseller/topup/payment')}}" method="POST">       --}}
-                                <form action="#" method="POST">      
+                                <form action="/reseller/topup/checkout" method="POST">      
                                 <select id="paymentAmount" name="paymentAmount" class="selector">
                                   <option value="50">₱ 50</option>
                                   <option value="150">₱ 150</option>
@@ -79,22 +74,15 @@
                                 {{-- <button type="submit" class="button is-link">Top Up</button> --}}
                               </div>
                             </div>
-                            <label class="checkbox">
-                              <input type="checkbox">
-                              I agree to the <a href="#">terms and conditions</a>
-                            </label>
-                      
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-
-                            
-                            
-                            
+                                <label class="is-fullwidth">
+                                  @error('paymentAmount')
+                                  <span class="help is-danger">{{ $message }} </span>
+                                  @enderror
+                                  @error('paymentAmountCustom')
+                                  <span class="help is-danger">{{ $message }} </span>
+                                  @enderror
+                                </label>                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                       
                             {{-- <nav class="level is-mobile">
                               <div class="level-left">
                           <a class="level-item" aria-label="reply">
@@ -117,16 +105,9 @@
                     </div>
                   </article>
                 </div>
-                {{-- END OF RESELLER PAYMENT DETAILS--}}
+                {{-- END OF RESELLER PAYMENT DETAILS--}}                                                          
                 
-                
-                
-                
-
-                
-                <h1 class="title is-5"> Choose Payment Option </h1>
-                
-                
+                <h1 class="title is-5"> Choose Payment Option </h1>                                
                 {{-- START OF TABS--}}
                 <div class="tabs is-boxed" id="tabs">
                   <ul>
@@ -172,11 +153,17 @@
                 {{-- START OF TAB CONTENT--}}
                 <div id="tab-content">
                   <div class="is-active" data-content="1">
-                    <img src="{{asset('img/paypal.png')}}" alt="payment" width="300px" height="155px">
+                    <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/cc-badges-ppppcmcvdam.png" alt="payment" width="300px" height="155px">
                         @csrf
                         {{-- <input class="button is-link" type="submit" value="Top Up"> --}}
-                        <input class="button is-link" value="Top Up">
-                      </form>
+                        <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox" id="userAgreement1">
+                            I agree to the <a href="#">terms and conditions</a>
+                          </label>   
+                        </div>
+                       <div class="control" style="margin-top:1em"> <input id="topupBtn1" class="button is-link" value="Top Up" type="submit">
+                      </div>
                       {{-- END OF PAYPAL PAYMENT FORM--}}
                       
                         
@@ -209,7 +196,16 @@
                                   {!!$responseNameProc1->remarks!!}                            
                                 </p>
                               @endforeach
-                        </div>                        
+                        </div> 
+                        
+                        <label class="checkbox">
+                            <input type="checkbox" id="userAgreement2">
+                            I agree to the <a href="#">terms and conditions</a>
+                          </label>   
+                          <div class="control" style="margin-top:1em">
+                        <input id="topupBtn2" class="button is-link" value="Top Up" type="submit">
+                      </div>
+                      
                   </div>
                   <div data-content="3">
                       <div class="select is-fullwidth" style="margin-bottom:0.3em">
@@ -231,6 +227,13 @@
                                 </p>
                               @endforeach
                         </div> 
+                        <label class="checkbox">
+                            <input type="checkbox">
+                            I agree to the <a href="#" id="userAgreement3">terms and conditions</a>
+                          </label>   
+                          <div class="control" style="margin-top:1em">
+                        <input id="topupBtn3" class="button is-link" value="Top Up" type="submit">
+                          </div>
                   </div>
                   <div data-content="4">
                       <div class="select is-fullwidth" style="margin-bottom:0.3em">
@@ -250,11 +253,41 @@
                                     {!!$responseNameProc4->remarks!!}                            
                                   </p>
                                 @endforeach
-                          </div>                        
+                          </div>
+                          <label class="checkbox">
+                              <input type="checkbox" onclick="showMe()">
+                              I agree to the <a href="#">terms and conditions</a>
+                            </label>
+                            <div class="control" style="margin-top:1em">   
+                          <input class="button is-link" id="topupBtn4" value="Top Up" type="submit">                   
+                            </div>
                   </div>
                   <div data-content="5">
-                    GCash
+                      {{-- <div class="select is-fullwidth" style="margin-bottom:0.3em">
+                          <select id="selectProc4" name="selectProc4">
+                              <option value="">Choose Payment Option</option> 
+                            @foreach ($responseProc4 as $responseNameProc4)
+                              <option value="{{$responseNameProc4->procId}}">{{$responseNameProc4->longName}}</option>
+                            @endforeach
+                          </select>
+                        </div> --}}
+                        <div class="control">
+                            <img id="procImgsrc5" src="https://www.gcash.com/wp-content/uploads/2017/11/GCashLogo25H.png" style="margin:0.5em;object-fit:contain"> 
+                                                  
+                                  <p  class="box" style="margin:0.3em">
+                                      Not a GCash user? Visit <a href="https://www.gcash.com/faqs">https://www.gcash.com/faqs</a> to find out how to get started.                           
+                                  </p>
+                               
+                          </div>
+                          <label class="checkbox">
+                              <input type="checkbox" onclick="showMe()">
+                              I agree to the <a href="#">terms and conditions</a>
+                            </label>
+                            <div class="control" style="margin-top:1em">   
+                          <input class="button is-link" value="Top Up" id="topupBtn5" type="submit">                   
+                            </div>                                        
                   </div>
+                </form>
                   {{-- <div data-content="6">
                     Dragon Pay
                   </div> --}}
@@ -309,7 +342,7 @@
                           </li>
                         </ul>
                 </nav> --}}
-                @include('includes.createNotifs')
+                {{-- @include('includes.createNotifs') --}}
                        
                       
             </div>        

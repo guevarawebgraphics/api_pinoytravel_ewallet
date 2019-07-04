@@ -88,8 +88,8 @@
                                    Reseller
                                 </a>
                                 <hr class="navbar-divider">
-                                <a class="navbar-item" href="/dashboard/2">
-                                    Reseller Acct 1
+                                <a class="navbar-item" href="/reseller/transactions">
+                                    Top Up History
                                 </a>
                                 <a class="navbar-item" href="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX7056622.jpg">
                                     Reseller Acct 2

@@ -234,7 +234,7 @@ $("#selectProc4").change(function(){
   if($("#selectProc4 option:selected").val() == ""){
     $('#procImgsrc4').attr('src','');
   } else if($("#selectProc4 option:selected").val() == "BAYD"){        
-    $('#procImgsrc4').attr('src','https://test.dragonpay.ph/Bank/images/bdologo.jpg');    
+    $('#procImgsrc4').attr('src','https://test.dragonpay.ph/Bank/images/bayadcenterlogo.jpg');    
     $('#BAYDtext').css('display','block');
   } else if($("#selectProc4 option:selected").val() == "LBC"){        
     $('#procImgsrc4').attr('src','https://test.dragonpay.ph/Bank/images/lbclogo.jpg');    
@@ -258,11 +258,35 @@ $("#selectProc4").change(function(){
 
 });
 
+function showMe(){
+  $("#topupBtn1,#topupBtn2,#topupBtn3,#topupBtn4,#topupBtn5").toggle(function(){
+    $(this).hide();
+  });
+}
+// $("#userAgreement1,#userAgreement2,#userAgreement3,#userAgreement4,#userAgreement5").click(function(){
+// if($("#userAgreement1,#userAgreement2,#userAgreement3,#userAgreement4,#userAgreement5").prop('checked') == true){
+//   $("#topupBtn1,#topupBtn2,#topupBtn3,#topupBtn4,#topupBtn5").removeAttr("disabled");
+// } else
+// $("#topupBtn1,#topupBtn2,#topupBtn3,#topupBtn4,#topupBtn5").attr("disabled", "disabled");
+// });
 
 
+// $("#userAgreement1").click(function(){if($("#userAgreement1").prop('checked') == true){$("#topupBtn1").removeAttr("disabled")} else$("#topupBtn1").attr("disabled", "disabled");});
+// $("#userAgreement2").click(function(){if($("#userAgreement2").prop('checked') == true){$("#topupBtn2").removeAttr("disabled")} else$("#topupBtn2").attr("disabled", "disabled");});
+// $("#userAgreement3").click(function(){if($("#userAgreement3").prop('checked') == true){$("#topupBtn3").removeAttr("disabled")} else$("#topupBtn3").attr("disabled", "disabled");});
+// $("#userAgreement4").click(function(){if($("#userAgreement4").prop('checked') == true){$("#topupBtn4").removeAttr("disabled")} else$("#topupBtn4").attr("disabled", "disabled");});
+// $("#userAgreement5").click(function(){if($("#userAgreement5").prop('checked') == true){$("#topupBtn5").removeAttr("disabled")} else$("#topupBtn5").attr("disabled", "disabled");});
 //END OF PROCESSOR IMAGE
-
-function setMe($procName, $procRemark ){
+// function isDisabled(){
+//   // if($("#userAgreement1,#userAgreement2,#userAgreement3,#userAgreement4,#userAgreement5").prop('checked') == true){
+//   //   $("#topupBtn1,#topupBtn2,#topupBtn3,#topupBtn4,#topupBtn5").removeAttr("disabled");
+//   // } else
+//   // $("#topupBtn1,#topupBtn2,#topupBtn3,#topupBtn4,#topupBtn5").attr("disabled", "disabled");
+//   // });
+  
+//   $("#topupBtn1,#topupBtn2,#topupBtn3,#topupBtn4,#topupBtn5").attr("disabled", "disabled");
+// }
+// function setMe($procName, $procRemark ){
 
   
-}
+// }

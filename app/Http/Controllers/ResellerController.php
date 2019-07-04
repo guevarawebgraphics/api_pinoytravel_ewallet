@@ -373,6 +373,10 @@ class ResellerController extends Controller
     //    return 'this is commission method in reseller controller';
         return view('pages.reseller.commission');
     }
+    public function transactions()
+    {
+        return view('pages.reseller.transactions');        
+    }
     public function topup(User $reseller)
     {   
         //API RESPONSE FOR PROCESSORS
@@ -396,7 +400,99 @@ class ResellerController extends Controller
         //     echo $longName;
         // }
         
+        // $response = $this->checkoutDragonpay($txnid, $type ,$amount, "Pinoytravel reservation for transaction with refno: ".$description, $email, $record->ReferenceCode, $email,$clientip, $agent);
+        // private function checkoutDragonpay($txnid,$procid, $amount, $description, $email, $param1,$param2, $ip_address, $agent){
+
         //COMPACT WILL PASS VARIABLES TO THE VIEW
         return view('pages.reseller.topup', compact('reseller', 'responseProc1', 'responseProc2', 'responseProc4'));
+    }
+    // public function checkoutDragonpay($transactionId, $processorId, $amount, $description, $email, $referenceCode)
+    // public function checkoutDragonpay(Request $request, User $reseller, $processorId, $amount, $description, $email)
+    public function checkoutDragonpay(Request $request)
+    {
+        // $userID = \Auth::user()->id;
+
+        //GET CURRENT USER INFO
+        $resellerName = \Auth::user()->name;
+        $resellerEmail = \Auth::user()->email;
+        //GET VALUE FROM REQUEST
+        $paymentAmount = $request->input('paymentAmount');
+        $processorId1 = $request->input('selectProc1');
+        $processorId2 = $request->input('selectProc2');
+        $processorId3 = $request->input('selectProc4');
+                //CUSTOM MESSAGE FOR CONTACT VALIDATION
+                $messages = [
+                    'paymentAmount.digits_between' => 'Topup amount must be between ₱50.00 to ₱10,000.00 only',
+                    'Name.regex' => 'This is not a valid name',
+                    'paymentAmountCustom.required' => 'Topup amount must be between ₱50.00 to ₱10,000.00 only',
+                    'paymentAmountCustom.lte' => 'Topup amount must be between ₱50.00 to ₱10,000.00 only',
+                    'paymentAmountCustom.gte' => 'Topup amount must be between ₱50.00 to ₱10,000.00 only',
+                    'paymentAmountCustom.numeric' => 'Topup amount must be between ₱50.00 to ₱10,000.00 only',
+                ];
+        if($paymentAmount == "custom"){
+            $this->validate($request, [
+                    'paymentAmountCustom' => 'required|gte:50|lte:10000|numeric',
+                    
+                ], $messages);
+        }
+                // $this->validate($request, [
+                    // 'paymentAmount' => 'required|min:50|max:10000|numeric',
+                    // 'paymentAmount' => 'required|digits_between:50,10000|min:50|max:10000',
+                // ], $messages);
+        //GENERATE TRANSACTION ID & REFERENCE CODE
+        // $transactionId = 'TOPID_'.strtoupper(str_random(12));
+        // $referenceCode = 'TOPREF_'.strtoupper(str_random(8));
+        $transactionId = strtoupper(str_random(12));
+        $referenceCode = strtoupper(str_random(8));
+        
+        // DETERMINE WHAT PROCESSOR IS SELECTED ON TOPUP
+        // SET $selectedProcessorId the PROCESSOR ID
+
+        if ($processorId1 == '')
+        {
+           if($processorId2 == '')
+           {
+               if($processorId3 == '')
+               {
+                    return $paymentAmount;
+               } 
+               else
+                {
+                    $selectedProcessorId = $processorId3; 
+                }
+           } 
+           else 
+           {
+                $selectedProcessorId = $processorId2;
+           }
+        } 
+        else 
+        {
+            $selectedProcessorId = $processorId1;
+        }
+
+        //description
+        $description = '₱'. $paymentAmount.' payment for ' .$referenceCode;
+        // dd($description = '₱ '. $paymentAmount.' payment for ' .$referenceCode);
+        // $transactionId = strtoupper(random_string('alnum', 12));
+        // $referenceCode = strtoupper(random_string('alnum', 8));
+        // return $request->input('paymentAmount');
+        // return $paymentAmount. ' '. $selectedProcessorId . ' ' . $transactionId . ' '.$referenceCode . ' ' . $resellerName. ' ' .$resellerEmail . ' ' . $description;
+        
+        
+        $digest_str = "PINOYTRAVEL".':'.$transactionId.':'.$paymentAmount.':PHP Payment for '.$referenceCode.':'.$resellerEmail.':'.'Hjb5L$xD9';
+        $sha1digest = sha1($digest_str);
+        $urlString = env("DRAGONPAY_URL", "https://test.dragonpay.ph/Pay.aspx?");
+        //https://test.dragonpay.ph/Bank/Gateway.aspx?
+        $urlParam = "merchantid=".env("DRAGONPAY_MERCHANT_ID", "PINOYTRAVEL");
+        // $urlParam .= "&txnid=".$transactionId."&amount=".$paymentAmount."&ccy=PHP&description=".$description."&email=".$resellerEmail."&digest=".$sha1digest;
+        $urlParam .= "&txnid=".$transactionId."&amount=".$paymentAmount."&ccy=PHP&description=".$description."&email=".$resellerEmail."&digest=".$sha1digest;
+        $urlParam .= "&param1=".$referenceCode."&param2=".$resellerEmail."*&procid=".$selectedProcessorId;
+    //    return $sha1digest;
+
+        // return $sha1digest; //758f3c09df2b2eddb37bc603184f0a5539ecaf70
+        $urlTest = "https://test.dragonpay.ph/Bank/Gateway.aspx?procid=BOG&refno=WW4HM3B2&amount=380.00&ccy=PHP&description=Payment+for+3RBTXJQP&billerId=1678005430%7cDragonpay+Corporation%7cPeso+Checking&email=sample%40sample.com&digest=e0f630e75a1e5fec33c1522184c9e8236431a2f1&expiry=7%2f3%2f19+11%3a18&merchantid=PINOYTRAVEL";
+    //    return redirect($urlString.($urlParam));
+       return redirect($urlString.($urlParam));
     }
 }

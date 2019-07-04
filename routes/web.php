@@ -45,31 +45,35 @@ Route::group(['middleware'=> ['auth']], function(){
     Route::get('/reseller/commission/view','ResellerController@commission');
     Route::get('/reseller/reservation/view','ResellerController@reservation');
     Route::get('/reseller/topup','ResellerController@topup');
+    // Route::get('/reseller/wallet','ResellerController@resellerWallet');
+    Route::get('/reseller/transactions','ResellerController@transactions');
+    Route::post('/reseller/topup/checkout', 'ResellerController@checkoutDragonpay');
     // Route::post('/reseller/topup/payment','TopupController@topupPayment')->name('/reseller/topup/payment');
     // Route::get('/reseller/topup/success','TopupController@executePayment')->name('/reseller/topup/success');
     // Route::get('/reseller/topup/cancel','TopupController@cancelPayment')->name('/reseller/topup/cancel');
     // Route::get('/execute-payment', 'TopupController@execute')->name('/execute-payment');
     // Route::get('/dragonpaytest', 'TopupController@dragonPayTest');
 });
-    // Route::get('/rese','ResellerController@create');
-    // Route::get('/reseller/view','ResellerController@all');
-    // Route::get('/reseller/edit','ResellerController@all_edit');
-    // Route::get('/reseller/delete','ResellerController@all_delete');
-    // Route::get('/reseller/hold','ResellerController@all_hold');
-    // Route::get('/reseller/wallet','ResellerController@wallet');
-    // Route::get('/reseller/search','ResellerController@search');
-    // Route::get('/reseller/search2','ResellerController@search2');
-    // Route::resource('reseller', 'ResellerController');
+// Route::get('/rese','ResellerController@create');
+// Route::get('/reseller/view','ResellerController@all');
+// Route::get('/reseller/edit','ResellerController@all_edit');
+// Route::get('/reseller/delete','ResellerController@all_delete');
+// Route::get('/reseller/hold','ResellerController@all_hold');
+// Route::get('/reseller/wallet','ResellerController@wallet');
+// Route::get('/reseller/search','ResellerController@search');
+// Route::get('/reseller/search2','ResellerController@search2');
+// Route::resource('reseller', 'ResellerController');
 // }]);
 //Testing
 
 // Route::get('/reseller/view','ResellerController@all')->middleware('auth');
+Auth::routes();
 Route::get('/test','HomeController@test')->middleware('auth');
 Route::get('/test','HomeController@test')->middleware('auth');
 
 // Route::get('/test','ResellerController@testall');
 // Route::get('/test2','ResellerController@testall2');
 // Route::get('/test3','ResellerController@testall3');
-Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');
