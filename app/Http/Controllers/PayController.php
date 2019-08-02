@@ -20,10 +20,12 @@ class PayController extends Controller
     {
         $userBal = DB::connection('mysql')->select("
         SELECT a.id as userId, 
-            (select sum(tuhh.amount) from top_up_history as tuhh where tuhh.userId = a.id) as total_topup,
-            ((select sum(tuh.amount) from top_up_history as tuh where tuh.userId = a.id)
+            (select sum(tuhh.amount) from top_up_history as tuhh where tuhh.userId = a.id AND tuhh.is_paid = 1) as total_topup,
+            (select sum(trr.amount) from transaction_details as trr where trr.userId = a.id) as total_spent,
+            ((select sum(tuh.amount) from top_up_history as tuh where tuh.userId = a.id AND tuh.is_paid = 1)
             -
             (select sum(tr.amount) from transaction_details as tr where tr.userId = a.id)) as total_balance
+            
         FROM users AS a
         LEFT JOIN  top_up_history AS b ON a.id = b.userId
         LEFT JOIN transaction_details as c ON a.id = c.userId
@@ -154,10 +156,12 @@ class PayController extends Controller
 
         $userBal = DB::connection('mysql')->select("
         SELECT a.id as userId, 
-            (select sum(tuhh.amount) from top_up_history as tuhh where tuhh.userId = a.id) as total_topup,
-            ((select sum(tuh.amount) from top_up_history as tuh where tuh.userId = a.id)
+            (select sum(tuhh.amount) from top_up_history as tuhh where tuhh.userId = a.id AND tuhh.is_paid = 1) as total_topup,
+            (select sum(trr.amount) from transaction_details as trr where trr.userId = a.id) as total_spent,
+            ((select sum(tuh.amount) from top_up_history as tuh where tuh.userId = a.id AND tuh.is_paid = 1)
             -
             (select sum(tr.amount) from transaction_details as tr where tr.userId = a.id)) as total_balance
+            
         FROM users AS a
         LEFT JOIN  top_up_history AS b ON a.id = b.userId
         LEFT JOIN transaction_details as c ON a.id = c.userId

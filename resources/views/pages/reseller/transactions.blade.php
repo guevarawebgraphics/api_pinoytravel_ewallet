@@ -7,7 +7,7 @@
 
 <div class="box">    
     <div class="column auto" style="">    
-        <table class="table is-clear-fix is-bordered" id="TableTopUpRecords" style="margin-bottom: 1.5em; width:100%;">
+        <table class="table is-bordered is-responsive is-hoverable table-row-hover-background-color" id="TableTopUpRecords" style="margin-bottom: 1.5em; width:100%;">
             <thead>
                 <tr>
                     <th>Transaction ID</th>

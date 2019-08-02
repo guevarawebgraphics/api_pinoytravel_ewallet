@@ -531,7 +531,7 @@ class ResellerController extends Controller
 
     public function getTopup()
     {
-        $TopUpHistory = DB::connection('mysql')->select("SELECT * FROM top_up_history WHERE userId = '".auth()->user()->id."'");
+        $TopUpHistory = DB::connection('mysql')->select("SELECT * FROM top_up_history WHERE userId = '".auth()->user()->id."' AND is_paid = 1 ORDER BY created_at DESC");
 
         $data = "";
         
@@ -540,11 +540,11 @@ class ResellerController extends Controller
             foreach($TopUpHistory as $field){
                 $data .='
                         <tr class="">
-                            <td>'.$field->txnid.'</td>                        
-                            <td>'.$field->refCode.'</td>
-                            <td>'.$field->procId.'</td>
-                            <td>'.$field->amount.'</td>
-                            <td>'.$field->created_at.'</td>
+                            <td> '.$field->txnid.'</td>                        
+                            <td> '.$field->refCode.'</td>
+                            <td> '.$field->procId.'</td>
+                            <td> ₱ '.number_format((float)$field->amount, 2, '.', ',').'</td>
+                            <td> '.$field->created_at.'</td>
                         </tr>
                         ';
                 $counter++;

@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="{{asset('css/animate.min.css')}}">    
         <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
         <link rel="stylesheet" href="{{asset('css/dataTables.bulma.min.css')}}">
-        <script src="{{asset('js/dataTables.bulma.min.js')}}"></script>
+        {{-- <script src="{{asset('js/dataTables.bulma.min.js')}}"></script> --}}
         <script src="{{asset('js/datatable.min.js')}}"></script>
         {{-- <title>{{config('app.name', 'Pinoy Travel | Reseller')}}</title> --}}
         <title>{{ config('app.name', 'Pinoy Travel | Reseller') }}</title>
