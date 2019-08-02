@@ -45,7 +45,10 @@ Route::group(['middleware'=> ['auth']], function(){
     Route::get('/reseller/reservation/view','ResellerController@reservation');
     Route::get('/reseller/topup','ResellerController@topup');
     // Route::get('/reseller/wallet','ResellerController@resellerWallet');
+
     Route::get('/reseller/transactions','ResellerController@transactions');
+    Route::get('reseller/transactions/getTopup', 'ResellerController@getTopup')->name('getTopup');
+    
     Route::post('/reseller/topup/checkout', 'ResellerController@checkoutDragonpay');
     
     Route::get('/pay', 'PayController@index');

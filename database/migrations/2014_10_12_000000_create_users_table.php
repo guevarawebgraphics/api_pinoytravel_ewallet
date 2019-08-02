@@ -34,6 +34,7 @@ class CreateUsersTable extends Migration
             $table->integer('wallet_bal')->nullable();
             $table->tinyInteger('is_admin')->nullable();
             $table->rememberToken();
+            $table->tinyInteger('deleted')->nullable();
             $table->timestamps();
         });
     }

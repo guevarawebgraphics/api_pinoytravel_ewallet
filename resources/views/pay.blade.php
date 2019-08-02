@@ -8,8 +8,7 @@
 <div class="columns animated fadeIn">        
     <div class="column is-three-fifths is-offset-one-fifth card">
             <div class="card-content">
-                    
-                    
+
                     <div class="content" id="EWalletContent">
 
                     </div>
@@ -37,6 +36,7 @@
 
 <!-- Get Receipt Details --->
 <script>
+
     getDtls();
     function getDtls(){
         $.ajax({

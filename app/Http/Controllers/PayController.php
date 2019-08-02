@@ -27,7 +27,7 @@ class PayController extends Controller
         FROM users AS a
         LEFT JOIN  top_up_history AS b ON a.id = b.userId
         LEFT JOIN transaction_details as c ON a.id = c.userId
-        WHERE a.id = '".auth()->user()->id."'
+        WHERE a.id = '".auth()->user()->id."' AND b.is_paid = 1
         GROUP BY a.id
         ");
         $data = "";
@@ -161,7 +161,7 @@ class PayController extends Controller
         FROM users AS a
         LEFT JOIN  top_up_history AS b ON a.id = b.userId
         LEFT JOIN transaction_details as c ON a.id = c.userId
-        WHERE a.id = '".auth()->user()->id."'
+        WHERE a.id = '".auth()->user()->id."' AND b.is_paid = 1
         GROUP BY a.id
         ");
 
