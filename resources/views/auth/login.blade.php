@@ -87,8 +87,45 @@
                 </header>
                 <div class="card-content">
                         <div class="content">
+                                <?php
+                                if(isset($_GET['digest'])){
+                                    $merchId = $_GET['merchantid'];
+                                    $txnid = $_GET['txnid'];
+                                    $amount = number_format((float)$_GET['amount'], 2, '.', '');
+                                    $param1 = $_GET['param1'];
+                                    $param2 = $_GET['param2'];
+                                    $procid = $_GET['procid'];
+                                    $digest = $_GET['digest'];
+                                    
+                                    $digest_str = $_GET['merchantid'].':'.$_GET['txnid'].':'.number_format((float)$_GET['amount'], 2, '.', ',').':PHP:Payment for '.$_GET['param1'].':'.$_GET['param2'].':'.'PINOYTRAVEL-EWALLET123';
+                                    $sha1digest = sha1($digest_str); 
+                                    if($sha1digest != $_GET['digest']){
+                                        ?>
+                                        <script>alert("Digest did not match!")</script>
+                                        <?php
+                                    }
+                                }else{
+                                    $merchId = "";
+                                    $txnid = "";
+                                    $amount = "";
+                                    $param1 = "";
+                                    $param2 = "";
+                                    $procid = "";
+                                    $digest = "";
+                                }
+                                ?>
+
                                 <form method="POST" action="{{ route('login') }}">
                                 @csrf
+                                
+                                <input id="merchId" type="text" value="<?= $merchId ?>" style="display:none;" name="merchId">
+                                <input id="txnid" type="text" value="<?= $txnid ?>" style="display:none;" name="txnid">
+                                <input id="amount" type="text" value="<?= $amount ?>" style="display:none;" name="amount">
+                                <input id="param1" type="text" value="<?= $param1 ?>" style="display:none;" name="param1">
+                                <input id="param2" type="text" value="<?= $param2 ?>" style="display:none;" name="param2">
+                                <input id="procid" type="text" value="<?= $procid ?>" style="display:none;" name="procid">
+                                <input id="digest" type="text" value="<?= $digest ?>" style="display:none;" name="digest">
+
                                         <div class="field tooltip is-tooltip-bottom" data-tooltip="Enter your email/username">
                                                 <label class="is-left">Email</label>
                                                 <div class="control">
@@ -158,6 +195,9 @@
       </p>
     </div>
   </footer>
+
+
+
 
 @endsection
 

@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
         <link rel="stylesheet" href="{{asset('css/bulma-tooltip.min.css')}}">   
         <link rel="stylesheet" href="{{asset('css/animate.min.css')}}">     
+        <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
         <title>{{config('app.name', 'Pinoy Travel | Reseller')}}</title>
         <script src="{{asset('js/pace.min.js')}}"></script>
         <style>.pace { -webkit-pointer-events: none; pointer-events: none; -webkit-user-select: none; -moz-user-select: none; user-select: none; } .pace-inactive { display: none; } .pace .pace-progress { background: #29a0da; position: fixed; z-index: 2000; top: 0; right: 100%; width: 100%; height: 4px; }</style>
@@ -86,7 +87,6 @@
         {{-- <script src="{{asset('/node_modules/bulma-extensions/bulma-tooltip/dist/css/bulma-tooltip.min.css')}}"></script> --}}
         {{-- <script src="{{asset('/node_modules/bulma-extensions/bulma-tooltip/dist/css/bulma-tooltip.min.css')}}"></script>
         --}}        
-        <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
         <script src="{{asset('js/script.js')}}"></script>
         <link rel="stylesheet" href="{{asset('css/sweetalerts2.min.css')}}">   
         <script src="{{asset('js/sweetalerts2.js')}}"></script>

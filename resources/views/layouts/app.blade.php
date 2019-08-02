@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+    <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
     <link rel="stylesheet" href="{{asset('css/bulma.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <link rel="icon" href="{{asset('img/icon/favicon.ico')}}">

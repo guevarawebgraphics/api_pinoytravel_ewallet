@@ -377,6 +377,18 @@ class ResellerController extends Controller
     {
         return view('pages.reseller.transactions');        
     }
+
+
+    //192.168.0.18/pinoytravel.com.ph/booking/sample
+    public function paymentStatus(Request $request)
+    {
+        $paymentAmount = $request->input('paymentAmount');
+        // $id = $this->input->post('id');
+        // $name = $this->input->post('name');
+
+        // echo '{"status":"true", "User Details":"'.$id. " ".$name.'"}';
+        echo '{"status":"true", "User Details":'.$paymentAmount .'}';
+    }
     public function topup(User $reseller)
     {   
         //API RESPONSE FOR PROCESSORS
@@ -472,7 +484,7 @@ class ResellerController extends Controller
         }
 
         //description
-        $description = '₱'. $paymentAmount.' payment for ' .$referenceCode;
+        $description = 'Payment for '.$referenceCode;
         // dd($description = '₱ '. $paymentAmount.' payment for ' .$referenceCode);
         // $transactionId = strtoupper(random_string('alnum', 12));
         // $referenceCode = strtoupper(random_string('alnum', 8));
@@ -480,19 +492,24 @@ class ResellerController extends Controller
         // return $paymentAmount. ' '. $selectedProcessorId . ' ' . $transactionId . ' '.$referenceCode . ' ' . $resellerName. ' ' .$resellerEmail . ' ' . $description;
         
         
-        $digest_str = "PINOYTRAVEL".':'.$transactionId.':'.$paymentAmount.':PHP Payment for '.$referenceCode.':'.$resellerEmail.':'.'Hjb5L$xD9';
+        $digest_str = "PINOYTRAVEL".':'.$transactionId.':'.number_format((float)$paymentAmount, 2, '.', ',').':PHP:Payment for '.$referenceCode.':'.$resellerEmail.':'.'Hjb5L$xD9';
+        // dd($digest_str);
         $sha1digest = sha1($digest_str);
         $urlString = env("DRAGONPAY_URL", "https://test.dragonpay.ph/Pay.aspx?");
         //https://test.dragonpay.ph/Bank/Gateway.aspx?
         $urlParam = "merchantid=".env("DRAGONPAY_MERCHANT_ID", "PINOYTRAVEL");
         // $urlParam .= "&txnid=".$transactionId."&amount=".$paymentAmount."&ccy=PHP&description=".$description."&email=".$resellerEmail."&digest=".$sha1digest;
-        $urlParam .= "&txnid=".$transactionId."&amount=".$paymentAmount."&ccy=PHP&description=".$description."&email=".$resellerEmail."&digest=".$sha1digest;
-        $urlParam .= "&param1=".$referenceCode."&param2=".$resellerEmail."*&procid=".$selectedProcessorId;
+        $urlParam .= "&txnid=".$transactionId."&amount=".number_format((float)$paymentAmount, 2, '.', ',')."&ccy=PHP&description=Payment for ".$referenceCode."&email=".$resellerEmail."&digest=".$sha1digest;
+        $urlParam .= "&param1=".$referenceCode."&param2=".$resellerEmail."&procid=".$selectedProcessorId;
     //    return $sha1digest;
 
+    //WORKING URL FOR TRANSACTION
+    // $urlTest = "https://test.dragonpay.ph/Pay.aspx?merchantid=PINOYTRAVEL&txnid=GP7Y26OREPK3&amount=290.00&ccy=PHP&description=Payment%20for%20GP7Y26OR&email=leo@csi.com&digest=58f6d150b7ff25ad104b143ef430765ca4393f58&param1=GP7Y26OR&param2=leo@csi.com&procid=BDRX";
+    // /// END OF WORIKIN
+    // $urlTest2 = "https://test.dragonpay.ph/Pay.aspx?merchantid=PINOYTRAVEL&txnid=GP7Y26OREPK3&amount=290.00&ccy=PHP&description=Payment%20for%20GP7Y26OR&email=leo@csi.com&digest=58f6d150b7ff25ad104b143ef430765ca4393f58&param1=GP7Y26OR&param2=leo@csi.com&procid=BDRX";
         // return $sha1digest; //758f3c09df2b2eddb37bc603184f0a5539ecaf70
-        $urlTest = "https://test.dragonpay.ph/Bank/Gateway.aspx?procid=BOG&refno=WW4HM3B2&amount=380.00&ccy=PHP&description=Payment+for+3RBTXJQP&billerId=1678005430%7cDragonpay+Corporation%7cPeso+Checking&email=sample%40sample.com&digest=e0f630e75a1e5fec33c1522184c9e8236431a2f1&expiry=7%2f3%2f19+11%3a18&merchantid=PINOYTRAVEL";
-    //    return redirect($urlString.($urlParam));
+       // $urlTest = "https://test.dragonpay.ph/Bank/Gateway.aspx?procid=BOG&refno=WW4HM3B2&amount=380.00&ccy=PHP&description=Payment+for+3RBTXJQP&billerId=1678005430%7cDragonpay+Corporation%7cPeso+Checking&email=sample%40sample.com&digest=e0f630e75a1e5fec33c1522184c9e8236431a2f1&expiry=7%2f3%2f19+11%3a18&merchantid=PINOYTRAVEL";
        return redirect($urlString.($urlParam));
+    //    return redirect($urlTest);
     }
 }

@@ -35,7 +35,7 @@ class HomeController extends Controller
     }
     public function admin(Request $req){
         return view('middleware')->withMessage("Admin");
-        }
+    }
     public function test()
     {
         return 'test';

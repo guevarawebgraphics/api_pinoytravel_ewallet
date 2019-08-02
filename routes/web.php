@@ -19,8 +19,7 @@
     //auth
     Route::get('/','HomeController@index');
     // Route::get('/admin/login','AdminController@login')->middleware('admin');
-    
-    
+
     // protect group routes with authentication
     // Route::group(['middleware'=> ['auth','admin']], function(){
         Route::group(['middleware'=> ['admin']], function(){
@@ -48,6 +47,13 @@ Route::group(['middleware'=> ['auth']], function(){
     // Route::get('/reseller/wallet','ResellerController@resellerWallet');
     Route::get('/reseller/transactions','ResellerController@transactions');
     Route::post('/reseller/topup/checkout', 'ResellerController@checkoutDragonpay');
+    
+    Route::get('/pay', 'PayController@index');
+    Route::get('pay/getReceipt', 'PayController@getReceipt')->name('getReceipt');
+    Route::post('pay/payNow', 'PayController@payNow')->name('payNow');
+    Route::post('pay/payVal', 'PayController@payVal')->name('payVal');
+    
+
     // Route::post('/reseller/topup/payment','TopupController@topupPayment')->name('/reseller/topup/payment');
     // Route::get('/reseller/topup/success','TopupController@executePayment')->name('/reseller/topup/success');
     // Route::get('/reseller/topup/cancel','TopupController@cancelPayment')->name('/reseller/topup/cancel');
@@ -65,7 +71,7 @@ Route::group(['middleware'=> ['auth']], function(){
 // Route::resource('reseller', 'ResellerController');
 // }]);
 //Testing
-
+Route::get('/testt', 'ResellerController@paymentStatus');
 // Route::get('/reseller/view','ResellerController@all')->middleware('auth');
 Auth::routes();
 Route::get('/test','HomeController@test')->middleware('auth');
