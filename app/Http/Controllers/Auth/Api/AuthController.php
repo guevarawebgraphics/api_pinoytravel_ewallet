@@ -107,10 +107,7 @@ class AuthController extends Controller
                 'userId'=>'required'
                 ]);
 
-
-                
             $userId = $request->userId;
-
 
             $top_up_query = "SELECT * FROM `top_up_history` WHERE userId = '".$userId."'";
             $top_up_history = DB::connection('mysql')->select($top_up_query);
@@ -148,7 +145,6 @@ class AuthController extends Controller
         {
 
             $validatedData = $request->validate([
-
                 'txnid'=>'required',
                 'refno'=>'required',
                 'status'=>'required',
@@ -156,25 +152,22 @@ class AuthController extends Controller
                 'param1'=>'required',
                 'param2'=>'required',
                 'amount'=>'required'
-
             ]);
 
-            $datetime = date("Y-m-d H:i:s",strtotime($request->datetime));
+            $top_up = new top_up_history;
+            $top_up->userId = Auth::user()->id;
+            $top_up->txnid = $request->txnid;
+            $top_up->dpRefNo = $request->refno;
+            $top_up->status = $request->status;
+            $top_up->dpProcID = $request->procid;
+            $top_up->refCode = $request->param1;
+            $top_up->email = $request->param2; 
+            $top_up->procId = "DPAY";
+            $top_up->amount = number_format((float)$request->amount, 2, '.', ',');
+            $top_up->is_paid = 0;
+            $top_up->save();
 
-            $DTR = new top_up_history;
-            $DTR->userId = Auth::user()->id;
-            $DTR->txnid = $request->txnid;
-            $DTR->dpRefNo = $request->refno;
-            $DTR->status = $request->status;
-            $DTR->dpProcID = $request->procid;
-            $DTR->refCode = $request->param1;
-            $DTR->email = $request->param2; 
-            $DTR->paymentId = "1";
-            $DTR->paymentDesc = "DRAGON";
-            $DTR->amount = $request->amount;
-            $DTR->save();
-
-            return response(['status'=>'ok','message'=>'Ewallet Balance Updated!']);
+            return response(['status'=>'ok','message'=>'Ewallet Top Up waiting to be paid.']);
         }
     }
 
@@ -518,7 +511,6 @@ class AuthController extends Controller
         
         $expires_query = DB::connection('mysql')->select("SELECT * from oauth_access_tokens WHERE id = '".$tokenArray."' AND user_id = '".auth()->user()->id."' AND expires_at <= '".$todayDate."' AND revoked = '0'");
 
-
         if(!empty($expires_query))
         {
             DB::table('oauth_access_tokens')
@@ -533,10 +525,16 @@ class AuthController extends Controller
         {
             $validatedData = $request->validate([
                 'txnid'=>'required',
-                'refCode'=>'required'
+                'refCode'=>'required',
+                'refno'=>'required',
+                'status'=>'required',
+                'procid'=>'required'
             ]);
             
             $txnid = $request->txnid;
+            $refno = $request->refno;
+            $status = $request->status;
+            $procid = $request->procid;
             $refCode = $request->refCode;
             $top_up_info = DB::connection('mysql')->select("SELECT * from top_up_history WHERE txnid = '".$txnid."' AND refCode = '".$refCode."'");
             
@@ -544,7 +542,11 @@ class AuthController extends Controller
     
                 DB::table('top_up_history')
                 ->where('txnid', $txnid)
+                ->where('refCode', $refCode)
                 ->update([
+                'dpRefNo'=>$refno,
+                'status'=>$status,
+                'dpProcID'=>$procid,
                 'is_paid' => '1'
                 ]);
 
@@ -553,7 +555,7 @@ class AuthController extends Controller
             }
             else
             {
-                return response(['status'=>'error','message'=>'Reseller email not found!']);
+                return response(['status'=>'error','message'=>'txnid/refCode not found!']);
             }
         }
     }
