@@ -1,9 +1,9 @@
 @extends('layouts.appReseller')
 @section('content')        
-  <p class="is-large is-pulled-right" style="margin-top:1em">Balance: <strong> PHP 3000.00</strong></p>    
+  <p class="is-large is-pulled-right" style="margin-top:1em; margin-right:10px;">Balance: <strong> PHP 3000.00</strong></p>    
 
 <div class="" style="margin:1.5em 1.5em 1.5em 0">
-        <h1 class="title is-1">Commission</h1>
+        <h1 class="title is-size-4">Commission</h1>
         {{-- <img src="{{asset('img/icon/pt_logo.png')}}" alt="PinoyTravel" style="margin-top:4em"> --}}
 </div>
           {{-- start of search bar--}}    

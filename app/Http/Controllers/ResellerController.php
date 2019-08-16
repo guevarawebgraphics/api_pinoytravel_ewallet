@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Models\TopUpHistory;
 use DB;
+use App\Models\UserBalance;
 
 class ResellerController extends Controller
 {
@@ -367,17 +368,20 @@ class ResellerController extends Controller
     //NEW ADDITIONS
     public function reservation()
     {
-        // return 'this is reservation method from reseller controlelr';
-        return view('pages.reseller.reservation');
+        // return 'this is reservation method from reseller controller';
+        $userBal = UserBalance::where('userId', auth()->user()->id)->get();
+        return view('pages.reseller.reservation')->with('userBal', $userBal);
     }
     public function commission()
     {
     //    return 'this is commission method in reseller controller';
-        return view('pages.reseller.commission');
+        $userBal = UserBalance::where('userId', auth()->user()->id)->get();
+        return view('pages.reseller.commission')->with('userBal', $userBal);
     }
     public function transactions()
     {
-        return view('pages.reseller.transactions');        
+        $userBal = UserBalance::where('userId', auth()->user()->id)->get();
+        return view('pages.reseller.transactions')->with('userBal', $userBal);       
     }
 
 
@@ -418,7 +422,8 @@ class ResellerController extends Controller
         // private function checkoutDragonpay($txnid,$procid, $amount, $description, $email, $param1,$param2, $ip_address, $agent){
 
         //COMPACT WILL PASS VARIABLES TO THE VIEW
-        return view('pages.reseller.topup', compact('reseller', 'responseProc1', 'responseProc2', 'responseProc4'));
+        $userBal = UserBalance::where('userId', auth()->user()->id)->get();
+        return view('pages.reseller.topup', compact('reseller', 'responseProc1', 'responseProc2', 'responseProc4'))->with('userBal', $userBal); 
     }
     // public function checkoutDragonpay($transactionId, $processorId, $amount, $description, $email, $referenceCode)
     // public function checkoutDragonpay(Request $request, User $reseller, $processorId, $amount, $description, $email)

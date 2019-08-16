@@ -1,9 +1,16 @@
 @extends('layouts.appReseller')
 @section('content')
 
+<p class="is-large is-pulled-right" style="margin-top:1em; margin-right:10px;">Balance: <strong>
+        @if($userBal != "")
+          ₱{{ number_format((float)$userBal[0]->total_balance, 2, '.', ',') }}
+        @else
+          ₱0.00
+        @endif
+    </strong></p>  
     
 <div style="margin:1.5em 1.5em 1.5em 1.5em;">
-        <h1 class="title is-3"><i class="fa fa-file-text-o"></i> Transaction History</h1>
+        <h1 class="title is-size-4"><i class="fa fa-history"></i> Transaction History</h1>
 </div>        
 
 <div class="box">    

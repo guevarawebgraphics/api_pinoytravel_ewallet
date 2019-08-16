@@ -7,12 +7,14 @@ use Illuminate\Support\Facades\Input;
 use Validator;
 use DB;
 use DateTime;
+use App\Models\UserBalance;
 
 class TransactionController extends Controller
 {
     public function index()
     {
-        return view('pages.reseller.transactionhistory');        
+        $userBal = UserBalance::where('userId', auth()->user()->id)->get();
+        return view('pages.reseller.transactionhistory')->with('userBal', $userBal);     
     }
     public function getTxnHistory(){
         
@@ -61,7 +63,10 @@ class TransactionController extends Controller
                         pauseOnHover: true,
                         animate: { in: "fadeIn", out: "fadeOut" },
                         type: "is-success" 
+                        
                     });
+
+                    window.open("http://192.168.0.10/pinoytravel.com.ph/booking/success/mobile",""," scrollbars=yes,menubar=no,width=500, resizable=yes,toolbar=no,location=no,status=no");
                 </script>';
                 session()->forget('merchId');
                 session()->forget('txnid');

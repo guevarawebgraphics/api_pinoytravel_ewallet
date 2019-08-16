@@ -219,8 +219,9 @@ class PayController extends Controller
 
             //Code for deleting session
             //session()->forget('');
-            session()->put('tnxSuccess','Successfully paid!');
             
+            session()->put('tnxSuccess','Successfully paid!');
+
             $messages = "Reference Code: ".session()->get('param1')." Successfully paid! ".session()->get('amount')." deducted to your wallet.";
             $success[] = $messages;
         }else{

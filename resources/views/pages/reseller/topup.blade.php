@@ -1,15 +1,19 @@
 @extends('layouts.appReseller')
 @section('content') 
 <div class="is-pulled-right">
-  <p class="is-large" style="margin-top:1em">Balance: <strong> ₱ 3000.00</strong></p>   
-  {{-- <p class="is-large" style="margin-top:1em">Balance: <strong> <a href="/reseller/wallet" title="Go To Wallet">₱ 3000.00</a></strong></p>    --}}
-  <p class="is-large" style="margin-top:1em"><a href="/reseller/transactions">Top Up History </a></p>    
-  {{-- <button class="button is-link field" style="margin-top:1em">Go To Wallet</button> --}}
+
+    <p class="is-large is-pulled-right" style="margin-top:1em; margin-right:10px;">Balance: <strong>
+        @if($userBal != "")
+          ₱{{ number_format((float)$userBal[0]->total_balance, 2, '.', ',') }}
+        @else
+          ₱0.00
+        @endif
+    </strong></p>    
+    
 </div>       
-<div style="margin:1.5em 1.5em 1.5em 0">
-        <h1 class="title is-1">Top Up E-Wallet</h1>
-        {{-- <img src="{{asset('img/icon/pt_logo.png')}}" alt="PinoyTravel" style="margin-top:4em"> --}}
-</div>        
+<div style="margin:1.5em 1.5em 1.5em 1.5em;">
+    <h1 class="title is-size-4"><i class="fa fa-credit-card"></i> Top Up E-Wallet</h1>
+</div>     
 
 {{-- <div class="card"></div> --}}
 <div class="box">    
@@ -39,7 +43,7 @@
                     </div> --}}
                     <div class="media-content">
                       <div class="content">
-                          <h1 class="title is-3">Top Up Amount</h1>
+                          <h3 class="title">Select Load Amount</h3>
                         <p>
                           <strong>{{ Auth::user()->name }}</strong> <small>{{Auth::user()->email}}</small> 
                           {{-- <strong>{{ Auth::user()->name }}</strong> <small>@johnsmith</small> <small>31m</small> --}}
