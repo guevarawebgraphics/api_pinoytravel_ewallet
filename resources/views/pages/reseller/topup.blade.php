@@ -52,7 +52,7 @@
                               <div class="select">
                                 {{-- START OF PAYPAL PAYMENT FORM--}}
                                 {{-- <form action="{{route('/reseller/topup/payment')}}" method="POST">       --}}
-                                <form action="/reseller/topup/checkout" method="POST">      
+                              <form action="/reseller/topup/checkout" method="POST">
                                 <select id="paymentAmount" name="paymentAmount" class="selector">
                                   <option value="50">₱ 50</option>
                                   <option value="150">₱ 150</option>
@@ -199,7 +199,7 @@
                         </div> 
                         
                         <label class="checkbox">
-                            <input type="checkbox" id="userAgreement2">
+                            <input type="checkbox" id="userAgreement2" required>
                             I agree to the <a href="#">terms and conditions</a>
                           </label>   
                           <div class="control" style="margin-top:1em">
@@ -347,8 +347,6 @@
                       
             </div>        
 </div>
-
-
 
 @endsection
 

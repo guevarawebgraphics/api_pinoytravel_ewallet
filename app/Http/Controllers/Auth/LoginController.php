@@ -57,7 +57,8 @@ class LoginController extends Controller
                 $urlParam = "merchantid=".$merchId;
                 $urlParam .= "&txnid=".$txnid."&amount=".number_format((float)$amount, 2, '.', ',')."&ccy=PHP&description=Payment for ".$param1."&email=".$param2."&digest=".$sha1digest;
                 $urlParam .= "&param1=".$param1."&param2=".$param2."&procid=".$procid;
-                return redirect($urlString.($urlParam));
+                return redirect($urlString);
+                // return redirect($urlString.($urlParam));
 
             }else{
                 return redirect('/reseller/reservation/view');

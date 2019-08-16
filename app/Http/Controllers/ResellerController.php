@@ -517,15 +517,20 @@ class ResellerController extends Controller
         $top_up->is_paid = 0;
         $top_up->save();
 
-        //return $sha1digest;
+        // $output = ($urlString.($urlParam));
+        // echo json_encode($output);
 
+        //return $sha1digest;
         //WORKING URL FOR TRANSACTION
         // $urlTest = "https://test.dragonpay.ph/Pay.aspx?merchantid=PINOYTRAVEL&txnid=GP7Y26OREPK3&amount=290.00&ccy=PHP&description=Payment%20for%20GP7Y26OR&email=leo@csi.com&digest=58f6d150b7ff25ad104b143ef430765ca4393f58&param1=GP7Y26OR&param2=leo@csi.com&procid=BDRX";
         // /// END OF WORIKIN
         // $urlTest2 = "https://test.dragonpay.ph/Pay.aspx?merchantid=PINOYTRAVEL&txnid=GP7Y26OREPK3&amount=290.00&ccy=PHP&description=Payment%20for%20GP7Y26OR&email=leo@csi.com&digest=58f6d150b7ff25ad104b143ef430765ca4393f58&param1=GP7Y26OR&param2=leo@csi.com&procid=BDRX";
         // return $sha1digest; //758f3c09df2b2eddb37bc603184f0a5539ecaf70
        // $urlTest = "https://test.dragonpay.ph/Bank/Gateway.aspx?procid=BOG&refno=WW4HM3B2&amount=380.00&ccy=PHP&description=Payment+for+3RBTXJQP&billerId=1678005430%7cDragonpay+Corporation%7cPeso+Checking&email=sample%40sample.com&digest=e0f630e75a1e5fec33c1522184c9e8236431a2f1&expiry=7%2f3%2f19+11%3a18&merchantid=PINOYTRAVEL";
+        
+       //Old post method of DragonPay
        return redirect($urlString.($urlParam));
+
         //    return redirect($urlTest);
     }
 

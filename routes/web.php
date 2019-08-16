@@ -46,7 +46,12 @@ Route::group(['middleware'=> ['auth']], function(){
     Route::get('/reseller/topup','ResellerController@topup');
     // Route::get('/reseller/wallet','ResellerController@resellerWallet');
 
-    Route::get('/reseller/transactions','ResellerController@transactions');
+    
+    Route::get('/reseller/transaction_history','TransactionController@index');
+    Route::get('reseller/transaction_history/getTxnHistory', 'TransactionController@getTxnHistory')->name('getTxnHistory');
+    Route::get('reseller/transaction_history/getToastDtls', 'TransactionController@getToastDtls')->name('getToastDtls');
+
+    Route::get('/reseller/top_up_history','ResellerController@transactions');
     Route::get('reseller/transactions/getTopup', 'ResellerController@getTopup')->name('getTopup');
     
     Route::post('/reseller/topup/checkout', 'ResellerController@checkoutDragonpay');

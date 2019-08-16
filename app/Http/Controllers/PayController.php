@@ -13,7 +13,14 @@ class PayController extends Controller
 {
     public function index()
     {
-        return view('pay');
+        if(session()->get('merchId') == "")
+        {
+            abort(404);
+        }
+        else
+        {
+            return view('pay');
+        }
     }
 
     public function getReceipt(Request $request)
@@ -32,6 +39,7 @@ class PayController extends Controller
         WHERE a.id = '".auth()->user()->id."' AND b.is_paid = 1
         GROUP BY a.id
         ");
+
         $data = "";
         $data .= '
         <div class="columns">
@@ -125,6 +133,25 @@ class PayController extends Controller
         $error = array();
         $success = array();
 
+        $transId = session()->get('txnid');
+        $refCode = session()->get('param1');
+        $txnDtls = DB::connection('mysql')->select("SELECT * FROM transaction_details WHERE transId = '".$transId."' AND refCode = '".$refCode."'");
+
+        $userBal = DB::connection('mysql')->select("
+        SELECT a.id as userId, 
+            (select sum(tuhh.amount) from top_up_history as tuhh where tuhh.userId = a.id AND tuhh.is_paid = 1) as total_topup,
+            (select sum(trr.amount) from transaction_details as trr where trr.userId = a.id) as total_spent,
+            ((select sum(tuh.amount) from top_up_history as tuh where tuh.userId = a.id AND tuh.is_paid = 1)
+            -
+            (select sum(tr.amount) from transaction_details as tr where tr.userId = a.id)) as total_balance
+            
+        FROM users AS a
+        LEFT JOIN  top_up_history AS b ON a.id = b.userId
+        LEFT JOIN transaction_details as c ON a.id = c.userId
+        WHERE a.id = '".auth()->user()->id."' AND b.is_paid = 1
+        GROUP BY a.id
+        ");
+
         if($request->payNow != "")
         {
             $messages = "Please Click Paynow";
@@ -134,6 +161,15 @@ class PayController extends Controller
         {
             $messages = "Please read and accept our policies to proceed with your payment";
             $error[] = $messages;
+        }
+        // else if(!empty($txnDtls))
+        // {
+        //     $messages = "Transaction ID and Ref. Code already paid!";
+        //     $error[] = $messages;
+        // }
+        else if($userBal[0]->total_balance < session()->get('amount')){
+            $messages = "You don't have enough load to perform your payment.";
+            $error[] = $messages; 
         }
         else
         {
@@ -180,7 +216,12 @@ class PayController extends Controller
             $txnDtls->procId = session()->get('procid');
             $txnDtls->deleted = 0;
             $txnDtls->save();
-            $messages = "Successfully Saved!";
+
+            //Code for deleting session
+            //session()->forget('');
+            session()->put('tnxSuccess','Successfully paid!');
+            
+            $messages = "Reference Code: ".session()->get('param1')." Successfully paid! ".session()->get('amount')." deducted to your wallet.";
             $success[] = $messages;
         }else{
             $messages = "An occured error, Please try again";

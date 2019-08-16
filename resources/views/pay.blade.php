@@ -58,7 +58,7 @@
 <!-- Pay Now Function -->
 <script>
     $(document).on('click', '#payNow', function (){    
-            payNow();   
+            payNow();
     });
 
     function payNow(){
@@ -77,7 +77,14 @@
                 {
                     if(data.error.length > 0)
                     {
-                        alert(data.error[0]);
+                        bulmaToast.toast({ 
+                            message: data.error[0],
+                            dismissible: true,
+                            duration: 3000,
+                            pauseOnHover: true,
+                            animate: { in: "fadeIn", out: "fadeOut" },
+                            type: "is-danger" 
+                        });
                         getDtls();
                     }
                     else if(data.success.length > 0)
@@ -91,10 +98,16 @@
                             success:function(data)
                             {
                                 if(data.success.length > 0){
-                                    alert(data.success[0]);
-                                    getDtls();
+                                    window.location = "//192.168.0.35:902/reseller/transaction_history";
                                 }else{
-                                    alert(data.error[0]);
+                                    bulmaToast.toast({ 
+                                        message: data.error[0],
+                                        dismissible: true,
+                                        duration: 3000,
+                                        pauseOnHover: true,
+                                        animate: { in: "fadeIn", out: "fadeOut" },
+                                        type: "is-danger" 
+                                    });
                                 }
                                 
                             },
@@ -111,7 +124,14 @@
         }
         else
         {
-            alert("Please read and accept our policies to proceed with your payment");
+            bulmaToast.toast({ 
+                message: "Please read and accept our policies to proceed with your payment",
+                dismissible: true,
+                duration: 3000,
+                pauseOnHover: true,
+                animate: { in: "fadeIn", out: "fadeOut" },
+                type: "is-danger" 
+            });
         }
     }
 </script>

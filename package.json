@@ -23,6 +23,7 @@
         "vue": "^2.5.17"
     },
     "dependencies": {
+        "bulma-toast": "^1.5.1",
         "datatables-bulma": "^1.0.1"
     }
 }

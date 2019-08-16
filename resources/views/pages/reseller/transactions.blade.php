@@ -1,15 +1,16 @@
 @extends('layouts.appReseller')
 @section('content') 
      
-<div style="margin:1.5em 1.5em 1.5em 0">
-        <h1 class="title is-1">Top Up History</h1>
+<div style="margin:1.5em 1.5em 1.5em 1.5em;">
+        <h1 class="title is-3"><i class="fa fa-credit-card"></i> Top Up History</h1>
+
 </div>        
 
 <div class="box">    
-    <div class="column auto" style="">    
-        <table class="table is-bordered is-responsive is-hoverable table-row-hover-background-color" id="TableTopUpRecords" style="margin-bottom: 1.5em; width:100%;">
+    <div class="" style="margin-bottom: 2em;overflow-x:auto!important;">    
+        <table class="table is-bordered is-responsive is-hoverable table-row-hover-background-color" id="TableTopUpRecords" style="margin-bottom: 1.5em; width:100%; margin-top: 1.5em;">
             <thead>
-                <tr>
+                <tr class="">
                     <th>Transaction ID</th>
                     <th>Reference Code</th>
                     <th>Proc ID</th>
