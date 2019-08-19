@@ -66,7 +66,7 @@ class TransactionController extends Controller
                         
                     });
 
-                    window.open("http://192.168.0.10/pinoytravel.com.ph/booking/success/mobile",""," scrollbars=yes,menubar=no,width=500, resizable=yes,toolbar=no,location=no,status=no");
+                    window.open("https://www.pinoytravel.com.ph/booking/success/mobile",""," scrollbars=yes,menubar=no,width=500, resizable=yes,toolbar=no,location=no,status=no");
                 </script>';
                 session()->forget('merchId');
                 session()->forget('txnid');

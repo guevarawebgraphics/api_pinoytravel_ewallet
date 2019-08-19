@@ -99,6 +99,25 @@
                             {
                                 if(data.success.length > 0){
                                     window.location = "//192.168.0.35:902/reseller/transaction_history";
+
+                                    //Working POST REQUEST Data API
+                                    //Soon will need to call an API to notify if payment is successful or not
+                                    //Uncomment and modify which api endpoint is needed and replace the params&values
+
+                                    // $.ajax({
+                                    //     url: "http://103.93.223.103:205/api/login",
+                                    //     method: "POST",
+                                    //     data:{ companyID:"2018-101", password:"123456" }, 
+                                    //     dataType: "json",
+                                    //     success:function(data)
+                                    //     {
+                                    //         alert(data.data.access_token);
+                                    //     },
+                                    //     error: function(xhr, ajaxOptions, thrownError){
+                                    //         console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                                    //     }
+                                    // });
+
                                 }else{
                                     bulmaToast.toast({ 
                                         message: data.error[0],
