@@ -22,5 +22,10 @@
     color: #fff!important;
   }
 
-
+  .text-muted{
+    color: #999999;
+  }
+  .text-success{
+    color: #44b550 !important;
+  }
   

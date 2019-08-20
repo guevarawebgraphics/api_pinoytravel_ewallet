@@ -44,12 +44,16 @@ Route::group(['middleware'=> ['auth']], function(){
     Route::get('/reseller/commission/view','ResellerController@commission');
     Route::get('/reseller/reservation/view','ResellerController@reservation');
     Route::get('/reseller/topup','ResellerController@topup');
+
+    Route::get('/message/success', function () {
+        return view('pages.message.success');
+    });
     // Route::get('/reseller/wallet','ResellerController@resellerWallet');
 
     
     Route::get('/reseller/transaction_history','TransactionController@index');
     Route::get('reseller/transaction_history/getTxnHistory', 'TransactionController@getTxnHistory')->name('getTxnHistory');
-    Route::get('reseller/transaction_history/getToastDtls', 'TransactionController@getToastDtls')->name('getToastDtls');
+    // Route::get('reseller/transaction_history/getToastDtls', 'TransactionController@getToastDtls')->name('getToastDtls');
 
     Route::get('/reseller/top_up_history','ResellerController@transactions');
     Route::get('reseller/transactions/getTopup', 'ResellerController@getTopup')->name('getTopup');

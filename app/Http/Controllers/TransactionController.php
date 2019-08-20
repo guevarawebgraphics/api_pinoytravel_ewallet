@@ -43,41 +43,43 @@ class TransactionController extends Controller
 
     }
 
-    public function getToastDtls(){
+    // public function getToastDtls(){
         
-        $data = "";
+    //     $data = "";
 
-        if(session()->get('tnxSuccess') != ""){
-            $data .= '
+    //     if(session()->get('tnxSuccess') != ""){
+    //         $data .= '
             
-                <input type="text" id="tnxid" value="'.session()->get('txnid').'" style="display:none;"> 
-                <input type="text" id="refCode" value="'.session()->get('param1').'" style="display:none;"> 
-                <script>
-                    var tnxid = $("#tnxid").val();
-                    var refCode = $("#refCode").val();
-                    var is_success = "Ref. Code: "+refCode+" Transaction ID: "+tnxid+" Successfully paid!";
-                    bulmaToast.toast({ 
-                        message: is_success,
-                        dismissible: true,
-                        duration: 3000,
-                        pauseOnHover: true,
-                        animate: { in: "fadeIn", out: "fadeOut" },
-                        type: "is-success" 
+    //             <input type="text" id="tnxid" value="'.session()->get('txnid').'" style="display:none;"> 
+    //             <input type="text" id="refCode" value="'.session()->get('param1').'" style="display:none;"> 
+    //             <script>
+    //                 var tnxid = $("#tnxid").val();
+    //                 var refCode = $("#refCode").val();
+    //                 var is_success = "Ref. Code: "+refCode+" Transaction ID: "+tnxid+" Successfully paid!";
+                    
+                    
+    //                 bulmaToast.toast({ 
+    //                     message: is_success,
+    //                     dismissible: true,
+    //                     duration: 3000,
+    //                     pauseOnHover: true,
+    //                     animate: { in: "fadeIn", out: "fadeOut" },
+    //                     type: "is-success" 
                         
-                    });
+    //                 });
+                    
 
-                    window.open("https://www.pinoytravel.com.ph/booking/success/mobile",""," scrollbars=yes,menubar=no,width=500, resizable=yes,toolbar=no,location=no,status=no");
-                </script>';
-                session()->forget('merchId');
-                session()->forget('txnid');
-                session()->forget('amount');
-                session()->forget('param1');
-                session()->forget('param2');
-                session()->forget('procid');
-                session()->forget('tnxSuccess');
-        }else{
-            $data .= '';
-        }
-        echo $data;
-    }
+    //             </script>';
+    //             session()->forget('merchId');
+    //             session()->forget('txnid');
+    //             session()->forget('amount');
+    //             session()->forget('param1');
+    //             session()->forget('param2');
+    //             session()->forget('procid');
+    //             session()->forget('tnxSuccess');
+    //     }else{
+    //         $data .= '';
+    //     }
+    //     echo $data;
+    // }
 }

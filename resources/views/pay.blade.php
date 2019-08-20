@@ -98,7 +98,9 @@
                             success:function(data)
                             {
                                 if(data.success.length > 0){
-                                    window.location = "//192.168.0.35:902/reseller/transaction_history";
+                                    window.location = "//192.168.0.35:902/message/success";
+
+                                    // window.location = "//192.168.0.35:902/reseller/transaction_history";
 
                                     //Working POST REQUEST Data API
                                     //Soon will need to call an API to notify if payment is successful or not

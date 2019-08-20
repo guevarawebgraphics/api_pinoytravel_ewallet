@@ -42,12 +42,27 @@
   </div>
 </div>
 
-<div id="ToastDiv">
+{{-- <div id="ToastDiv">
 
 
-</div>
+</div> --}}
 
-
+{{-- toastDtls();
+     function toastDtls(){
+         $.ajax({
+             headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+             url: "{{ route('getToastDtls') }}",
+             method: "GET",
+             data: {}, 
+             success:function(data)
+             {
+                 $('#ToastDiv').html(data);
+         },
+             error: function(xhr, ajaxOptions, thrownError){
+                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+             }
+         });
+     } --}}
 <script>
     txnDtls();
     function txnDtls(){
@@ -71,22 +86,7 @@
         });
     }
 
-    toastDtls();
-    function toastDtls(){
-        $.ajax({
-            headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            url: "{{ route('getToastDtls') }}",
-            method: "GET",
-            data: {}, 
-            success:function(data)
-            {
-                $('#ToastDiv').html(data);
-            },
-            error: function(xhr, ajaxOptions, thrownError){
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    }
+    
 
 </script>
     

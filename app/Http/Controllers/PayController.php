@@ -220,7 +220,16 @@ class PayController extends Controller
             //Code for deleting session
             //session()->forget('');
             
-            session()->put('tnxSuccess','Successfully paid!');
+            //Uncomment if you want toast for paid feedback
+            // session()->put('tnxSuccess','Successfully paid!');
+
+            //Comment if you want toast for paid feedback
+            session()->forget('merchId');
+            session()->forget('txnid');
+            session()->forget('amount');
+            session()->forget('param1');
+            session()->forget('param2');
+            session()->forget('procid');
 
             $messages = "Reference Code: ".session()->get('param1')." Successfully paid! ".session()->get('amount')." deducted to your wallet.";
             $success[] = $messages;
