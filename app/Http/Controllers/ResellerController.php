@@ -554,7 +554,7 @@ class ResellerController extends Controller
                             <td> '.$field->refCode.'</td>
                             <td> '.$field->procId.'</td>
                             <td> ₱ '.number_format((float)$field->amount, 2, '.', ',').'</td>
-                            <td> '.$field->created_at.'</td>
+                            <td>'.date("F d Y - h:i a",strtotime($field->created_at)).'</td>
                         </tr>
                         ';
                 $counter++;

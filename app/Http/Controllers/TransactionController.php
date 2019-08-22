@@ -33,7 +33,7 @@ class TransactionController extends Controller
                     <td>'.$field->refCode.'</td>
                     <td>'.$field->transEmail.'</td>
                     <td>'.$field->procId.'</td>
-                    <td>'.date("F d Y",strtotime($field->created_at)).'</td>
+                    <td>'.date("F d Y - h:i a",strtotime($field->created_at)).'</td>
                 </tr>
                 ';
                 $counter++;
