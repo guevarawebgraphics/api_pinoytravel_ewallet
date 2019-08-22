@@ -40,6 +40,12 @@ class PayController extends Controller
         GROUP BY a.id
         ");
 
+        if(!empty($userBal)){
+            $currentBalance = number_format((float)$userBal[0]->total_balance, 2, '.', ',');
+        }else{
+            $currentBalance = number_format((float)0, 2, '.', ',');
+        }
+
         $data = "";
         $data .= '
         <div class="columns">
@@ -53,7 +59,7 @@ class PayController extends Controller
         </div>
         <div class="column">
         <!-- <i class="fa fa-shopping-cart" style="margin-right:5px;"></i> -->
-            <b>Balance:&nbsp;<span>₱'.number_format((float)$userBal[0]->total_balance, 2, '.', ',').'</span></b>
+            <b>Balance:&nbsp;<span>₱'.$currentBalance.'</span></b>
         </div>
         </div>
         <hr>
@@ -115,7 +121,7 @@ class PayController extends Controller
                 </table>
             </div>
             <div class="" style="margin-top: 1em;">
-                <b>Current Balance:  </b>'.number_format((float)$userBal[0]->total_balance, 2, '.', ',').'<br>
+                <b>Current Balance:  </b>'.$currentBalance.'<br>
                 <b>Total Amount to Pay:  </b>'.session()->get('amount').'<br>
             </div>
             <div class="" style="margin-top:2em;">
@@ -127,7 +133,8 @@ class PayController extends Controller
 
     }
 
-    public function payVal(Request $request){
+    public function payVal(Request $request)
+    {
         $message = "";
         $output = array();
         $error = array();
@@ -152,6 +159,12 @@ class PayController extends Controller
         GROUP BY a.id
         ");
 
+        if(!empty($userBal)){
+            $totalBalance = $userBal[0]->total_balance;
+        }else{
+            $totalBalance = 0.00;
+        }
+
         if($request->payNow != "")
         {
             $messages = "Please Click Paynow";
@@ -167,7 +180,7 @@ class PayController extends Controller
         //     $messages = "Transaction ID and Ref. Code already paid!";
         //     $error[] = $messages;
         // }
-        else if($userBal[0]->total_balance < session()->get('amount')){
+        else if($totalBalance < session()->get('amount')){
             $messages = "You don't have enough load to perform your payment.";
             $error[] = $messages; 
         }
@@ -184,7 +197,8 @@ class PayController extends Controller
         echo json_encode($output);
     }
 
-    public function payNow(Request $request){
+    public function payNow(Request $request)
+    {
         $message = "";
         $output = array();
         $error = array();
@@ -247,7 +261,8 @@ class PayController extends Controller
         echo json_encode($output);
     }
 
-    public function cancelEwallet(Request $request){
+    public function cancelEwallet(Request $request)
+    {
         $message = "";
         $output = array();
         $error = array();
@@ -260,7 +275,7 @@ class PayController extends Controller
             session()->forget('param1');
             session()->forget('param2');
             session()->forget('procid');
-            
+
             $messages = "Redirecting..";
             $success[] = $messages;
         }else{
