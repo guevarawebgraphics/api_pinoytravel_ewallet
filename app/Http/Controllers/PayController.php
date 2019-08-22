@@ -205,7 +205,8 @@ class PayController extends Controller
         GROUP BY a.id
         ");
 
-        if($userBal != ""){
+        if(count($userBal)){
+        // if($userBal != ""){
             $txnDtls = new TransactionDetails;
             $txnDtls->userId = auth()->user()->id;
             $txnDtls->merchId = session()->get('merchId');
@@ -236,6 +237,35 @@ class PayController extends Controller
         }else{
             $messages = "An occured error, Please try again";
             $success[] = $messages;
+        }
+
+        $output = array(
+            'error'=>$error,
+            'success'=>$success
+        );
+
+        echo json_encode($output);
+    }
+
+    public function cancelEwallet(Request $request){
+        $message = "";
+        $output = array();
+        $error = array();
+        $success = array();
+
+        if($request->cancelEwallet == "TRUE"){
+            session()->forget('merchId');
+            session()->forget('txnid');
+            session()->forget('amount');
+            session()->forget('param1');
+            session()->forget('param2');
+            session()->forget('procid');
+            
+            $messages = "Redirecting..";
+            $success[] = $messages;
+        }else{
+            $messages = "Please select Cancel and return to Reseller Page";
+            $error[] = $messages;
         }
 
         $output = array(

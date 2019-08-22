@@ -3,8 +3,8 @@
 
 
   <p class="is-large is-pulled-right" style="margin-top:1em; margin-right:10px;">Balance: <strong>
-      @if($userBal != "")
-        ₱{{ number_format((float)$userBal[0]->total_balance, 2, '.', ',') }}
+      @if(count($userBal))
+        ₱{{number_format((float)$userBal[0]->total_balance, 2, '.', ',')}}
       @else
         ₱0.00
       @endif

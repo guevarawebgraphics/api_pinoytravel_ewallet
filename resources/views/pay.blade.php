@@ -23,7 +23,7 @@
     </div>
     
 </div>
-<center><small><a href="/reseller/reservation/view">Cancel and return to Reseller Page.</a></small></center>
+<center><small><a href="#" id="cancelEwallet">Cancel and return to Reseller Page.</a></small></center>
 
 <footer class="footer animated bounceIn has-background-white">
 <div class="has-text-centered">
@@ -154,6 +154,40 @@
                 type: "is-danger" 
             });
         }
+    }
+
+
+    $(document).on('click', '#cancelEwallet', function (){    
+            cancelEwallet();
+    });
+
+    function cancelEwallet(){
+        $.ajax({
+            headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: "{{ route('cancelEwallet') }}",
+            method: "POST",
+            data:{cancelEwallet: "TRUE"}, 
+            dataType: "json",
+            success:function(data)
+            {
+                if(data.success.length > 0){
+                    window.location = "//192.168.0.35:902/reseller/reservation/view";
+                }else{
+                    bulmaToast.toast({ 
+                        message: data.error[0],
+                        dismissible: true,
+                        duration: 3000,
+                        pauseOnHover: true,
+                        animate: { in: "fadeIn", out: "fadeOut" },
+                        type: "is-danger" 
+                    });
+                }
+                
+            },
+            error: function(xhr, ajaxOptions, thrownError){
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
     }
 </script>
 @endsection

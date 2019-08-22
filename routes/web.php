@@ -64,6 +64,7 @@ Route::group(['middleware'=> ['auth']], function(){
     Route::get('pay/getReceipt', 'PayController@getReceipt')->name('getReceipt');
     Route::post('pay/payNow', 'PayController@payNow')->name('payNow');
     Route::post('pay/payVal', 'PayController@payVal')->name('payVal');
+    Route::post('pay/cancelEwallet', 'PayController@cancelEwallet')->name('cancelEwallet');
     
 
     // Route::post('/reseller/topup/payment','TopupController@topupPayment')->name('/reseller/topup/payment');
