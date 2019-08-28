@@ -526,7 +526,8 @@ class AuthController extends Controller
                     'dpRefNo'=>$refno,
                     'status'=>$status,
                     'dpProcID'=>$procid,
-                    'is_paid' => '1'
+                    'is_paid' => '1',
+                    'updated_at' => now()
                     ]);
 
                     return response(['status'=>'oK','message'=>'Ewallet Balance Successfully Topped up!']);
