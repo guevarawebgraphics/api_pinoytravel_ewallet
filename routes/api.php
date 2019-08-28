@@ -18,6 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/login','Auth\Api\AuthController@login');
 
+Route::post('/dragonpay','Auth\Api\AuthController@dragonpay');
+
 Route::middleware('auth:api')->group(function () {
 
     Route::post('/top_up_wallet','Auth\Api\AuthController@top_up_wallet');
@@ -34,6 +36,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/search_user','Auth\Api\AuthController@search_user');
     
-    Route::post('/dragonpay','Auth\Api\AuthController@dragonpay');
+    // Route::post('/dragonpay','Auth\Api\AuthController@dragonpay');
 
 });

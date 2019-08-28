@@ -497,38 +497,13 @@ class AuthController extends Controller
 
     public function dragonpay(Request $request)
     {
-
-        //Code for getting the current date of Asia/Manila
-        date_default_timezone_set('Asia/Taipei');
-        $todays_date = date("Y-m-d H:i:s");
-        $today = strtotime($todays_date);
-        $todayDate = date("Y-m-d H:i:s", $today); 
-        //Code for getting the current date of Asia/Manila
-
-
-        //This will identify if the active token is expired will automatically mark it as revoked = true
-        $tokenArray = Auth::user()->token()->id;
-        
-        $expires_query = DB::connection('mysql')->select("SELECT * from oauth_access_tokens WHERE id = '".$tokenArray."' AND user_id = '".auth()->user()->id."' AND expires_at <= '".$todayDate."' AND revoked = '0'");
-
-        if(!empty($expires_query))
-        {
-            DB::table('oauth_access_tokens')
-            ->where('expires_at', '<=',$todayDate)
-            ->update([
-            'revoked' => true
-            ]);
-            
-            return response(['status'=>'error','message'=>'Your Token is Expired!']);
-        }
-        else
-        {
             $validatedData = $request->validate([
                 'txnid'=>'required',
                 'refCode'=>'required',
                 'refno'=>'required',
                 'status'=>'required',
-                'procid'=>'required'
+                'procid'=>'required',
+                'secret_key'=>'required',
             ]);
             
             $txnid = $request->txnid;
@@ -536,27 +511,31 @@ class AuthController extends Controller
             $status = $request->status;
             $procid = $request->procid;
             $refCode = $request->refCode;
+            $secret_key = $request->secret_key;
             $top_up_info = DB::connection('mysql')->select("SELECT * from top_up_history WHERE txnid = '".$txnid."' AND refCode = '".$refCode."'");
             
             if(!empty($top_up_info)){
     
-                DB::table('top_up_history')
-                ->where('txnid', $txnid)
-                ->where('refCode', $refCode)
-                ->update([
-                'dpRefNo'=>$refno,
-                'status'=>$status,
-                'dpProcID'=>$procid,
-                'is_paid' => '1'
-                ]);
+                if(sha1("PINOYTRAVEL-EWALLET") != $secret_key){
+                    return response(['status'=>'error','message'=>'secret key did not match']);
+                }else{
+                    DB::table('top_up_history')
+                    ->where('txnid', $txnid)
+                    ->where('refCode', $refCode)
+                    ->update([
+                    'dpRefNo'=>$refno,
+                    'status'=>$status,
+                    'dpProcID'=>$procid,
+                    'is_paid' => '1'
+                    ]);
 
-                return response(['status'=>'oK','message'=>'Ewallet Balance Successfully Topped up!']);
+                    return response(['status'=>'oK','message'=>'Ewallet Balance Successfully Topped up!']);
+                }
                 
             }
             else
             {
                 return response(['status'=>'error','message'=>'txnid/refCode not found!']);
             }
-        }
     }
 }
