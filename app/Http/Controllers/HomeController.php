@@ -25,7 +25,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(User $user)
+    public function index(User $user, Request $request)
     {   
         $userBal = UserBalance::where('userId', auth()->user()->id)->get();
         $user_record = DB::connection('mysql')->select("SELECT * FROM users WHERE id = '".auth()->user()->id."'");
@@ -40,7 +40,8 @@ class HomeController extends Controller
         if($user_record[0]->is_admin == 1){
             // return view('pages.admin.view', compact('reseller', 'searched'));
             return  redirect('/admin/view/all');
-        }else{
+        }
+        else{
             return view('pages.reseller.reservation')->with('userBal', $userBal);
         }    
     }

@@ -65,7 +65,7 @@ Route::group(['middleware'=> ['auth']], function(){
     Route::post('pay/payNow', 'PayController@payNow')->name('payNow');
     Route::post('pay/payVal', 'PayController@payVal')->name('payVal');
     Route::post('pay/cancelEwallet', 'PayController@cancelEwallet')->name('cancelEwallet');
-    
+    Route::post('pay/cancelSession', 'PayController@cancelSession')->name('cancelSession');
 
     // Route::post('/reseller/topup/payment','TopupController@topupPayment')->name('/reseller/topup/payment');
     // Route::get('/reseller/topup/success','TopupController@executePayment')->name('/reseller/topup/success');
@@ -94,5 +94,8 @@ Route::get('/test','HomeController@test')->middleware('auth');
 // Route::get('/test2','ResellerController@testall2');
 // Route::get('/test3','ResellerController@testall3');
 
+Route::get('/pay/1', function () {
+    return view('auth.login');
+});
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -541,7 +541,7 @@ class ResellerController extends Controller
 
     public function getTopup()
     {
-        $TopUpHistory = DB::connection('mysql')->select("SELECT * FROM top_up_history WHERE userId = '".auth()->user()->id."' AND is_paid = 1 ORDER BY created_at DESC");
+        $TopUpHistory = DB::connection('mysql')->select("SELECT * FROM top_up_history WHERE userId = '".auth()->user()->id."' AND is_paid = 1 ORDER BY updated_at DESC");
 
         $data = "";
         
@@ -554,7 +554,7 @@ class ResellerController extends Controller
                             <td> '.$field->refCode.'</td>
                             <td> '.$field->procId.'</td>
                             <td> ₱ '.number_format((float)$field->amount, 2, '.', ',').'</td>
-                            <td>'.date("F d Y - h:i a",strtotime($field->created_at)).'</td>
+                            <td>'.date("F d Y - h:i a",strtotime($field->updated_at)).'</td>
                         </tr>
                         ';
                 $counter++;

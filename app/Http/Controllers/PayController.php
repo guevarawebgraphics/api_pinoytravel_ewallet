@@ -175,11 +175,11 @@ class PayController extends Controller
             $messages = "Please read and accept our policies to proceed with your payment";
             $error[] = $messages;
         }
-        // else if(!empty($txnDtls))
-        // {
-        //     $messages = "Transaction ID and Ref. Code already paid!";
-        //     $error[] = $messages;
-        // }
+        else if(!empty($txnDtls))
+        {
+            $messages = "Transaction ID and Ref. Code already paid!";
+            $error[] = $messages;
+        }
         else if($totalBalance < session()->get('amount')){
             $messages = "You don't have enough load to perform your payment.";
             $error[] = $messages; 
@@ -238,13 +238,13 @@ class PayController extends Controller
             //Uncomment if you want toast for paid feedback
             // session()->put('tnxSuccess','Successfully paid!');
 
-            //Comment if you want toast for paid feedback
-            session()->forget('merchId');
-            session()->forget('txnid');
-            session()->forget('amount');
-            session()->forget('param1');
-            session()->forget('param2');
-            session()->forget('procid');
+            // Comment if you want toast for paid feedback
+            // session()->forget('merchId');
+            // session()->forget('txnid');
+            // session()->forget('amount');
+            // session()->forget('param1');
+            // session()->forget('param2');
+            // session()->forget('procid');
 
             $messages = "Reference Code: ".session()->get('param1')." Successfully paid! ".session()->get('amount')." deducted to your wallet.";
             $success[] = $messages;
@@ -288,6 +288,29 @@ class PayController extends Controller
             'success'=>$success
         );
 
+        echo json_encode($output);
+    }
+
+    public function cancelSession(Request $request){
+        $message = "";
+        $output = array();
+        $error = array();
+        $success = array();
+
+        session()->forget('merchId');
+        session()->forget('txnid');
+        session()->forget('amount');
+        session()->forget('param1');
+        session()->forget('param2');
+        session()->forget('procid');
+
+        $messages = "Success";
+        $success[] = $messages;
+
+        $output = array(
+            'error'=>$error,
+            'success'=>$success
+        );
         echo json_encode($output);
     }
 }

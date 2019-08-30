@@ -61,6 +61,7 @@
             payNow();
     });
 
+
     function payNow(){
         //Agreement
         if($('#chkAgreement').prop("checked") == true){
@@ -98,27 +99,89 @@
                             success:function(data)
                             {
                                 if(data.success.length > 0){
-                                    window.location = "//192.168.0.35:902/message/success";
+                                    //Comment
+                                        // window.location = "//192.168.0.35:902/message/success";
+                                        // window.location = "//192.168.0.35:902/reseller/transaction_history";
+                                        //Working POST REQUEST Data API
+                                        //Soon will need to call an API to notify if payment is successful or not
+                                        //Uncomment and modify which api endpoint is needed and replace the params&values
+                                        // $.ajax({
+                                        //     url: "http://103.93.223.103:205/api/login",
+                                        //     method: "POST",
+                                        //     data:{ companyID:"2018-101", password:"123456" }, 
+                                        //     dataType: "json",
+                                        //     success:function(data)
+                                        //     {
+                                        //         alert(data.data.access_token);
+                                        //     },
+                                        //     error: function(xhr, ajaxOptions, thrownError){
+                                        //         console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                                        //     }
+                                        // });
+                                    //Comment End
 
-                                    // window.location = "//192.168.0.35:902/reseller/transaction_history";
+                                    var merchId = '<?php echo session()->get("merchId"); ?>';
+                                    var txnid = '<?php echo session()->get("txnid"); ?>';
+                                    var amount = '<?php echo session()->get("amount"); ?>';
+                                    var param1 = '<?php echo session()->get("param1"); ?>';
+                                    var param2 = '<?php echo session()->get("param2"); ?>';
+                                    var procid = '<?php echo session()->get("procid"); ?>';
 
-                                    //Working POST REQUEST Data API
-                                    //Soon will need to call an API to notify if payment is successful or not
-                                    //Uncomment and modify which api endpoint is needed and replace the params&values
-
-                                    // $.ajax({
-                                    //     url: "http://103.93.223.103:205/api/login",
-                                    //     method: "POST",
-                                    //     data:{ companyID:"2018-101", password:"123456" }, 
-                                    //     dataType: "json",
-                                    //     success:function(data)
-                                    //     {
-                                    //         alert(data.data.access_token);
-                                    //     },
-                                    //     error: function(xhr, ajaxOptions, thrownError){
-                                    //         console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                                    //     }
-                                    // });
+                                    $.ajax({
+                                        url: "http://192.168.0.17:2330/v1/payment/ewallet",
+                                        method: "POST",
+                                        data:{ 
+                                            merchID:merchId,
+                                            transID:txnid,
+                                            amount:amount,
+                                            refCode:param1,
+                                            email:param2,
+                                            procID:procid
+                                        }, 
+                                        dataType: "json",
+                                        success:function(data)
+                                        {
+                                            // alert(data.results);
+                                            $.ajax({
+                                                headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                                url: "{{ route('cancelSession') }}",
+                                                method: "POST",
+                                                data:{cancelSession: "TRUE"}, 
+                                                dataType: "json",
+                                                success:function(data)
+                                                {
+                                                    if(data.success.length > 0){
+                                                        window.location = "//192.168.0.35:902/message/success";
+                                                    }else{
+                                                        alert("Successfully Paid!");
+                                                    }
+                                                },
+                                                error: function(xhr, ajaxOptions, thrownError){
+                                                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                                                }
+                                            });
+                                        },
+                                        error: function(){
+                                            $.ajax({
+                                                headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                                url: "{{ route('cancelSession') }}",
+                                                method: "POST",
+                                                data:{cancelSession: "TRUE"}, 
+                                                dataType: "json",
+                                                success:function(data)
+                                                {
+                                                    if(data.success.length > 0){
+                                                        window.location = "//192.168.0.35:902/message/success";
+                                                    }else{
+                                                        alert("Successfully Paid!");
+                                                    }
+                                                },
+                                                error: function(xhr, ajaxOptions, thrownError){
+                                                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                                                }
+                                            });
+                                        }
+                                    });
 
                                 }else{
                                     bulmaToast.toast({ 
