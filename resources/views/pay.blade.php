@@ -32,13 +32,27 @@ if(loggedIn == "false"){
         $procid = $_GET["procid"];
         $digest = $_GET["digest"];
 
-        session()->put('merchId',$merchId);
-        session()->put('txnid',$txnid);
-        session()->put('amount',$amount);
-        session()->put('param1',$param1);
-        session()->put('param2',$param2);
-        session()->put('procid',$procid);
-        session()->put('digest',$digest);
+        $secret_key = env("EWALLET_SECRET_KEY", "PINOYTRAVEL-EWALLET123");
+        $digest_str = $merchId.':'.$txnid.':'.number_format((float)$amount, 2, '.', ',').':PHP:Payment for '.$param1.':'.$param2.':'.$secret_key;
+        $sha1digest = sha1($digest_str); 
+
+            if($sha1digest == $digest){
+
+                session()->put('merchId',$merchId);
+                session()->put('txnid',$txnid);
+                session()->put('amount',$amount);
+                session()->put('param1',$param1);
+                session()->put('param2',$param2);
+                session()->put('procid',$procid);
+                session()->put('digest',$digest);
+
+            }else{
+                ?>
+                <script>
+                    window.location = '//192.168.0.35:902/home?digest=false';
+                </script>
+                <?php
+            }
         }
     ?>
 @endauth
@@ -132,6 +146,11 @@ if(loggedIn == "false"){
                     }
                     else if(data.success.length > 0)
                     {
+                        var x = document.getElementById("payNow");
+                        x.innerHTML = "Loading...";
+                        document.getElementById("payNow").disabled = true;
+                        
+
                         $.ajax({
                             headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                             url: "{{ route('payNow') }}",
@@ -141,27 +160,6 @@ if(loggedIn == "false"){
                             success:function(data)
                             {
                                 if(data.success.length > 0){
-                                    //Comment
-                                        // window.location = "//192.168.0.35:902/message/success";
-                                        // window.location = "//192.168.0.35:902/reseller/transaction_history";
-                                        //Working POST REQUEST Data API
-                                        //Soon will need to call an API to notify if payment is successful or not
-                                        //Uncomment and modify which api endpoint is needed and replace the params&values
-                                        // $.ajax({
-                                        //     url: "http://103.93.223.103:205/api/login",
-                                        //     method: "POST",
-                                        //     data:{ companyID:"2018-101", password:"123456" }, 
-                                        //     dataType: "json",
-                                        //     success:function(data)
-                                        //     {
-                                        //         alert(data.data.access_token);
-                                        //     },
-                                        //     error: function(xhr, ajaxOptions, thrownError){
-                                        //         console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                                        //     }
-                                        // });
-                                    //Comment End
-
                                     var merchId = '<?php echo session()->get("merchId"); ?>';
                                     var txnid = '<?php echo session()->get("txnid"); ?>';
                                     var amount = '<?php echo session()->get("amount"); ?>';
