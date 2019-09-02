@@ -11,16 +11,16 @@ use App\Models\TransactionDetails;
 
 class PayController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        if(session()->get('merchId') == "")
-        {
-            abort(404);
-        }
-        else
-        {
+        // if(session()->get('merchId') == "")
+        // {
+        //     abort(404);
+        // }
+        // else
+        // {
             return view('pay');
-        }
+        // }
     }
 
     public function getReceipt(Request $request)

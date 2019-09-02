@@ -1,5 +1,15 @@
 @extends('layouts.appReseller')
-@section('content')        
+@section('content')
+<?php
+if(session()->forget('merchId') != ""){
+            session()->forget('merchId');
+            session()->forget('txnid');
+            session()->forget('amount');
+            session()->forget('param1');
+            session()->forget('param2');
+            session()->forget('procid');
+}
+?>
   <p class="is-large is-pulled-right" style="margin-top:1em; margin-right:10px;">Balance: <strong>
       @if(count($userBal))
       ₱{{ number_format((float)$userBal[0]->total_balance, 2, '.', ',') }}

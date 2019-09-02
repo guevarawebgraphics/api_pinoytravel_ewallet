@@ -1,6 +1,47 @@
 @extends('layouts.app')
 @section('content') 
 
+<script>
+var session = '<?php echo session()->get("merchId"); ?>';
+var loggedIn = "{{ auth()->check() ? 'true' : 'false' }}";
+
+if(loggedIn == "false"){
+    var merchId = '<?php if(isset($_GET["merchantid"])){ echo $_GET["merchantid"]; } ?>';
+    var txnid = '<?php if(isset($_GET["txnid"])){ echo $_GET["txnid"]; } ?>';
+    var ccy = '<?php if(isset($_GET["ccy"])){ echo $_GET["ccy"]; } ?>';
+    var amount = '<?php if(isset($_GET["amount"])){ echo $_GET["amount"]; } ?>';
+    var description = '<?php if(isset($_GET["description"])){ echo $_GET["description"]; } ?>';
+    var email = '<?php if(isset($_GET["email"])){ echo $_GET["email"]; } ?>';
+    var digest = '<?php if(isset($_GET["digest"])){ echo $_GET["digest"]; } ?>';
+    var param1 = '<?php if(isset($_GET["param1"])){ echo $_GET["param1"]; } ?>';
+    var param2 = '<?php if(isset($_GET["param2"])){ echo $_GET["param2"]; } ?>';
+    var procid = '<?php if(isset($_GET["procid"])){ echo $_GET["procid"]; } ?>';
+
+    window.location = '//192.168.0.35:902/login?merchantid='+merchId+'&txnid='+txnid+'&amount='+amount+'&ccy='+ccy+'&description='+description+'&email='+email+'&digest='+digest+'&param1='+param1+'&param2='+param2+'&procid='+procid;
+}
+</script>
+
+@auth
+    <?php
+        if(session()->get("merchId") == ""){
+        $merchId = $_GET["merchantid"];
+        $txnid = $_GET["txnid"];
+        $amount = $_GET["amount"];
+        $param1 = $_GET["param1"];
+        $param2 = $_GET["param2"];
+        $procid = $_GET["procid"];
+        $digest = $_GET["digest"];
+
+        session()->put('merchId',$merchId);
+        session()->put('txnid',$txnid);
+        session()->put('amount',$amount);
+        session()->put('param1',$param1);
+        session()->put('param2',$param2);
+        session()->put('procid',$procid);
+        session()->put('digest',$digest);
+        }
+    ?>
+@endauth
 
 <div class="has-text-centered animated fadeIn">
     <img src="{{asset('img/icon/pt_logo.png')}}" alt="PinoyTravel" style="margin-top:4em; margin-bottom:2em;">
@@ -32,6 +73,7 @@
   </p>
 </div>
 </footer>
+
 
 
 <!-- Get Receipt Details --->

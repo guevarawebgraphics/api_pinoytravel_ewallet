@@ -41,6 +41,7 @@
 //IF THE ADMIN WILL NOT BE ALLOWED TO VIEW RESELLER ACCOUNT
 // Route::group(['middleware'=> ['reseller']], function(){
 Route::group(['middleware'=> ['auth']], function(){
+    
     Route::get('/reseller/commission/view','ResellerController@commission');
     Route::get('/reseller/reservation/view','ResellerController@reservation');
     Route::get('/reseller/topup','ResellerController@topup');
@@ -59,8 +60,7 @@ Route::group(['middleware'=> ['auth']], function(){
     Route::get('reseller/transactions/getTopup', 'ResellerController@getTopup')->name('getTopup');
     
     Route::post('/reseller/topup/checkout', 'ResellerController@checkoutDragonpay');
-    
-    Route::get('/pay', 'PayController@index');
+
     Route::get('pay/getReceipt', 'PayController@getReceipt')->name('getReceipt');
     Route::post('pay/payNow', 'PayController@payNow')->name('payNow');
     Route::post('pay/payVal', 'PayController@payVal')->name('payVal');
@@ -95,7 +95,9 @@ Route::get('/test','HomeController@test')->middleware('auth');
 // Route::get('/test3','ResellerController@testall3');
 
 Route::get('/pay/1', function () {
-    return view('auth.login');
+    // return view('auth.login');
+    return redirect(url()->previous());
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/pay', 'PayController@index');

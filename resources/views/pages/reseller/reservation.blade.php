@@ -1,6 +1,15 @@
 @extends('layouts.appReseller')
 @section('content')        
-
+<?php
+if(session()->forget('merchId') != ""){
+            session()->forget('merchId');
+            session()->forget('txnid');
+            session()->forget('amount');
+            session()->forget('param1');
+            session()->forget('param2');
+            session()->forget('procid');
+}
+?>
 
   <p class="is-large is-pulled-right" style="margin-top:1em; margin-right:10px;">Balance: <strong>
       @if(count($userBal))
