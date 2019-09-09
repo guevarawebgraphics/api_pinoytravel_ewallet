@@ -4,6 +4,8 @@
 <script>
 var session = '<?php echo session()->get("merchId"); ?>';
 var loggedIn = "{{ auth()->check() ? 'true' : 'false' }}";
+var app_redirect = "<?php echo env('APP_REDIRECT'); ?>";
+var app_api_pt = "<?php echo env('APP_API_PT'); ?>";
 
 if(loggedIn == "false"){
     var merchId = '<?php if(isset($_GET["merchantid"])){ echo $_GET["merchantid"]; } ?>';
@@ -17,39 +19,47 @@ if(loggedIn == "false"){
     var param2 = '<?php if(isset($_GET["param2"])){ echo $_GET["param2"]; } ?>';
     var procid = '<?php if(isset($_GET["procid"])){ echo $_GET["procid"]; } ?>';
 
-    window.location = '//192.168.0.35:902/login?merchantid='+merchId+'&txnid='+txnid+'&amount='+amount+'&ccy='+ccy+'&description='+description+'&email='+email+'&digest='+digest+'&param1='+param1+'&param2='+param2+'&procid='+procid;
+    window.location = '//'+app_redirect+'/login?merchantid='+merchId+'&txnid='+txnid+'&amount='+amount+'&ccy='+ccy+'&description='+description+'&email='+email+'&digest='+digest+'&param1='+param1+'&param2='+param2+'&procid='+procid;
 }
 </script>
 
 @auth
     <?php
         if(session()->get("merchId") == ""){
-        $merchId = $_GET["merchantid"];
-        $txnid = $_GET["txnid"];
-        $amount = $_GET["amount"];
-        $param1 = $_GET["param1"];
-        $param2 = $_GET["param2"];
-        $procid = $_GET["procid"];
-        $digest = $_GET["digest"];
+            if(isset($_GET["merchantid"], $_GET["txnid"], $_GET["amount"], $_GET["param1"], $_GET["param2"], $_GET["procid"], $_GET["digest"])){
+                $merchId = $_GET["merchantid"];
+                $txnid = $_GET["txnid"];
+                $amount = $_GET["amount"];
+                $param1 = $_GET["param1"];
+                $param2 = $_GET["param2"];
+                $procid = $_GET["procid"];
+                $digest = $_GET["digest"];
 
-        $secret_key = env("EWALLET_SECRET_KEY", "PINOYTRAVEL-EWALLET123");
-        $digest_str = $merchId.':'.$txnid.':'.number_format((float)$amount, 2, '.', ',').':PHP:Payment for '.$param1.':'.$param2.':'.$secret_key;
-        $sha1digest = sha1($digest_str); 
+                $secret_key = env("APP_EWALLET_SECRET_KEY");
+                $digest_str = $merchId.':'.$txnid.':'.number_format((float)$amount, 2, '.', ',').':PHP:Payment for '.$param1.':'.$param2.':'.$secret_key;
+                $sha1digest = sha1($digest_str); 
 
-            if($sha1digest == $digest){
+                if($sha1digest == $digest){
 
-                session()->put('merchId',$merchId);
-                session()->put('txnid',$txnid);
-                session()->put('amount',$amount);
-                session()->put('param1',$param1);
-                session()->put('param2',$param2);
-                session()->put('procid',$procid);
-                session()->put('digest',$digest);
+                    session()->put('merchId',$merchId);
+                    session()->put('txnid',$txnid);
+                    session()->put('amount',$amount);
+                    session()->put('param1',$param1);
+                    session()->put('param2',$param2);
+                    session()->put('procid',$procid);
+                    session()->put('digest',$digest);
 
+                }else{
+                    ?>
+                    <script>
+                        window.location = '//'+app_redirect+'/home?digest=false';
+                    </script>
+                    <?php
+                }
             }else{
                 ?>
                 <script>
-                    window.location = '//192.168.0.35:902/home?digest=false';
+                    window.location = '//'+app_redirect+'/home?booking_url=missing';
                 </script>
                 <?php
             }
@@ -83,7 +93,7 @@ if(loggedIn == "false"){
 <footer class="footer animated bounceIn has-background-white">
 <div class="has-text-centered">
   <p>
-    <strong>v0.2</strong> - PinoyTravelReseller
+    <strong><?php echo env("APP_VERSION"); ?></strong> - PinoyTravelReseller
   </p>
 </div>
 </footer>
@@ -119,6 +129,7 @@ if(loggedIn == "false"){
 
 
     function payNow(){
+
         //Agreement
         if($('#chkAgreement').prop("checked") == true){
             var is_agreed = $("#chkAgreement").val();
@@ -168,7 +179,7 @@ if(loggedIn == "false"){
                                     var procid = '<?php echo session()->get("procid"); ?>';
 
                                     $.ajax({
-                                        url: "http://192.168.0.17:2330/v1/payment/ewallet",
+                                        url: app_api_pt,
                                         method: "POST",
                                         data:{ 
                                             merchID:merchId,
@@ -191,7 +202,7 @@ if(loggedIn == "false"){
                                                 success:function(data)
                                                 {
                                                     if(data.success.length > 0){
-                                                        window.location = "//192.168.0.35:902/message/success";
+                                                        window.location = "//"+app_redirect+"/message/success";
                                                     }else{
                                                         alert("Successfully Paid!");
                                                     }
@@ -201,6 +212,10 @@ if(loggedIn == "false"){
                                                 }
                                             });
                                         },
+                                        // error: function(xhr, ajaxOptions, thrownError){
+                                        //     console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                                        //     alert("API Call failed..");
+                                        // }
                                         error: function(){
                                             $.ajax({
                                                 headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -211,7 +226,7 @@ if(loggedIn == "false"){
                                                 success:function(data)
                                                 {
                                                     if(data.success.length > 0){
-                                                        window.location = "//192.168.0.35:902/message/success";
+                                                        window.location = "//"+app_redirect+"/message/success";
                                                     }else{
                                                         alert("Successfully Paid!");
                                                     }
@@ -274,7 +289,7 @@ if(loggedIn == "false"){
             success:function(data)
             {
                 if(data.success.length > 0){
-                    window.location = "//192.168.0.35:902/reseller/reservation/view";
+                    window.location = "//"+app_redirect+"/reseller/reservation/view";
                 }else{
                     bulmaToast.toast({ 
                         message: data.error[0],

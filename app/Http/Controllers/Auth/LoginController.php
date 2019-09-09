@@ -40,7 +40,7 @@ class LoginController extends Controller
             $param2 = $request->post('param2');
             $procid = $request->post('procid');
             $digest = $request->post('digest');
-            $secret_key = env("EWALLET_SECRET_KEY", "PINOYTRAVEL-EWALLET123");
+            $secret_key = env("APP_EWALLET_SECRET_KEY");
             $digest_str = $merchId.':'.$txnid.':'.number_format((float)$amount, 2, '.', ',').':PHP:Payment for '.$param1.':'.$param2.':'.$secret_key;
             $sha1digest = sha1($digest_str); 
 

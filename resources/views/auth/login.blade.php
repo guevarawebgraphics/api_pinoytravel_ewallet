@@ -89,6 +89,7 @@
                         <div class="content">
                                 <?php
                                 if(isset($_GET['digest'])){
+                                    $env_key = env('APP_EWALLET_SECRET_KEY');
                                     $merchId = $_GET['merchantid'];
                                     $txnid = $_GET['txnid'];
                                     $amount = number_format((float)$_GET['amount'], 2, '.', '');
@@ -97,7 +98,7 @@
                                     $procid = $_GET['procid'];
                                     $digest = $_GET['digest'];
                                     
-                                    $digest_str = $_GET['merchantid'].':'.$_GET['txnid'].':'.number_format((float)$_GET['amount'], 2, '.', ',').':PHP:Payment for '.$_GET['param1'].':'.$_GET['param2'].':'.'PINOYTRAVEL-EWALLET123';
+                                    $digest_str = $_GET['merchantid'].':'.$_GET['txnid'].':'.number_format((float)$_GET['amount'], 2, '.', ',').':PHP:Payment for '.$_GET['param1'].':'.$_GET['param2'].':'.$env_key;
                                     $sha1digest = sha1($digest_str); 
                                     if($sha1digest != $_GET['digest']){
                                         ?>
@@ -171,9 +172,10 @@
                                         </div>
                                         <div class="field">
                                                 @if (Route::has('password.request'))
-                                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                                        {{ __('Forgot Your Password?') }}
-                                                    </a>
+                                                {{-- <a class="btn btn-link" href="{{ route('password.request') }}"> --}}
+                                                <a class="btn btn-link" href="#">
+                                                    {{ __('Forgot Your Password?') }}
+                                                </a>
                                                     @endif
 
                                         </div>
@@ -191,7 +193,7 @@
 <footer class="footer animated bounceIn has-background-white">
     <div class="has-text-centered">
       <p>
-        <strong>v0.2</strong> - PinoyTravelReseller
+        <strong><?php echo env("APP_VERSION"); ?></strong> - PinoyTravelReseller
       </p>
     </div>
   </footer>

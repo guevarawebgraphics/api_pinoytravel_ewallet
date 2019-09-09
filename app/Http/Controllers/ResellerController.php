@@ -398,9 +398,12 @@ class ResellerController extends Controller
     public function topup(User $reseller)
     {   
         //API RESPONSE FOR PROCESSORS
-        $procType1url = file_get_contents("https://www.pigglywiggly.com.ph/api/v1/dragonpay/processors?type=1");
-        $procType2url = file_get_contents("https://www.pigglywiggly.com.ph/api/v1/dragonpay/processors?type=2");
-        $procType4url = file_get_contents("https://www.pigglywiggly.com.ph/api/v1/dragonpay/processors?type=4");
+        // $procType1url = file_get_contents("https://www.pigglywiggly.com.ph/api/v1/dragonpay/processors?type=1");
+        // $procType2url = file_get_contents("https://www.pigglywiggly.com.ph/api/v1/dragonpay/processors?type=2");
+        // $procType4url = file_get_contents("https://www.pigglywiggly.com.ph/api/v1/dragonpay/processors?type=4");
+        $procType1url = file_get_contents(env('APP_PROC1'));
+        $procType2url = file_get_contents(env('APP_PROC2'));
+        $procType4url = file_get_contents(env('APP_PROC4'));
         
         //TO FETCH RESPONSE (ON VIEW)
         $responseProc1 = json_decode($procType1url);
