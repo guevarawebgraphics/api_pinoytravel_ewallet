@@ -78,7 +78,9 @@
   
 
 <div class="has-text-centered animated fadeIn">
+    <a href="/">
         <img src="{{asset('img/icon/pt_logo.png')}}" alt="PinoyTravel" style="margin-top:4em; margin-bottom:2em;">
+    </a>
 </div>
 <div class="columns animated fadeIn">        
         <div class="column is-three-fifths is-offset-one-fifth card">
@@ -172,8 +174,8 @@
                                         </div>
                                         <div class="field">
                                                 @if (Route::has('password.request'))
-                                                {{-- <a class="btn btn-link" href="{{ route('password.request') }}"> --}}
-                                                <a class="btn btn-link" href="#">
+                                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                                {{-- <a class="btn btn-link" href="#"> --}}
                                                     {{ __('Forgot Your Password?') }}
                                                 </a>
                                                     @endif

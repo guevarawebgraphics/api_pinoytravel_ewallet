@@ -1,14 +1,20 @@
 @extends('layouts.app')
+@section('content') 
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+<div class="has-text-centered animated fadeIn">
+    <a href="/">
+        <img src="{{asset('img/icon/pt_logo.png')}}" alt="PinoyTravel" style="margin-top:4em; margin-bottom:2em;">
+    </a>
+</div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
+<div class="columns animated fadeIn">        
+    <div class="column is-three-fifths is-offset-one-fifth card">
+        <header class="card-header">
+                <p class="card-header-title"> {{ __('Reset Password') }} - PinoyTravel Reseller </p>          
+        </header>
+
+        <div class="card-content">
+                <form method="POST" action="{{ route('password.update') }}">
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">
@@ -17,12 +23,15 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-
+                                <p class="control has-icons-left">
+                                    <input id="email" type="email" class="input is-primary tooltip @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+                                    <span class="icon is-small is-left"><i class="far fa-envelope"></i></span>
+                                </p>
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <div class="notification is-danger">
+                                        <button class="delete"></button>
+                                        {{ $message }}
+                                    </div>            
                                 @enderror
                             </div>
                         </div>
@@ -31,12 +40,15 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
+                                <p class="control has-icons-left has-icons-left">
+                                    <input id="password" type="password" class="input is-primary tooltip @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
+                                </p>
                                 @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <div class="notification is-danger">
+                                        <button class="delete"></button>
+                                        {{ $message }}
+                                    </div>    
                                 @enderror
                             </div>
                         </div>
@@ -45,21 +57,35 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <p class="control has-icons-left has-icons-left">
+                                    <input id="password-confirm" type="password" class="input is-primary tooltip" name="password_confirmation" required autocomplete="new-password">
+                                    <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
+                                </p>
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+        </div>
+
+        <div class="has-text-right">
+            <div class="form-group row mb-0">
+                <div class="col-md-6 offset-md-4">
+                    <button type="submit" class="button is-success">
+                        {{ __('Reset Password') }}
+                    </button>
                 </div>
             </div>
         </div>
+
+        </form>
+
     </div>
 </div>
+<footer class="footer animated bounceIn has-background-white">
+    <div class="has-text-centered">
+        <p>
+        <strong><?php echo env("APP_VERSION"); ?></strong> - PinoyTravelReseller
+        </p>
+    </div>
+</footer>
+    
 @endsection
