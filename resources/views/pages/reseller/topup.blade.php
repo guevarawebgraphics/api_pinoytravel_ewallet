@@ -127,19 +127,19 @@ if(session()->forget('merchId') != ""){
                   <ul>
                     <li class="is-active" data-tab="1">
                       <a>
-                        <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
+                        <span class="icon is-small"><i class="fas fa-credit-card" aria-hidden="true"></i></span>
                         <span><strong>Card Payment</strong></span>
                       </a>
                     </li>
                     <li data-tab="2">
                       <a>
-                        <span class="icon is-small"><i class="fas fa-music" aria-hidden="true"></i></span>
+                        <span class="icon is-small"><i class="fas fa-globe" aria-hidden="true"></i></span>
                         <span><strong>Online Banking</strong></span>
                       </a>
                     </li>
                     <li data-tab="3">
                       <a>
-                        <span class="icon is-small"><i class="fas fa-film" aria-hidden="true"></i></span>
+                        <span class="icon is-small"><i class="fas fa-money-check-alt" aria-hidden="true"></i></span>
                         <span><strong>OTC Bank/ATM</strong></span>
                       </a>
                     </li>
@@ -155,12 +155,12 @@ if(session()->forget('merchId') != ""){
                         <span><strong>GCash</strong></span>
                       </a>
                     </li>
-                    {{-- <li data-tab="6">
+                    <li data-tab="6">
                       <a>
                         <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
-                        <span><strong>Dragon Pay</strong></span>
+                        <span><strong>Direct Deposit</strong></span>
                       </a>
-                    </li> --}}
+                    </li>
                   </ul>
                 </div>
 
@@ -302,9 +302,29 @@ if(session()->forget('merchId') != ""){
                             </div>                                        
                   </div>
                 </form>
-                  {{-- <div data-content="6">
-                    Dragon Pay
-                  </div> --}}
+                  <div data-content="6">
+                      <div class="box">
+                        <p><b><label class="has-text-danger">ZERO PAYMENT GATEWAY FEE!!</label> Pay CASH directly to PinoyTravel through over-the-counter bank deposit or ONLINE TRANSFER. This process may take 8-12 hours. Please make sure that your booking expiration is not within this period.</b></p>
+                      </div>
+
+                      <ul>
+                         <li>
+                           <p>1. DEPOSIT/Transfer here:PESO Account details:</p>
+                          <ul class="has-text-danger" style="margin-left:1.5em;">
+                            <li><b>Bank of Philippine Islands (BPI)<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account Number:3990-0176-29</b></li>
+                            <li><b>Banco de Oro (BDO)<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account Number:3920-0636-48</b></li>
+                          </ul>
+
+                         </li>
+                         <li><p>2. Take a clear picture of the deposit slip or screenshot of the online transfer confirmation, as your PROOF of payment.</p></li>
+                         <li><p>3. Go back to the PinoyTravel MAIN PAGE and click “VERIFY DIRECT PAYMENT” (located at the upper right corner beside “To Pay” red Button) to upload your proof of payment.</p></li>
+                         <li><p>4. Check the EMAIL with subject DIRECT PAYMENT CONFIRMATION for the actual amount you need to deposit. Follow next steps indicated in the email.</p></li>
+                         <li><p>5. PinoyTravel will verify your payment. Once verified your travel voucher will be sent to your email.</p></li>
+                         <li><p>6. If you agree with these terms, please the click the “I Agree..” box, press “Continue with Payment” and follow steps 1- 4 as stated above.</p></li>
+                      </ul>
+                    </div>
                 </div>
                 {{-- END OF TAB CONTENT--}}
                 {{-- END OF TABS--}}

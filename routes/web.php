@@ -11,6 +11,8 @@
 |
 */
 
+URL::forceRootUrl(env('APP_URL'));
+
 // Route::get('/', function () {
     //     return view('testing.test1');
     // });

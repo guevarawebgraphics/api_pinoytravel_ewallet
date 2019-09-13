@@ -502,14 +502,14 @@ class ResellerController extends Controller
         // return $paymentAmount. ' '. $selectedProcessorId . ' ' . $transactionId . ' '.$referenceCode . ' ' . $resellerName. ' ' .$resellerEmail . ' ' . $description;
         
         
-        $digest_str = "PINOYTRAVEL".':'.$transactionId.':'.number_format((float)$paymentAmount, 2, '.', ',').':PHP:Payment for '.$referenceCode.':'.$resellerEmail.':'.'Hjb5L$xD9';
+        $digest_str = "PINOYTRAVEL".':'.$transactionId.':'.number_format((float)$paymentAmount, 2, '.', '').':PHP:Payment for '.$referenceCode.':'.$resellerEmail.':'.env('APP_DRAGONPAY_SECRET_KEY');
         // dd($digest_str);
         $sha1digest = sha1($digest_str);
-        $urlString = env("DRAGONPAY_URL", "https://test.dragonpay.ph/Pay.aspx?");
+        $urlString = env("APP_DRAGONPAY_URL");
         //https://test.dragonpay.ph/Bank/Gateway.aspx?
-        $urlParam = "merchantid=".env("DRAGONPAY_MERCHANT_ID", "PINOYTRAVEL");
+        $urlParam = "merchantid=".env("APP_DRAGONPAY_MERCHANT_ID");
         // $urlParam .= "&txnid=".$transactionId."&amount=".$paymentAmount."&ccy=PHP&description=".$description."&email=".$resellerEmail."&digest=".$sha1digest;
-        $urlParam .= "&txnid=".$transactionId."&amount=".number_format((float)$paymentAmount, 2, '.', ',')."&ccy=PHP&description=Payment for ".$referenceCode."&email=".$resellerEmail."&digest=".$sha1digest;
+        $urlParam .= "&txnid=".$transactionId."&amount=".number_format((float)$paymentAmount, 2, '.', '')."&ccy=PHP&description=Payment for ".$referenceCode."&email=".$resellerEmail."&digest=".$sha1digest;
         $urlParam .= "&param1="."EW-".$referenceCode."&param2=".$resellerEmail."&procid=".$selectedProcessorId;
     
         $top_up = new TopUpHistory;
