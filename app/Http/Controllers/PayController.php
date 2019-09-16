@@ -220,7 +220,6 @@ class PayController extends Controller
         ");
 
         if(count($userBal)){
-        // if($userBal != ""){
             $txnDtls = new TransactionDetails;
             $txnDtls->userId = auth()->user()->id;
             $txnDtls->merchId = session()->get('merchId');
@@ -231,20 +230,6 @@ class PayController extends Controller
             $txnDtls->procId = session()->get('procid');
             $txnDtls->deleted = 0;
             $txnDtls->save();
-
-            //Code for deleting session
-            //session()->forget('');
-            
-            //Uncomment if you want toast for paid feedback
-            // session()->put('tnxSuccess','Successfully paid!');
-
-            // Comment if you want toast for paid feedback
-            // session()->forget('merchId');
-            // session()->forget('txnid');
-            // session()->forget('amount');
-            // session()->forget('param1');
-            // session()->forget('param2');
-            // session()->forget('procid');
 
             $messages = "Reference Code: ".session()->get('param1')." Successfully paid! ".session()->get('amount')." deducted to your wallet.";
             $success[] = $messages;
