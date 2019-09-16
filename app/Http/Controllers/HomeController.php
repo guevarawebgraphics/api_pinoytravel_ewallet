@@ -27,7 +27,10 @@ class HomeController extends Controller
      */
     public function index(User $user, Request $request)
     {   
-        $userBal = UserBalance::where('userId', auth()->user()->id)->get();
+        $userBal = UserBalance::where('userId', auth()->user()->id)
+        ->orderBy('created_at','desc')
+        ->take(1)
+        ->get();
         $user_record = DB::connection('mysql')->select("SELECT * FROM users WHERE id = '".auth()->user()->id."'");
 
         $searched = 0;

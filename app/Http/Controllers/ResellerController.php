@@ -369,18 +369,27 @@ class ResellerController extends Controller
     public function reservation()
     {
         // return 'this is reservation method from reseller controller';
-        $userBal = UserBalance::where('userId', auth()->user()->id)->get();
+        $userBal = UserBalance::where('userId', auth()->user()->id)
+                                ->orderBy('created_at','desc')
+                                ->take(1)
+                                ->get();
         return view('pages.reseller.reservation')->with('userBal', $userBal);
     }
     public function commission()
     {
     //    return 'this is commission method in reseller controller';
-        $userBal = UserBalance::where('userId', auth()->user()->id)->get();
+        $userBal = UserBalance::where('userId', auth()->user()->id)
+        ->orderBy('created_at','desc')
+        ->take(1)
+        ->get();
         return view('pages.reseller.commission')->with('userBal', $userBal);
     }
     public function transactions()
     {
-        $userBal = UserBalance::where('userId', auth()->user()->id)->get();
+        $userBal = UserBalance::where('userId', auth()->user()->id)
+        ->orderBy('created_at','desc')
+        ->take(1)
+        ->get();
         return view('pages.reseller.transactions')->with('userBal', $userBal);       
     }
 
@@ -425,7 +434,10 @@ class ResellerController extends Controller
         // private function checkoutDragonpay($txnid,$procid, $amount, $description, $email, $param1,$param2, $ip_address, $agent){
 
         //COMPACT WILL PASS VARIABLES TO THE VIEW
-        $userBal = UserBalance::where('userId', auth()->user()->id)->get();
+        $userBal = UserBalance::where('userId', auth()->user()->id)
+        ->orderBy('created_at','desc')
+        ->take(1)
+        ->get();
         return view('pages.reseller.topup', compact('reseller', 'responseProc1', 'responseProc2', 'responseProc4'))->with('userBal', $userBal); 
     }
     // public function checkoutDragonpay($transactionId, $processorId, $amount, $description, $email, $referenceCode)

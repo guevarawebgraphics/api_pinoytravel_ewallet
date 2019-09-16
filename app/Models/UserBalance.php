@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class UserBalance extends Model
 {
     protected $connection = 'mysql';
-    protected $table = "userbal";
+    protected $table = "total_userbalance";
 }

@@ -8,6 +8,7 @@ use Validator;
 use DB;
 use DateTime;
 use App\Models\TransactionDetails;
+use App\Models\UserBalance;
 
 class PayController extends Controller
 {
@@ -25,20 +26,22 @@ class PayController extends Controller
 
     public function getReceipt(Request $request)
     {
-        $userBal = DB::connection('mysql')->select("
-        SELECT a.id as userId, 
-            (select sum(tuhh.amount) from top_up_history as tuhh where tuhh.userId = a.id AND tuhh.is_paid = 1) as total_topup,
-            (select sum(trr.amount) from transaction_details as trr where trr.userId = a.id) as total_spent,
-            ((select sum(tuh.amount) from top_up_history as tuh where tuh.userId = a.id AND tuh.is_paid = 1)
-            -
-            (select sum(tr.amount) from transaction_details as tr where tr.userId = a.id)) as total_balance
+        // $userBal = DB::connection('mysql')->select("
+        // SELECT a.id as userId, 
+        //     (select sum(tuhh.amount) from top_up_history as tuhh where tuhh.userId = a.id AND tuhh.is_paid = 1) as total_topup,
+        //     (select sum(trr.amount) from transaction_details as trr where trr.userId = a.id) as total_spent,
+        //     ((select sum(tuh.amount) from top_up_history as tuh where tuh.userId = a.id AND tuh.is_paid = 1)
+        //     -
+        //     (select sum(tr.amount) from transaction_details as tr where tr.userId = a.id)) as total_balance
             
-        FROM users AS a
-        LEFT JOIN  top_up_history AS b ON a.id = b.userId
-        LEFT JOIN transaction_details as c ON a.id = c.userId
-        WHERE a.id = '".auth()->user()->id."' AND b.is_paid = 1
-        GROUP BY a.id
-        ");
+        // FROM users AS a
+        // LEFT JOIN  top_up_history AS b ON a.id = b.userId
+        // LEFT JOIN transaction_details as c ON a.id = c.userId
+        // WHERE a.id = '".auth()->user()->id."' AND b.is_paid = 1
+        // GROUP BY a.id
+        // ");
+
+        $userBal = DB::connection('mysql')->select("SELECT * FROM total_userbalance WHERE userId = '".auth()->user()->id."' ORDER BY created_at DESC LIMIT 1");
 
         if(!empty($userBal)){
             $currentBalance = number_format((float)$userBal[0]->total_balance, 2, '.', ',');
@@ -144,20 +147,22 @@ class PayController extends Controller
         $refCode = session()->get('param1');
         $txnDtls = DB::connection('mysql')->select("SELECT * FROM transaction_details WHERE transId = '".$transId."' AND refCode = '".$refCode."'");
 
-        $userBal = DB::connection('mysql')->select("
-        SELECT a.id as userId, 
-            (select sum(tuhh.amount) from top_up_history as tuhh where tuhh.userId = a.id AND tuhh.is_paid = 1) as total_topup,
-            (select sum(trr.amount) from transaction_details as trr where trr.userId = a.id) as total_spent,
-            ((select sum(tuh.amount) from top_up_history as tuh where tuh.userId = a.id AND tuh.is_paid = 1)
-            -
-            (select sum(tr.amount) from transaction_details as tr where tr.userId = a.id)) as total_balance
+        // $userBal = DB::connection('mysql')->select("
+        // SELECT a.id as userId, 
+        //     (select sum(tuhh.amount) from top_up_history as tuhh where tuhh.userId = a.id AND tuhh.is_paid = 1) as total_topup,
+        //     (select sum(trr.amount) from transaction_details as trr where trr.userId = a.id) as total_spent,
+        //     ((select sum(tuh.amount) from top_up_history as tuh where tuh.userId = a.id AND tuh.is_paid = 1)
+        //     -
+        //     (select sum(tr.amount) from transaction_details as tr where tr.userId = a.id)) as total_balance
             
-        FROM users AS a
-        LEFT JOIN  top_up_history AS b ON a.id = b.userId
-        LEFT JOIN transaction_details as c ON a.id = c.userId
-        WHERE a.id = '".auth()->user()->id."' AND b.is_paid = 1
-        GROUP BY a.id
-        ");
+        // FROM users AS a
+        // LEFT JOIN  top_up_history AS b ON a.id = b.userId
+        // LEFT JOIN transaction_details as c ON a.id = c.userId
+        // WHERE a.id = '".auth()->user()->id."' AND b.is_paid = 1
+        // GROUP BY a.id
+        // ");
+         
+        $userBal = DB::connection('mysql')->select("SELECT * FROM total_userbalance WHERE userId = '".auth()->user()->id."' ORDER BY created_at DESC LIMIT 1");
 
         if(!empty($userBal)){
             $totalBalance = $userBal[0]->total_balance;
@@ -204,22 +209,26 @@ class PayController extends Controller
         $error = array();
         $success = array();
 
-        $userBal = DB::connection('mysql')->select("
-        SELECT a.id as userId, 
-            (select sum(tuhh.amount) from top_up_history as tuhh where tuhh.userId = a.id AND tuhh.is_paid = 1) as total_topup,
-            (select sum(trr.amount) from transaction_details as trr where trr.userId = a.id) as total_spent,
-            ((select sum(tuh.amount) from top_up_history as tuh where tuh.userId = a.id AND tuh.is_paid = 1)
-            -
-            (select sum(tr.amount) from transaction_details as tr where tr.userId = a.id)) as total_balance
+        // $userBal = DB::connection('mysql')->select("
+        // SELECT a.id as userId, 
+        //     (select sum(tuhh.amount) from top_up_history as tuhh where tuhh.userId = a.id AND tuhh.is_paid = 1) as total_topup,
+        //     (select sum(trr.amount) from transaction_details as trr where trr.userId = a.id) as total_spent,
+        //     ((select sum(tuh.amount) from top_up_history as tuh where tuh.userId = a.id AND tuh.is_paid = 1)
+        //     -
+        //     (select sum(tr.amount) from transaction_details as tr where tr.userId = a.id)) as total_balance
             
-        FROM users AS a
-        LEFT JOIN  top_up_history AS b ON a.id = b.userId
-        LEFT JOIN transaction_details as c ON a.id = c.userId
-        WHERE a.id = '".auth()->user()->id."' AND b.is_paid = 1
-        GROUP BY a.id
-        ");
+        // FROM users AS a
+        // LEFT JOIN  top_up_history AS b ON a.id = b.userId
+        // LEFT JOIN transaction_details as c ON a.id = c.userId
+        // WHERE a.id = '".auth()->user()->id."' AND b.is_paid = 1
+        // GROUP BY a.id
+        // ");
 
+        $userBal = DB::connection('mysql')->select("SELECT * FROM total_userbalance WHERE userId = '".auth()->user()->id."' ORDER BY created_at DESC LIMIT 1");
+        
         if(count($userBal)){
+
+            //Save Transaction Details
             $txnDtls = new TransactionDetails;
             $txnDtls->userId = auth()->user()->id;
             $txnDtls->merchId = session()->get('merchId');
@@ -230,6 +239,20 @@ class PayController extends Controller
             $txnDtls->procId = session()->get('procid');
             $txnDtls->deleted = 0;
             $txnDtls->save();
+
+            //Balance Deduction
+            $final_bal = $userBal[0]->total_balance - session()->get('amount');
+            $getrefCode = session()->get('param1');
+            $gettxnid = session()->get('txnid');
+
+            $last_id = DB::connection('mysql')->select("SELECT * FROM transaction_details WHERE transID = '".$gettxnid."' AND refCode = '".$getrefCode."'");
+            $ttl_userbal = new UserBalance;
+            $ttl_userbal->userId = auth()->user()->id;
+            $ttl_userbal->txhistoryId = $last_id[0]->id;
+            $ttl_userbal->total_balance = $final_bal;
+            $ttl_userbal->created_at = now();
+            $ttl_userbal->updated_at = now();
+            $ttl_userbal->save();
 
             $messages = "Reference Code: ".session()->get('param1')." Successfully paid! ".session()->get('amount')." deducted to your wallet.";
             $success[] = $messages;

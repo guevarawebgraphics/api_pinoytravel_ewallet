@@ -13,7 +13,10 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $userBal = UserBalance::where('userId', auth()->user()->id)->get();
+        $userBal = UserBalance::where('userId', auth()->user()->id)
+        ->orderBy('created_at','desc')
+        ->take(1)
+        ->get();
         return view('pages.reseller.transactionhistory')->with('userBal', $userBal);     
     }
     public function getTxnHistory(){
