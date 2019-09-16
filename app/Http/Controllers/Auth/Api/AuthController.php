@@ -12,6 +12,7 @@ use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Route;
 use App\Models\top_up_history;
+use App\Models\total_userbalance;
 
 
 class AuthController extends Controller
@@ -514,23 +515,61 @@ class AuthController extends Controller
             $secret_key = $request->secret_key;
             $top_up_info = DB::connection('mysql')->select("SELECT * from top_up_history WHERE txnid = '".$txnid."' AND refCode = '".$refCode."'");
             
+            $userIdBal = $top_up_info[0]->userId;
+            $userBal = DB::connection('mysql')->select("SELECT * from total_userbalance WHERE userId = '".$userIdBal."' ORDER BY created_at DESC LIMIT 1");
+
             if(!empty($top_up_info)){
     
                 if(sha1("PINOYTRAVEL-EWALLET") != $secret_key){
                     return response(['status'=>'error','message'=>'secret key did not match']);
                 }else{
-                    DB::table('top_up_history')
-                    ->where('txnid', $txnid)
-                    ->where('refCode', $refCode)
-                    ->update([
-                    'dpRefNo'=>$refno,
-                    'status'=>$status,
-                    'dpProcID'=>$procid,
-                    'is_paid' => '1',
-                    'updated_at' => now()
-                    ]);
+                    if($top_up_info[0]->is_paid != 1){
+                        DB::table('top_up_history')
+                        ->where('txnid', $txnid)
+                        ->where('refCode', $refCode)
+                        ->update([
+                        'dpRefNo'=>$refno,
+                        'status'=>$status,
+                        'dpProcID'=>$procid,
+                        'is_paid' => '1',
+                        'updated_at' => now()
+                        ]);
+                        
+                        if(!empty($userBal))
+                        {
+                            $ttl_bal = $userBal[0]->total_balance;
+                            $final_bal = $ttl_bal + $top_up_info[0]->amount;
+                            $ttl_userbal = new total_userbalance;
+                            $ttl_userbal->userId = $userIdBal;
+                            $ttl_userbal->tophistoryId = $top_up_info[0]->id;
+                            $ttl_userbal->total_balance = $final_bal;
+                            $ttl_userbal->created_at = now();
+                            $ttl_userbal->updated_at = now();
+                            $ttl_userbal->save();
+                        }
+                        else
+                        {
+                            $ttl_userbal = new total_userbalance;
+                            $ttl_userbal->userId = $userIdBal;
+                            $ttl_userbal->tophistoryId = $top_up_info[0]->id;
+                            $ttl_userbal->total_balance = $top_up_info[0]->amount;
+                            $ttl_userbal->created_at = now();
+                            $ttl_userbal->updated_at = now();
+                            $ttl_userbal->save();
+                        }
+                        
+                        
+                        return response(['status'=>'oK','message'=>'Ewallet Balance Successfully Topped up!']);
+                    }else{
+                        
+                        return response([
+                        'status'=>'error',
+                        'txnid'=>$txnid,
+                        'refCode'=>$refCode,
+                        'message'=>'tnxid and refCode already paid!'
+                        ]);
+                    }
 
-                    return response(['status'=>'oK','message'=>'Ewallet Balance Successfully Topped up!']);
                 }
                 
             }
