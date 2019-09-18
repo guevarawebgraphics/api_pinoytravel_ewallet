@@ -60,6 +60,33 @@
                           </div>
                         {{-- form end--}}
                         {{-- form start--}}
+                        <div class="field is-horizontal">
+                          <div class="field-label is-normal">
+                          <label class="label">Account Balance</label>
+                          </div>
+                          <div class="field-body">
+                            <div class="field">
+                              <p class="control">
+                                  <?php
+                                  if(!empty($walletBal[0]->userId))
+                                      if($walletBal[0]->userId == $reseller->id){
+                                          
+                                          $bal = number_format((float)$walletBal[0]->total_balance, 2, '.', ',');
+                                      }else{
+                                          $bal = number_format((float)0, 2, '.', ',');
+                                      }
+                                  else{
+                                      $bal = number_format((float)0, 2, '.', ',');
+                                  }
+                                  ?>
+                                <input class="input" type="text" placeholder="₱0.00" value="₱{{ $bal }}" readonly>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        {{-- form end--}}
+
+                        {{-- form start--}}
                           {{-- <div class="field is-horizontal">
                             <div class="field-label is-normal">
                               <label class="label">Password</label>
@@ -95,7 +122,9 @@
           {{-- title--}}
           <h1 class="title is-3">Reseller Accounts</h1>  
           <a href="/admin/create/reseller" class="button is-success"><span class="file-icon"><i class="fas fa-plus"></i></span>Create</a>         
-            {{-- start of search bar--}}    
+          <br>
+          <br>
+          {{-- start of search bar--}}    
             <div class="field has-addons is-grouped is-grouped-right">
                 <div class="control">
                         {{-- <form action="/test2" method="GET"> --}}
@@ -122,13 +151,15 @@
                     </div> --}}
             </div>      
             {{-- end of search bar--}} 
-            {{-- start of table--}}          
+            {{-- start of table--}}  
+            <div class="" style="overflow-y: auto;">        
             <table class="table is-clear-fix is-bordered is-fullwidth is-striped" style="margin-bottom: 1.5em">
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Address</th>
+                        <th>Account Balance</th>
                         <th>Contact</th>
                         {{-- <th>Image</th>   --}}
                         <th>Actions</th>  
@@ -153,6 +184,9 @@
                                 <td>{{$reseller->name}}</td>                        
                                 <td>{{$reseller->email}}</td>
                                 <td>{{$reseller->address}}</td>
+                                <td>
+                                    ₱{{ number_format((float)$reseller->total_balance, 2, '.', ',') }}
+                                </td>
                                 <td>{{$reseller->contact_no}}</td>
                                 {{-- <td><img src="" alt="{{$reseller_temp->profile_pic}}" height="25px" width="100px"></td>                                                                         --}}
                                 <td>
@@ -268,6 +302,7 @@
                         {{-- <tr></tr> --}}
                     </tbody>
             </table>
+            </div>
                 <p class="title is-5 has-text-centered">No Reseller Account Found </p>
                     @endif
                 

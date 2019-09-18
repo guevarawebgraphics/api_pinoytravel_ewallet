@@ -9,6 +9,7 @@ use App\User;
 use App\Models\TopUpHistory;
 use DB;
 use App\Models\UserBalance;
+use App\Models\ViewTotalUserBalance;
 
 class ResellerController extends Controller
 {
@@ -31,13 +32,18 @@ class ResellerController extends Controller
      */
     public function create()
     {    
-        $resellers = User::orderBy('created_at', 'desc')
-        ->where('is_blocked', '0')
-        ->where('is_admin', '0')            
+        $resellers = ViewTotalUserBalance::orderBy('created_at', 'desc')
+        ->where('is_blocked', '0')  
+        ->where('is_admin', '0')          
         ->paginate(20);
+
+        $wallet_balance = UserBalance::orderBy('created_at','desc')
+        ->take(1)
+        ->get();
+
         // return view('pages.reseller.create');
         // return view('pages.reseller.create', compact('resellers'));     x        
-        return view('pages.admin.create', compact('resellers'));             
+        return view('pages.admin.create', compact('resellers'))->with('walletBal',$wallet_balance);             
     }
 
     /**
@@ -115,23 +121,22 @@ class ResellerController extends Controller
      */
     public function show(User $reseller)
     {
-        //Show Reseller By ID :)
-        // return Reseller::find($id);
-        // $resellers = Reseller::findOrFail($id);        
-        // return view('pages.viewRacct_form');    
-        // $resellers = Reseller::find($id);
-        // return $reseller;
-        //USED
-        // return view('pages.reseller.viewform', compact('reseller')); 
-        //TEST
-        // dd('test');
-        $resellers = User::orderBy('created_at', 'desc')
-        ->where('is_blocked', '0')            
-        ->where('is_admin', '0')
+        
+        $resellers = ViewTotalUserBalance::orderBy('created_at', 'desc')
+        ->where('is_blocked', '0')  
+        ->where('is_admin', '0')          
         ->paginate(20);
-        return view('pages.admin.viewform', compact('reseller','resellers'));
-    }
 
+        $walletBal = UserBalance::orderBy('created_at','desc')
+         ->where('userId','=',$reseller->id)
+         ->take(1)
+         ->get();
+
+
+        return view('pages.admin.viewform', compact('reseller','resellers','walletBal'));
+        
+    }
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -146,11 +151,17 @@ class ResellerController extends Controller
         //USED
         //  return view('pages.reseller.editform', compact('reseller'));
          //TEST
-         $resellers = User::orderBy('created_at', 'desc')
-         ->where('is_blocked', '0')
-         ->where('is_admin', '0')            
-         ->paginate(20);
-         return view('pages.admin.editform', compact('reseller','resellers')); 
+         $resellers = ViewTotalUserBalance::orderBy('created_at', 'desc')
+        ->where('is_blocked', '0')  
+        ->where('is_admin', '0')          
+        ->paginate(20);
+
+         $walletBal = UserBalance::orderBy('created_at','desc')
+         ->where('userId','=',$reseller->id)
+         ->take(1)
+         ->get();
+        
+         return view('pages.admin.editform', compact('reseller','resellers','walletBal'));
         //  return view('testing.test2', compact('reseller'));
     }
 
@@ -191,6 +202,7 @@ class ResellerController extends Controller
                 'password' => 'min:8|confirmed|nullable',
                 'password_confirmation' => 'min:8|nullable'         
             ], $messages);
+            
             // return 123;
         // return redirect('/dashboard/1')->with('success', 'Reseller Edited');
         // $resellers = Reseller::find($id);
@@ -259,18 +271,22 @@ class ResellerController extends Controller
     }
 
     //Standard View For All Resellers
-    public function all()
+    public function all(User $resellers)
     {
         //Use the model of reseller to get all the data of the reseller table
         // $resellers = Reseller::all();
         // $resellers = Reseller::orderBy('name', 'desc')->paginate(1);
         $searched = 0;
         // $reseller = Reseller::orderBy('created_at', 'desc')
-        $resellers = User::orderBy('created_at', 'desc')
+        $resellers = ViewTotalUserBalance::orderBy('created_at', 'desc')
         ->where('is_blocked', '0')  
         ->where('is_admin', '0')          
         ->paginate(20);
-        return view('pages.admin.view', compact('resellers', 'searched'));    
+
+        $walletBal = UserBalance::orderBy('created_at','DESC')
+        ->get();
+        
+        return view('pages.admin.view', compact('resellers', 'searched','walletBal'));    
     }
     //View on Edit
     public function all_edit()
@@ -301,10 +317,12 @@ class ResellerController extends Controller
     public function wallet()
     {   
         $searched = 0;
-        $resellers = User::orderBy('created_at', 'desc')
-        ->where('is_blocked', '0')
-        ->where('is_admin', '0')            
+        //from User to ViewTotalUserBalance
+        $resellers = ViewTotalUserBalance::orderBy('created_at', 'desc')
+        ->where('is_blocked', '0')  
+        ->where('is_admin', '0')          
         ->paginate(20);
+        
         return view('pages.admin.wallet', compact('resellers', 'searched'));   
         // return Reseller::where('name', 'Jon Snow')->get(); 
     }
@@ -350,16 +368,28 @@ class ResellerController extends Controller
             {$searched = 1;}
                         
         // dd($search);
-        $resellers = User::orderBy('created_at', 'desc')
+        // $resellers = User::orderBy('created_at', 'desc')
+        // ->where('Name', 'like', '%'.$search.'%')
+        // ->where('is_admin', 0)
+        // ->paginate(20);
+
+        //from User to ViewTotalUserBalance
+        $resellers = ViewTotalUserBalance::orderBy('created_at', 'desc')
         ->where('Name', 'like', '%'.$search.'%')
         ->where('is_admin', 0)
         ->paginate(20);
+
+        $wallet_balance = UserBalance::orderBy('created_at','desc')
+        ->take(1)
+        ->get();
+
+
         //CHECK IF THE ADMIN IS SEARCHING IN THE WALLET PAGE OR NOT
         if($request->input('wallet_search') == 1){            
-            return view('pages.admin.wallet', compact('resellers', 'searched'));         
+            return view('pages.admin.wallet', compact('resellers', 'searched'))->with('walletBal',$wallet_balance);         
             
         } else            
-            return view('pages.admin.view', compact('resellers', 'searched'));         
+            return view('pages.admin.view', compact('resellers', 'searched'))->with('walletBal',$wallet_balance);         
         
 
     }
@@ -554,8 +584,7 @@ class ResellerController extends Controller
         //    return redirect($urlTest);
     }
 
-    public function getTopup()
-    {
+    public function getTopup(){
         $TopUpHistory = DB::connection('mysql')->select("SELECT * FROM top_up_history WHERE userId = '".auth()->user()->id."' AND is_paid = 1 ORDER BY updated_at DESC");
 
         $data = "";
@@ -576,5 +605,105 @@ class ResellerController extends Controller
             }
         }
         echo $data;
+    }
+
+    public function modifyVal(Request $request){
+        $message = "";
+        $output = array();
+        $error = array();
+        $success = array();
+
+        if($request->proceed != "TRUE"){
+
+            $messages = "Problem occurred please contact webmaster.";
+            $error[] = $messages;
+
+        }else if($request->amount == ""){
+
+            $messages = "Amount is required!";
+            $error[] = $messages;
+
+        }else if($request->radio == ""){
+
+            $messages = "Please choose if add or Deduct to reseller account";
+            $error[] = $messages;
+
+        }else if($request->modifyPwd == ""){
+
+            $messages = "Manage Account Balance password is required";
+            $error[] = $messages;
+
+        }else{
+
+            if(Hash::check($request->modifyPwd, auth()->user()->password)){
+                $messages = "Success!";
+                $success[] = $messages;
+            }else{
+                $messages = "Manage Account Balance password is incorrect!";
+                $error[] = $messages;
+            }
+            
+        }
+
+        $output = array(
+            'error'=>$error,
+            'success'=>$success
+        );
+
+        echo json_encode($output);
+    }
+
+    public function modifybalance(Request $request){
+        $message = "";
+        $output = array();
+        $error = array();
+        $success = array();
+
+        if($request->proceed == "TRUE"){
+            
+            $amount = number_format((float)$request->amount, 2, '.', '');
+            $userId = $request->userId;
+            $total_userbalance = DB::connection('mysql')->select("SELECT * FROM total_userbalance WHERE userId = '".$userId."' ORDER BY created_at DESC LIMIT 1");
+
+            if(!empty($total_userbalance[0]->userId)){
+                if($request->radio == "add"){
+                    $finalAmount = $amount + $total_userbalance[0]->total_balance;
+                }
+                else if($request->radio == "deduct")
+                {
+                    $resAmount = $total_userbalance[0]->total_balance - $amount;
+                    if($resAmount < 0){
+                        $finalAmount = number_format((float)0, 2, '.', '');
+                    }else{
+                        $finalAmount = number_format((float)$resAmount, 2, '.', '');
+                    }
+                }
+            }else{
+                $finalAmount = number_format((float)$amount, 2, '.', '');
+            }
+
+            $ttl_userbal = new UserBalance;
+            $ttl_userbal->userId = $userId;
+            $ttl_userbal->total_balance = $finalAmount;
+            $ttl_userbal->updated_by = auth()->user()->name;
+            $ttl_userbal->created_at = now();
+            $ttl_userbal->updated_at = now();
+            $ttl_userbal->save();
+
+            $messages = "Account Balance Successfully Updated!";
+            $success[] = $messages;
+
+        }else{
+
+            $messages = "Error...";
+            $error[] = $messages;
+        }
+
+        $output = array(
+            'error'=>$error,
+            'success'=>$success
+        );
+
+        echo json_encode($output);
     }
 }

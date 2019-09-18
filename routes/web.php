@@ -34,6 +34,10 @@ URL::forceRootUrl(env('APP_URL'));
             Route::get('/admin/edit/reseller/{reseller}', 'ResellerController@edit');
             // Route::put('/admin/reseller/{reseller}/update', 'ResellerController@update');
             Route::put('/admin/update/{reseller}', 'ResellerController@update');
+
+            Route::post('/admin/edit/reseller/modifybalance', 'ResellerController@modifybalance')->name('modifybalance');
+            Route::post('/admin/edit/reseller/modifyVal', 'ResellerController@modifyVal')->name('modifyVal');
+
             //DELETE RESOURCE ROUTE LATER
             //REFERENCE ONLY
             // Route::resource('admin', 'ResellerController');

@@ -13,7 +13,8 @@
                 </div>
             </div>      
             {{-- end of search bar--}}  
-            {{-- start of table--}}          
+            {{-- start of table--}} 
+            <div class="" style="overflow-y: auto;">         
             <table class="table is-clear-fix is-bordered" style="margin-bottom: 1.5em">
                 <thead>
                     <tr>
@@ -62,6 +63,7 @@
                     @else  
                 </tbody>
             </table>
+            </div>
                 <p class="title is-5 has-text-centered">No Reseller Account Found </p>
             @endif                                        
                 </tbody>

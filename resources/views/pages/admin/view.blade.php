@@ -7,7 +7,8 @@
           {{-- title--}}
           <h1 class="title is-3">Reseller Accounts</h1>      
           <a href="/admin/create/reseller" class="button is-success"><span class="file-icon"><i class="fas fa-plus"></i></span>Create</a>    
-          
+          <br>
+          <br>
             {{-- start of search bar--}}    
             <div class="field has-addons is-grouped is-grouped-right">
                 @if($searched == 0)                   
@@ -45,7 +46,8 @@
                     </div> --}}
             </div>      
             {{-- end of search bar--}}  
-            {{-- start of table--}}          
+            {{-- start of table--}}      
+            <div class="" style="overflow-y: auto;">    
             <table class="table is-clear-fix is-bordered is-fullwidth is-striped" style="margin-bottom: 1.5em">
                 <thead>
                     <tr>
@@ -53,6 +55,7 @@
                         <th>Email</th>
                         <th>Address</th>
                         <th>Contact</th>
+                        <th>Account Balance</th>
                         {{-- <th>Image</th>   --}}
                         <th>Actions</th>  
                         {{-- <th></th>--}}
@@ -77,6 +80,9 @@
                                 <td>{{$reseller->email}}</td>
                                 <td>{{$reseller->address}}</td>
                                 <td>{{$reseller->contact_no}}</td>
+                                <td>
+                                    ₱{{ number_format((float)$reseller->total_balance, 2, '.', ',') }}
+                                </td>
                                 {{-- <td><img src="" alt="{{$resellers->profile_pic}}" height="25px" width="100px"></td>                                                                         --}}
                                 <td>
                                     <div class="field is-grouped">
@@ -193,6 +199,7 @@
                         {{-- <tr></tr> --}}
                     </tbody>
             </table>
+            </div>
                 <p class="title is-5 has-text-centered">
                     No Reseller Account Found. 
                     <a class=" is-link" href="/admin/view/all">Go Back</a>

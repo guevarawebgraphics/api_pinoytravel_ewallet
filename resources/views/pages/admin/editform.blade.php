@@ -108,6 +108,101 @@
                       </div>
                   {{-- form end--}}
 
+                  
+                  {{-- form start--}}
+                  <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Account Balance</label>
+                        </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <?php
+                                if(!empty($walletBal[0]->userId)){
+                                    if($walletBal[0]->userId == $reseller->id){
+                                        
+                                        $bal = number_format((float)$walletBal[0]->total_balance, 2, '.', ',');
+                                        $balCompute = $walletBal[0]->total_balance;
+                                        $userIdBal = $walletBal[0]->userId;
+                                    }else{
+                                        $bal = number_format((float)0, 2, '.', ',');
+                                        $balCompute = 0;
+                                        $userIdBal = 0;
+                                    }
+                                }else{
+                                    $bal = number_format((float)0, 2, '.', ',');
+                                    $balCompute = 0;
+                                    $userIdBal = 0;
+                                }
+                               ?>
+
+                                <input type="hidden" name="" id="userId" value="{{ $reseller->id }}">
+                                <input class="input" type="text" name="ewalletbal" placeholder="₱0.00" value="₱{{old('ewalletbal',$bal)}}" readonly>
+                                
+                            </p>
+                            <br>
+                            <div id="divEWBal" class="box" style="display:none;">
+
+                                    <p class="modal-card-title"><span class="file-icon is-inline"><i class="fas fa-credit-card"></i></span>Manage Account Balance</p> 
+                                    <hr>
+                                    <p class="has-text-info has-text-weight-bold">Note:</p> 
+                                    <em>You are trying to modify the Account Balance of <b>{{$reseller->name}}</b></em>
+                                    <br>
+                                    <br>
+                                    <div class="field">
+                                        <label class="label">Enter your amount</label>
+                                        <div class="control">
+                                            <input class="input decimal"  id='second' type="text"  placeholder="e.g 15000.00" require>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="field">
+                                    <div class="control">
+                                        <label class="radio">
+                                        <input type="radio" name="balOption" class="input_amount" value="add">
+                                        Add to reseller account
+                                        </label>
+                                        <label class="radio">
+                                        <input type="radio" name="balOption" class="input_amount" value="deduct">
+                                        Deduct to reseller account
+                                        </label>
+                                    </div>
+                                    </div>
+
+                                    <br>
+
+                                    Account balance: <b>₱{{ $bal }}</b>
+                    
+                                    <br />
+                                    <div class="field">
+                                        <div class="control">
+                                            Total account balance: <b><span id="total_expenses1"></span></b>
+                                        </div>
+                                    </div>
+                    
+                                    <hr>
+                    
+                                    <div class="field">
+                                    <label class="label">Enter your password</label>
+                                    <div class="control">
+                                        <input class="input" id="modifyPwd" type="password" name="modifyPwd" require>
+                                    </div>
+                                    </div>
+                                    <br>
+                                <a class="button is-info" data-userId="{{ $reseller->id }}" id="proceedBal">
+                                        Continue
+                                    </a>
+                            </div>
+                            <a class="" onClick="toggleEWBal();">
+                                <em id="hideLabel">Click here to manage balance..</em>
+                            </a>
+                        </div>
+                    </div>
+                    </div>
+
+                    
+                {{-- form end--}}
+
                   {{-- form start--}}
                       <div class="field is-horizontal">
                           <div class="field-label is-normal">
@@ -229,14 +324,17 @@
                   {{-- form end--}}           
         {{-- </form> --}}
         {{-- END OF PARENT FORM TAG--}}   
+
+
     </div>
     @include('includes.createNotifs')
+    
     <div class="box">
-
           {{-- title--}}
           <h1 class="title is-3">Reseller Accounts</h1> 
           <a href="/admin/create/reseller" class="button is-success"><span class="file-icon"><i class="fas fa-plus"></i></span>Create</a>                     
-            {{-- start of search bar--}}    
+          <br><br>  
+          {{-- start of search bar--}}    
             <div class="field has-addons is-grouped is-grouped-right">
                     <div class="control">
                             {{-- <form action="/test2" method="GET"> --}}
@@ -263,7 +361,8 @@
                         </div> --}}
                 </div>      
                 {{-- end of search bar--}} 
-            {{-- start of table--}}          
+            {{-- start of table--}}      
+            <div class="" style="overflow-y: auto;">      
             <table class="table is-clear-fix is-bordered is-fullwidth is-striped" style="margin-bottom: 1.5em">
                 <thead>
                     <tr>
@@ -271,6 +370,7 @@
                         <th>Email</th>
                         <th>Address</th>
                         <th>Contact</th>
+                        <th>Account Balance</th>
                         {{-- <th>Image</th>   --}}
                         <th>Actions</th>  
                         {{-- <th></th>--}}
@@ -295,6 +395,9 @@
                                 <td>{{$reseller->email}}</td>
                                 <td>{{$reseller->address}}</td>
                                 <td>{{$reseller->contact_no}}</td>
+                                <td>
+                                ₱{{ number_format((float)$reseller->total_balance, 2, '.', ',') }}
+                                </td>
                                 {{-- <td><img src="" alt="{{$reseller->profile_pic}}" height="25px" width="100px"></td>                                                                         --}}
                                 <td>
                                     <div class="field is-grouped">
@@ -413,6 +516,7 @@
                         {{-- <tr></tr> --}}
                     </tbody>
             </table>
+            </div>
                 <p class="title is-5 has-text-centered">No Reseller Account Found </p>
                     @endif
                 
@@ -485,9 +589,146 @@
             </div> --}}
           {{-- form end--}}          
           {{$resellers->links()}}
+
+ 
+
         </div>
       </div>         
-    </div>         
+    </div>
+    
+    <script>
+    function toggleEWBal() {
+        var x = document.getElementById("divEWBal");
+        if (x.style.display === "none") {
+
+            x.style.display = "block";
+
+            var hideAccount = document.getElementById("hideLabel");
+            hideAccount.innerHTML = "Exit manage balance..";
+
+        } else {
+
+            x.style.display = "none";
+
+            var hideAccount = document.getElementById("hideLabel");
+            hideAccount.innerHTML = "Click here to manage balance..";
+
+        }
+    }
+
+    $('.decimal').keypress(function(evt){
+        return (/^[0-9]*\.?[0-9]*$/).test($(this).val()+evt.key);
+    });
+
+    var formatter = new Intl.NumberFormat('en-PH', {
+        style: 'currency',
+        currency: 'PHP',
+    })
+
+    $('.input_amount').change(function(){ 
+        var x = $('input[name=balOption]:checked').val();
+        var firstValue  = Number("<?php echo number_format((float)$balCompute, 2, '.', ''); ?>");
+        var secondValue = Number($('#second').val());
+
+        if(secondValue != ""){
+            if(x == "add"){
+                var resValue = firstValue + secondValue;
+                $('#total_expenses1').html(formatter.format(resValue));
+            }
+            else if(x == "deduct"){
+                var resValue = firstValue - secondValue;
+                if(resValue < 0){
+                    $('#total_expenses1').html(formatter.format(0));
+                }else{
+                    $('#total_expenses1').html(formatter.format(resValue));
+                }
+            }
+        }else{
+            $('#total_expenses1').html(formatter.format(0));
+        }   
+    });
+
+    $('#proceedBal').click(function(){ 
+
+
+        var amount = $('#second').val();
+        var modifyPwd = $('#modifyPwd').val();
+        var radio = $('input[name=balOption]:checked').val();
+        var userId = $(this).attr('data-userId');
+
+        $.ajax({
+                headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: "{{ route('modifyVal') }}",
+                method: "POST",
+                data:{
+                    proceed:"TRUE",
+                    radio:radio,
+                    amount:amount,
+                    modifyPwd:modifyPwd,
+                    userId:userId
+                }, 
+                dataType: "json",
+                success:function(data)
+                {
+                    if(data.success.length > 0){
+                        $.ajax({
+                            headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            url: "{{ route('modifybalance') }}",
+                            method: "POST",
+                            data:{
+                                proceed:"TRUE",
+                                radio:radio,
+                                amount:amount,
+                                modifyPwd:modifyPwd,
+                                userId:userId
+                            }, 
+                            dataType: "json",
+                            success:function(data)
+                            {
+                                if(data.success.length > 0){
+                                    location.reload();
+                                    // bulmaToast.toast({ 
+                                    //     message: data.success[0],
+                                    //     dismissible: true,
+                                    //     duration: 3000,
+                                    //     pauseOnHover: true,
+                                    //     animate: { in: "fadeIn", out: "fadeOut" },
+                                    //     type: "is-success" 
+                                    // });
+                                    
+                                }else{
+                                    bulmaToast.toast({ 
+                                        message: data.error[0],
+                                        dismissible: true,
+                                        duration: 3000,
+                                        pauseOnHover: true,
+                                        animate: { in: "fadeIn", out: "fadeOut" },
+                                        type: "is-danger" 
+                                    });
+                                }
+                            },
+                            error: function(xhr, ajaxOptions, thrownError){
+                                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                            }
+                        });
+                    }else{
+                        bulmaToast.toast({ 
+                            message: data.error[0],
+                            dismissible: true,
+                            duration: 3000,
+                            pauseOnHover: true,
+                            animate: { in: "fadeIn", out: "fadeOut" },
+                            type: "is-danger" 
+                        });
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError){
+                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+    });
+    </script>
+
 @endsection
 
 

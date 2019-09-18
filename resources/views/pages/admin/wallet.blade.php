@@ -68,7 +68,7 @@
                                 <td>{{ $reseller->name}}</td>                        
                                 <td>{{$reseller->email}}</td>
                                 {{-- <td><img src="" alt="{{$reseller->profile_pic}}" height="25px" width="100px"></td> --}}
-                                <td> ₱ {{$reseller->wallet_bal}}</td>
+                                <td> ₱{{ number_format((float)$reseller->total_balance, 2, '.', ',') }}</td>
                             </tr>
                     @endforeach                        
                     {{-- IF THERE WERE NO reseller TO FETCH --}}                    

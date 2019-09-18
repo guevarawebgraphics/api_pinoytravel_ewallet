@@ -141,7 +141,7 @@
             </div>      
                 {{-- end of search bar--}}  
             {{-- start of table--}}        
-
+            <div class="" style="overflow-y: auto;">  
             <table class="table is-clear-fix is-bordered is-fullwidth is-striped" id="CreateReseller" style="margin-bottom: 1.5em">
                 <thead>
                     <tr>
@@ -149,6 +149,7 @@
                         <th>Email</th>
                         <th>Address</th>
                         <th>Contact</th>
+                        <th>Account Balance</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -160,6 +161,9 @@
                                 <td>{{$reseller->email}}</td>
                                 <td>{{$reseller->address}}</td>
                                 <td>{{$reseller->contact_no}}</td>
+                                <td>
+                                    ₱{{ number_format((float)$reseller->total_balance, 2, '.', ',') }}
+                                </td>
                                 <td>
                                     <div class="field is-grouped">
                                         <div class="control">
@@ -252,6 +256,7 @@
                     @endif
                 </tbody>
             </table>
+            </div>
             {{$resellers->links()}}
         </div>            
     </div>         

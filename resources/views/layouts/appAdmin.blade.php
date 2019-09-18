@@ -63,10 +63,10 @@
                                  Administrator
                                 </a>
                                 <hr class="navbar-divider">                
-                                <a class="navbar-item" href="/admin/wallet/reseller">
+                                {{-- <a class="navbar-item" href="/admin/wallet/reseller"> --}}
                                 {{-- <a class="navbar-item" href="/reseller/wallet"> --}}
-                                    Reseller Wallet Value
-                                </a>
+                                    {{-- Reseller Wallet Value --}}
+                                {{-- </a> --}}
                                 <a class="navbar-item" href="#">
                                     Reports
                                 </a>

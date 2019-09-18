@@ -1,0 +1,28 @@
+CREATE VIEW view_total_userbalance AS
+
+
+SELECT a.id, a.name, a.email, a.email_verified_at, a.password, a.address, a.contact_no, a.is_blocked, a.on_hold, a.is_admin,
+
+(select tu.id from total_userbalance as tu where tu.userId = a.id ORDER BY created_at DESC LIMIT 1) as tu_id,
+
+(select tu.userId from total_userbalance as tu where tu.userId = a.id ORDER BY created_at DESC LIMIT 1) as userId,
+
+(select tu.txhistoryId from total_userbalance as tu where tu.userId = a.id ORDER BY created_at DESC LIMIT 1) as txhistoryId,
+
+(select tu.tophistoryId from total_userbalance as tu where tu.userId = a.id ORDER BY created_at DESC LIMIT 1) as tophistoryId,
+
+(select tu.total_balance from total_userbalance as tu where tu.userId = a.id ORDER BY created_at DESC LIMIT 1) as total_balance,
+
+(select tu.description from total_userbalance as tu where tu.userId = a.id ORDER BY created_at DESC LIMIT 1) as description,
+
+(select tu.updated_by from total_userbalance as tu where tu.userId = a.id ORDER BY created_at DESC LIMIT 1) as updated_by,
+
+(select max(tu.created_at) from total_userbalance as tu where tu.userId = a.id) as created_at
+
+(select max(tu.updated_at) from total_userbalance as tu where tu.userId = a.id) as updated_at
+
+FROM users AS a
+LEFT JOIN total_userbalance AS b ON a.id = b.userId
+WHERE a.is_admin = 0
+GROUP BY a.id
+ORDER BY b.created_at DESC
