@@ -37,10 +37,9 @@ URL::forceRootUrl(env('APP_URL'));
 
             Route::post('/admin/edit/reseller/modifybalance', 'ResellerController@modifybalance')->name('modifybalance');
             Route::post('/admin/edit/reseller/modifyVal', 'ResellerController@modifyVal')->name('modifyVal');
-
-            //DELETE RESOURCE ROUTE LATER
-            //REFERENCE ONLY
-            // Route::resource('admin', 'ResellerController');
+            Route::get('/admin/new_admin', 'ResellerController@create_admin');
+            Route::post('/admin/new_admin/newAdminVal', 'ResellerController@newAdminVal')->name('newAdminVal');
+            Route::post('/admin/new_admin/newAdmin', 'ResellerController@newAdmin')->name('newAdmin');
 });
 // Route::get('/admin/view/all','ResellerController@all')->middleware('admin');
 

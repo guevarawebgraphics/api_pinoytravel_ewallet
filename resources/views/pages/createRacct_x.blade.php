@@ -64,7 +64,7 @@
         </aside>
         <div class="column auto" style="">
           {{-- title--}}
-          <h1 class="title is-3">Create Reseller Account</h1>
+          <h1 class="title is-4">Create Reseller Account</h1>
           {{-- form start--}}
           <div class="field is-horizontal">
             <div class="field-label is-normal">

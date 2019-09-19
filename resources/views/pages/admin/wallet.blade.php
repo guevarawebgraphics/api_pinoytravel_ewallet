@@ -3,7 +3,7 @@
         <div class="column auto" style="">
             <div class="box">
           {{-- title--}}
-          <h1 class="title is-3">Get Total Wallet Value</h1>          
+          <h1 class="title is-4">Get Total Wallet Value</h1>          
             {{-- start of search bar--}}    
             <div class="field has-addons is-grouped is-grouped-right">
                 @if($searched == 0)                   

@@ -10,6 +10,7 @@ use App\Models\TopUpHistory;
 use DB;
 use App\Models\UserBalance;
 use App\Models\ViewTotalUserBalance;
+use App\Models\Users;
 
 class ResellerController extends Controller
 {
@@ -676,10 +677,12 @@ class ResellerController extends Controller
             if(!empty($total_userbalance[0]->userId)){
                 if($request->radio == "add"){
                     $finalAmount = $amount + $total_userbalance[0]->total_balance;
+                    // $type = "ADD";
                 }
                 else if($request->radio == "deduct")
                 {
                     $resAmount = $total_userbalance[0]->total_balance - $amount;
+                    // $type = "DEDUCT";
                     if($resAmount < 0){
                         $finalAmount = number_format((float)0, 2, '.', '');
                     }else{
@@ -693,6 +696,7 @@ class ResellerController extends Controller
             $ttl_userbal = new UserBalance;
             $ttl_userbal->userId = $userId;
             $ttl_userbal->total_balance = $finalAmount;
+            // $ttl_userbal->type = "";
             $ttl_userbal->updated_by = auth()->user()->name;
             $ttl_userbal->created_at = now();
             $ttl_userbal->updated_at = now();
@@ -707,6 +711,101 @@ class ResellerController extends Controller
             $error[] = $messages;
         }
 
+        $output = array(
+            'error'=>$error,
+            'success'=>$success
+        );
+
+        echo json_encode($output);
+    }
+
+    public function create_admin(){
+        return view('pages.admin.create_admin');
+    }
+
+    public function newAdminVal(Request $request){
+        $message = "";
+        $output = array();
+        $error = array();
+        $success = array();
+
+        $validateEmail = DB::connection('mysql')->select("SELECT * FROM users WHERE email = '".$request->email."'");
+
+        if($request->proceed =="TRUE"){
+            if($request->name == ""){
+                $messages = "Name is Required!";
+                $error[] = $messages;
+            }
+            else if($request->email == ""){
+                $messages = "Email is Required!";
+                $error[] = $messages;
+            }
+            else if($request->password == "") {
+                $messages = "Password is Required!";
+                $error[] = $messages;
+            }
+            else if($request->address == "") {
+                $messages = "Address is Required!";
+                $error[] = $messages;
+            }
+            else if($request->contact == "") {
+                $messages = "Contact is Required!";
+                $error[] = $messages;
+            }         
+            else if (count($validateEmail) > 0){
+                $messages = "Email already exists!";
+                $error[] = $messages;
+            }
+            else {
+                $messages = "Success!";
+                $success[] = $messages;
+            }
+        }
+        else{
+            $messages = "Validation error..";
+            $error[] = $messages;
+        }
+
+        $output = array(
+            'error'=>$error,
+            'success'=>$success
+        );
+
+        echo json_encode($output);
+    }
+
+    public function newAdmin(Request $request){
+        $message = "";
+        $output = array();
+        $error = array();
+        $success = array();
+        
+        if($request->proceed == "TRUE"){
+
+            $Users = new Users;
+            $Users->name = $request->name;
+            $Users->email = $request->email;
+            $Users->password = Hash::make($request->password);
+            $Users->address = $request->address;
+            $Users->contact_no = $request->contact;
+            $Users->is_blocked = 0;
+            $Users->on_hold = 0;
+            $Users->wallet_bal = 0.00;
+            $Users->is_admin = 1;
+            $Users->deleted = 0;
+            $Users->created_at = now();
+            $Users->updated_at = now();
+            $Users->save();
+
+            $messages = "Admin account successfully created!";
+            $success[] = $messages;
+
+        }
+        else
+        {
+            $messages = "Email already exists..";
+            $error[] = $messages;
+        }
         $output = array(
             'error'=>$error,
             'success'=>$success

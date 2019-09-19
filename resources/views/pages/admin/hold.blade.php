@@ -2,7 +2,7 @@
 @section('content')           
         <div class="column auto" style="overflow-x: auto;">
             {{-- title--}}
-            <h1 class="title is-3">Hold Reseller Account</h1>
+            <h1 class="title is-4">Hold Reseller Account</h1>
             @include('includes.createNotifs')
             {{-- start of search bar--}}    
             <div class="field has-addons is-grouped is-grouped-right">

@@ -5,7 +5,7 @@
 
             
                 {{-- title--}}
-                <h1 class="title is-3">Create Reseller Account</h1>
+                <h1 class="title is-4">Create Reseller Account</h1>
                 {{-- START OF PARENT FORM TAG--}}
                 <form action="{{ route('reseller.store') }}" method="post">
                 {{-- <form action="/" method="post"> --}}
@@ -148,7 +148,7 @@
             
 
           {{-- title--}}
-          <h1 class="title is-3">Reseller Accounts</h1>
+          <h1 class="title is-4">Reseller Accounts</h1>
           <button type='submit' class="button is-success">
                 <span class="file-icon">
                         <i class="fas fa-plus"></i>

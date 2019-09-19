@@ -2,7 +2,7 @@
 @section('content')           
         <div class="column auto" style="overflow-x: auto;">
           {{-- title--}}
-          <h1 class="title is-3">Edit Reseller Account</h1>
+          <h1 class="title is-4">Edit Reseller Account</h1>
             {{-- start of search bar--}}    
             <div class="field has-addons is-grouped is-grouped-right">
                 <div class="control">

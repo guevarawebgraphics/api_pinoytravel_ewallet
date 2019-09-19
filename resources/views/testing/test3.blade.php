@@ -3,7 +3,7 @@
         <div class="column auto" style=" overflow-x: auto;">
             <div class="box">
                     {{-- title--}}
-                    <h1 class="title is-3">Reseller Account Profile</h1>
+                    <h1 class="title is-4">Reseller Account Profile</h1>
                     {{-- form start--}}
                     <div class="field is-horizontal">
                           <div class="field-label is-normal">
@@ -93,7 +93,7 @@
             </div> 
             <div class="box">                 
           {{-- title--}}
-          <h1 class="title is-3">Reseller Accounts</h1>  
+          <h1 class="title is-4">Reseller Accounts</h1>  
           <a href="/reseller/create" class="button is-success"><span class="file-icon"><i class="fas fa-plus"></i></span>Create</a>         
             {{-- start of search bar--}}    
             <div class="field has-addons is-grouped is-grouped-right">

@@ -70,7 +70,7 @@
                                 <a class="navbar-item" href="#">
                                     Reports
                                 </a>
-                                <a class="navbar-item" href="/register">
+                                <a class="navbar-item" href="/admin/new_admin">
                                     Register a New Admin
                                 </a>
                                 {{-- <a class="navbar-item" href="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX7056622.jpg">
@@ -117,8 +117,8 @@
                             <button class="delete" aria-label="close"></button>
                         </header>
                         <section class="modal-card-body">
-                        Are you sure?
-                    </section>
+                            Are you sure?
+                        </section>
                     <footer class="modal-card-foot">                            
                         <button class="button is-danger" onclick="$('#out').submit();">Logout</button>
                         <button class="button">Cancel</button>

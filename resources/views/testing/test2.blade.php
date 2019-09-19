@@ -3,7 +3,7 @@
         <div class="column auto" style=" overflow-x: auto;">
 
           {{-- title--}}
-          <h1 class="title is-3">
+          <h1 class="title is-4">
             {{-- <a id="iconPicker" href="#" class="is-4"> <i class="fas fa-arrow-left"></i>  --}}
       </a>Edit Reseller Account</h1>
         {{-- START OF PARENT FORM TAG--}}          
@@ -203,7 +203,7 @@
             
 
           {{-- title--}}
-          <h1 class="title is-3">Reseller Accounts</h1>        
+          <h1 class="title is-4">Reseller Accounts</h1>        
             {{-- start of search bar--}}    
             <div class="field has-addons is-grouped is-grouped-right">
                     <div class="control">

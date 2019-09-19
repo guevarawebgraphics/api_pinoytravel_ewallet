@@ -4,7 +4,7 @@
         <div class="column auto" style=" overflow-x: auto;">
             <div class="box">
                 {{-- title--}}
-                <h1 class="title is-3">Create Reseller Account</h1>
+                <h1 class="title is-4">Create Reseller Account</h1>
                 {{-- START OF PARENT FORM TAG--}}
                 <form action="{{ route('admin.store.reseller') }}" method="post">
                     @csrf
@@ -126,7 +126,7 @@
             @include('includes.createNotifs')         
         <div class="box">
           {{-- title--}}
-          <h1 class="title is-3">Reseller Accounts</h1>
+          <h1 class="title is-4">Reseller Accounts</h1>
             {{-- start of search bar--}}    
             <div class="field has-addons is-grouped is-grouped-right">
                 <div class="control">
