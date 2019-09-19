@@ -543,6 +543,7 @@ class AuthController extends Controller
                             $ttl_userbal->userId = $userIdBal;
                             $ttl_userbal->tophistoryId = $top_up_info[0]->id;
                             $ttl_userbal->total_balance = $final_bal;
+                            $ttl_userbal->type = "TOPUP";
                             $ttl_userbal->created_at = now();
                             $ttl_userbal->updated_at = now();
                             $ttl_userbal->save();
@@ -553,6 +554,7 @@ class AuthController extends Controller
                             $ttl_userbal->userId = $userIdBal;
                             $ttl_userbal->tophistoryId = $top_up_info[0]->id;
                             $ttl_userbal->total_balance = $top_up_info[0]->amount;
+                            $ttl_userbal->type = "TOPUP";
                             $ttl_userbal->created_at = now();
                             $ttl_userbal->updated_at = now();
                             $ttl_userbal->save();
