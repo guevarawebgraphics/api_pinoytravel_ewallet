@@ -204,55 +204,56 @@ class ResellerController extends Controller
             ], $messages);
             
             // return 123;
-        // return redirect('/dashboard/1')->with('success', 'Reseller Edited');
-        // $resellers = Reseller::find($id);
-        // dd('hello');
-        // echo $request->input('name');die;
-        $reseller->name = $request->input('Name');
-        $reseller->email = $request->input('Email');
-        if(!$request->input('password') == ''){$reseller->password = Hash::make($request->input('password'));}
-        $reseller->address = $request->input('Address');
-        $reseller->contact_no = $request->input('Contact');          
-        // $resellers->password = \Hash::make($request->input('Password'));
-        // $resellers->profile_pic = 'profile_pic';
-        // echo $resellers->name; die;
-        $reseller->save();
-        // return 123;
-        return redirect('/admin/edit/reseller/'.$reseller->id)->with('success', 'Reseller Updated');
-    }
-    else if($edit == 2)
-    {
-        // $resellers = Reseller::findOrFail($id);
-        $reseller->is_blocked = 1;
-        // echo $resellers; die;
-        //DELETE (Will Block Reseller Account)
-        $reseller->save();
-        return back()->with('error', 'Reseller '. $reseller->name. ' Deleted');
-        // return redirect('reseller/delete')->with('error', 'Reseller Deleted');
+            // return redirect('/dashboard/1')->with('success', 'Reseller Edited');
+            // $resellers = Reseller::find($id);
+            // dd('hello');
+            // echo $request->input('name');die;
+            $reseller->name = $request->input('Name');
+            $reseller->email = $request->input('Email');
+            if(!$request->input('password') == ''){$reseller->password = Hash::make($request->input('password'));}
+            $reseller->address = $request->input('Address');
+            $reseller->contact_no = $request->input('Contact');          
+            // $resellers->password = \Hash::make($request->input('Password'));
+            // $resellers->profile_pic = 'profile_pic';
+            // echo $resellers->name; die;
+            $reseller->save();
+            // return 123;
+            return redirect('/admin/edit/reseller/'.$reseller->id)->with('success', 'Reseller Updated');
+        }
+        else if($edit == 2)
+        {
+            // $resellers = Reseller::findOrFail($id);
+            $reseller->is_blocked = 1;
+            $reseller->deleted = 1;
+            // echo $resellers; die;
+            //DELETE (Will Block Reseller Account)
+            $reseller->save();
+            return back()->with('error', 'Reseller '. $reseller->name. ' Deleted');
+            // return redirect('reseller/delete')->with('error', 'Reseller Deleted');
 
-    }
-    else if($edit == 3)
-    {
-        // $resellers = Reseller::find($id);
-        $reseller->on_hold = 1;
-        // echo $resellers; die;
-        //DELETE (Will Block Reseller Account)
-        $reseller->save();
-        return back()->with('hold', 'Reseller ' . $reseller->name .' On Hold');
-        // return redirect('/reseller/hold')->with('error', 'Reseller ' . $reseller->name .' On Hold');
+        }
+        else if($edit == 3)
+        {
+            // $resellers = Reseller::find($id);
+            $reseller->on_hold = 1;
+            // echo $resellers; die;
+            //DELETE (Will Block Reseller Account)
+            $reseller->save();
+            return back()->with('hold', 'Reseller ' . $reseller->name .' On Hold');
+            // return redirect('/reseller/hold')->with('error', 'Reseller ' . $reseller->name .' On Hold');
 
-    }    
-    else if($edit == 4)
-    {
-        // $resellers = Reseller::findOrFail($id);
-        $reseller->on_hold = 0;
-        // echo $resellers; die;
-        //DELETE (Will Block Reseller Account)
-        $reseller->save();
-        return back()->with('hold', 'Reseller ' . $reseller->name .' is active');
-        // return redirect('/reseller/hold')->with('error', 'Reseller ' . $reseller->name .' is active');
+        }    
+        else if($edit == 4)
+        {
+            // $resellers = Reseller::findOrFail($id);
+            $reseller->on_hold = 0;
+            // echo $resellers; die;
+            //DELETE (Will Block Reseller Account)
+            $reseller->save();
+            return back()->with('hold', 'Reseller ' . $reseller->name .' is active');
+            // return redirect('/reseller/hold')->with('error', 'Reseller ' . $reseller->name .' is active');
 
-    }   
+        }   
     }
 
     /**
@@ -375,7 +376,7 @@ class ResellerController extends Controller
 
         //from User to ViewTotalUserBalance
         $resellers = ViewTotalUserBalance::orderBy('created_at', 'desc')
-        ->where('Name', 'like', '%'.$search.'%')
+        ->where('name', 'like', '%'.$search.'%')
         ->where('is_admin', 0)
         ->paginate(20);
 
@@ -407,7 +408,7 @@ class ResellerController extends Controller
     }
     public function commission()
     {
-    //    return 'this is commission method in reseller controller';
+        //return 'this is commission method in reseller controller';
         $userBal = UserBalance::where('userId', auth()->user()->id)
         ->orderBy('created_at','desc')
         ->take(1)
@@ -435,40 +436,47 @@ class ResellerController extends Controller
         echo '{"status":"true", "User Details":'.$paymentAmount .'}';
     }
     public function topup(User $reseller)
-    {   
-        //API RESPONSE FOR PROCESSORS
-        // $procType1url = file_get_contents("https://www.pigglywiggly.com.ph/api/v1/dragonpay/processors?type=1");
-        // $procType2url = file_get_contents("https://www.pigglywiggly.com.ph/api/v1/dragonpay/processors?type=2");
-        // $procType4url = file_get_contents("https://www.pigglywiggly.com.ph/api/v1/dragonpay/processors?type=4");
-        $procType1url = file_get_contents(env('APP_PROC1'));
-        $procType2url = file_get_contents(env('APP_PROC2'));
-        $procType4url = file_get_contents(env('APP_PROC4'));
-        
-        //TO FETCH RESPONSE (ON VIEW)
-        $responseProc1 = json_decode($procType1url);
-        $responseProc2 = json_decode($procType2url);
-        $responseProc4 = json_decode($procType4url);
+    {
+        if(auth()->user()->on_hold == 0)
+        {   
+            //API RESPONSE FOR PROCESSORS
+            // $procType1url = file_get_contents("https://www.pigglywiggly.com.ph/api/v1/dragonpay/processors?type=1");
+            // $procType2url = file_get_contents("https://www.pigglywiggly.com.ph/api/v1/dragonpay/processors?type=2");
+            // $procType4url = file_get_contents("https://www.pigglywiggly.com.ph/api/v1/dragonpay/processors?type=4");
+            $procType1url = file_get_contents(env('APP_PROC1'));
+            $procType2url = file_get_contents(env('APP_PROC2'));
+            $procType4url = file_get_contents(env('APP_PROC4'));
+            
+            //TO FETCH RESPONSE (ON VIEW)
+            $responseProc1 = json_decode($procType1url);
+            $responseProc2 = json_decode($procType2url);
+            $responseProc4 = json_decode($procType4url);
 
-        // foreach($responseProc1 as $obj){
-        //     echo $obj->longName;                     
-        //  }
-        //  die;            
+            // foreach($responseProc1 as $obj){
+            //     echo $obj->longName;                     
+            //  }
+            //  die;            
 
-        //dd($responseProc1);
-        // foreach($responseProc1 as $response){
-        //     $longName = $response['longName'];
-        //     echo $longName;
-        // }
-        
-        // $response = $this->checkoutDragonpay($txnid, $type ,$amount, "Pinoytravel reservation for transaction with refno: ".$description, $email, $record->ReferenceCode, $email,$clientip, $agent);
-        // private function checkoutDragonpay($txnid,$procid, $amount, $description, $email, $param1,$param2, $ip_address, $agent){
+            //dd($responseProc1);
+            // foreach($responseProc1 as $response){
+            //     $longName = $response['longName'];
+            //     echo $longName;
+            // }
+            
+            // $response = $this->checkoutDragonpay($txnid, $type ,$amount, "Pinoytravel reservation for transaction with refno: ".$description, $email, $record->ReferenceCode, $email,$clientip, $agent);
+            // private function checkoutDragonpay($txnid,$procid, $amount, $description, $email, $param1,$param2, $ip_address, $agent){
 
-        //COMPACT WILL PASS VARIABLES TO THE VIEW
-        $userBal = UserBalance::where('userId', auth()->user()->id)
-        ->orderBy('created_at','desc')
-        ->take(1)
-        ->get();
-        return view('pages.reseller.topup', compact('reseller', 'responseProc1', 'responseProc2', 'responseProc4'))->with('userBal', $userBal); 
+            //COMPACT WILL PASS VARIABLES TO THE VIEW
+            $userBal = UserBalance::where('userId', auth()->user()->id)
+            ->orderBy('created_at','desc')
+            ->take(1)
+            ->get();
+            return view('pages.reseller.topup', compact('reseller', 'responseProc1', 'responseProc2', 'responseProc4'))->with('userBal', $userBal); 
+        }
+        else
+        {
+            return redirect('/');
+        }
     }
     // public function checkoutDragonpay($transactionId, $processorId, $amount, $description, $email, $referenceCode)
     // public function checkoutDragonpay(Request $request, User $reseller, $processorId, $amount, $description, $email)
@@ -581,7 +589,7 @@ class ResellerController extends Controller
        //Old post method of DragonPay
        return redirect($urlString.($urlParam));
 
-        //    return redirect($urlTest);
+        //return redirect($urlTest);
     }
 
     public function getTopup(){

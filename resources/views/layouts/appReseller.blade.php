@@ -69,10 +69,11 @@
                             <a class="navbar-item" href="/reseller/reservation/view">
                             Reservations
                             </a>
-                    
-                            <a class="navbar-item" href="/reseller/topup">
-                            Top-up E-Wallet
-                            </a>
+                            @if(auth()->user()->on_hold == 0)
+                                <a class="navbar-item" href="/reseller/topup">
+                                Top-up E-Wallet
+                                </a>
+                            @endif
                             <a class="navbar-item" href="/reseller/commission/view">
                             Commission
                             </a>
@@ -83,7 +84,15 @@
                         <div class="navbar-item">
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a class="navbar-link">
-                                    {{ Auth::user()->name }}
+                                @php
+                                    if(auth()->user()->on_hold == 1){
+                                        echo "<small><i class='fas fa-lock'></i>&nbsp;<b>ON-HOLD</b></small>&nbsp;&nbsp;".auth()->user()->name;
+                                    }else{
+                                        echo auth()->user()->name;
+                                    }    
+
+                                @endphp
+                                    {{-- {{ Auth::user()->name }} --}}
                             </a>
                             
                             <div class="navbar-dropdown">
@@ -125,6 +134,18 @@
 
                     </div>
                 </nav>
+
+            
+            @if(auth()->user()->on_hold == 1)
+                <div class="columns is-mobile is-centered alert alert-success notification is-warning" style="margin-top:0.5em">
+                    <button class="delete"></button>
+                        <p class="help is-size-5"><b>Caution:</b><em> This account is currently <b>ON HOLD</b>. You can't perform any transactions. Please contact our admin, Thank you!</em></p>
+                </div>
+            @endif
+
+           
+
+
             @yield('content')
         {{-- MODAL FOR LOGOUT --}}
         <div class="modal animated fadeIn" id="modalLogout">

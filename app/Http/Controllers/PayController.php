@@ -14,14 +14,14 @@ class PayController extends Controller
 {
     public function index(Request $request)
     {
-        // if(session()->get('merchId') == "")
-        // {
-        //     abort(404);
-        // }
-        // else
-        // {
+        if(auth()->user()->on_hold == 1)
+        {
+            return  redirect('/');
+        }
+        else
+        {
             return view('pay');
-        // }
+        }
     }
 
     public function getReceipt(Request $request)
@@ -162,7 +162,8 @@ class PayController extends Controller
         // GROUP BY a.id
         // ");
          
-        $userBal = DB::connection('mysql')->select("SELECT * FROM total_userbalance WHERE userId = '".auth()->user()->id."' ORDER BY created_at DESC LIMIT 1");
+        // $userBal = DB::connection('mysql')->select("SELECT * FROM total_userbalance WHERE userId = '".auth()->user()->id."' ORDER BY created_at DESC LIMIT 1");
+        $userBal = DB::connection('mysql')->select("SELECT * FROM view_total_userbalance WHERE userId = '".auth()->user()->id."'");
 
         if(!empty($userBal)){
             $totalBalance = $userBal[0]->total_balance;
@@ -182,11 +183,15 @@ class PayController extends Controller
         }
         else if(!empty($txnDtls))
         {
-            $messages = "Transaction ID and Ref. Code already paid!";
+            $messages = "<b>Transaction ID</b>&nbsp; and &nbsp;<b>Ref. Code</b>&nbsp; already paid!";
             $error[] = $messages;
         }
         else if($totalBalance < session()->get('amount')){
             $messages = "You don't have enough load to perform your payment.";
+            $error[] = $messages; 
+        }
+        else if(auth()->user()->on_hold == 1){
+            $messages = "<b>ON-HOLD</b>&nbsp;account can't perform any transaction.";
             $error[] = $messages; 
         }
         else

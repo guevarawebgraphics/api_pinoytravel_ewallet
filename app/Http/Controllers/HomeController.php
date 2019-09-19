@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\UserBalance;
 use DB;
+use App\Models\ViewTotalUserBalance;
 
 class HomeController extends Controller
 {
@@ -27,30 +28,39 @@ class HomeController extends Controller
      */
     public function index(User $user, Request $request)
     {   
-        $userBal = UserBalance::where('userId', auth()->user()->id)
+
+        $userBal = ViewTotalUserBalance::where('userId', auth()->user()->id)
         ->orderBy('created_at','desc')
-        ->take(1)
         ->get();
+        
         $user_record = DB::connection('mysql')->select("SELECT * FROM users WHERE id = '".auth()->user()->id."'");
 
         $searched = 0;
-        // $reseller = Reseller::orderBy('created_at', 'desc')
+
         $reseller = User::orderBy('created_at', 'desc')
         ->where('is_blocked', '0')  
         ->where('is_admin', '0')          
         ->paginate(20);
-        
-        if($user_record[0]->is_admin == 1){
-            // return view('pages.admin.view', compact('reseller', 'searched'));
-            return  redirect('/admin/view/all');
+    
+        if($user_record[0]->is_blocked == 0){
+            if($user_record[0]->is_admin == 1)
+            {
+                return  redirect('/admin/view/all');
+            }
+            else
+            {
+                return view('pages.reseller.reservation')->with('userBal', $userBal);
+            }
+        }else{
+            session()->flush();
+            $this->middleware('guest')->except('logout');
         }
-        else{
-            return view('pages.reseller.reservation')->with('userBal', $userBal);
-        }    
     }
     public function admin(Request $req){
         return view('middleware')->withMessage("Admin");
     }
+
+
     public function test()
     {
         return 'test';

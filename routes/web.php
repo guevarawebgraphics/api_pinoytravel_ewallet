@@ -67,6 +67,7 @@ Route::group(['middleware'=> ['auth']], function(){
     
     Route::post('/reseller/topup/checkout', 'ResellerController@checkoutDragonpay');
 
+
     Route::get('pay/getReceipt', 'PayController@getReceipt')->name('getReceipt');
     Route::post('pay/payNow', 'PayController@payNow')->name('payNow');
     Route::post('pay/payVal', 'PayController@payVal')->name('payVal');
@@ -100,10 +101,7 @@ Route::get('/test','HomeController@test')->middleware('auth');
 // Route::get('/test2','ResellerController@testall2');
 // Route::get('/test3','ResellerController@testall3');
 
-Route::get('/pay/1', function () {
-    // return view('auth.login');
-    return redirect(url()->previous());
-});
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/pay', 'PayController@index');

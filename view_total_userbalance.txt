@@ -17,7 +17,7 @@ SELECT a.id, a.name, a.email, a.email_verified_at, a.password, a.address, a.cont
 
 (select tu.updated_by from total_userbalance as tu where tu.userId = a.id ORDER BY created_at DESC LIMIT 1) as updated_by,
 
-(select max(tu.created_at) from total_userbalance as tu where tu.userId = a.id) as created_at
+(select max(tu.created_at) from total_userbalance as tu where tu.userId = a.id) as created_at,
 
 (select max(tu.updated_at) from total_userbalance as tu where tu.userId = a.id) as updated_at
 
