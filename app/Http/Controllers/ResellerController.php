@@ -621,7 +621,7 @@ class ResellerController extends Controller
             $messages = "Invalid deduction already ₱0.00 balance. ";
             $error[] = $messages;
 
-        }else if(empty($viewBal)){
+        }else if(empty($viewBal) && ($request->radio == "deduct")){
 
             $messages = "Invalid deduction already ₱0.00 balance..";
             $error[] = $messages;
@@ -850,7 +850,7 @@ class ResellerController extends Controller
                     $content = "";
                 }
                 else if($field->type == "TXN"){
-                    $type = "Transaction History";
+                    $type = "Transaction History <em>(booked)</em>";
                     $debit = "";
                     $credit = number_format((float)$field->txnamount, 2, '.', ',');
                     $style = 'style="border-left:13px solid hsl(348, 100%, 61%);"';
@@ -858,17 +858,17 @@ class ResellerController extends Controller
                     $article = "is-dark";
                     $title = "Booking Details";
                     $content = '
-                    Merchant ID : '.$field->txmerchId.'<br>
-                    Transaction ID : '.$field->txtransId.'<br>
-                    Booking Amount : '.$field->txbookingAmount.'<br>
-                    Reference Code : '.$field->txrefCode.'<br>
-                    Email : '.$field->txtransEmail.'<br>
-                    Proc ID : '.$field->txprocId.'<br>
-                    Booked Date : '.$field->txbookingCreated.'<br>
+                    <b>Merchant ID : </b>'.$field->txmerchId.'<br>
+                    <b>Transaction ID : </b>'.$field->txtransId.'<br>
+                    <b>Booking Amount : </b>'.$field->txbookingAmount.'<br>
+                    <b>Reference Code : </b>'.$field->txrefCode.'<br>
+                    <b>Email : </b>'.$field->txtransEmail.'<br>
+                    <b>Proc ID : </b>'.$field->txprocId.'<br>
+                    <b>Booked Date : </b>'.date("F d Y - h:i a",strtotime($field->txbookingCreated)).'<br>
                     ';
                 }
                 else if($field->type == "TOPUP"){
-                    $type = "Top Up History";
+                    $type = "Top Up History <em>(paid)</em>";
                     $debit = number_format((float)$field->txnamount, 2, '.', ',');
                     $credit = "";
                     $style = 'style="border-left:13px solid hsl(141, 71%, 48%);"';
@@ -876,15 +876,15 @@ class ResellerController extends Controller
                     $article = "is-dark";
                     $title = "Account Top Up Details";
                     $content = '
-                    Transaction ID : '.$field->tptxnid.'<br>
-                    Reference No. : '.$field->tpdpRefNo.'<br>
-                    Status : '.$field->tpstatus.'<br>
-                    DP Proc ID : '.$field->tpdpProcID.'<br>
-                    Reference Code : '.$field->tprefCode.'<br>
-                    Email : '.$field->tpemail.'<br>
-                    Proc ID : '.$field->tpprocId.'<br>
-                    Top Up Amount : '.$field->tpamount.'<br>
-                    Top Up Date : '.$field->tpup_created.'<br>
+                    <b>Transaction ID : </b>'.$field->tptxnid.'<br>
+                    <b>Reference No. : </b>'.$field->tpdpRefNo.'<br>
+                    <b>Status : </b>'.$field->tpstatus.'<br>
+                    <b>DP Proc ID : </b>'.$field->tpdpProcID.'<br>
+                    <b>Reference Code : </b>'.$field->tprefCode.'<br>
+                    <b>Email : </b>'.$field->tpemail.'<br>
+                    <b>Proc ID : </b>'.$field->tpprocId.'<br>
+                    <b>Top Up Amount : </b>'.$field->tpamount.'<br>
+                    <b>Top Up Date : </b>'.date("F d Y - h:i a",strtotime($field->tpup_created)).'<br>
                     ';
                 }
                 else{
