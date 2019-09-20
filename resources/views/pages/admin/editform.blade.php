@@ -335,9 +335,8 @@
           <a href="/admin/create/reseller" class="button is-success"><span class="file-icon"><i class="fas fa-plus"></i></span>Create</a>                     
           <br><br>  
           {{-- start of search bar--}}    
-            <div class="field has-addons is-grouped is-grouped-right">
+            {{-- <div class="field has-addons is-grouped is-grouped-right">
                     <div class="control">
-                            {{-- <form action="/test2" method="GET"> --}}
                             <form action="/admin/search/reseller" method="GET">
                             <input class="input is-small" type="text" name="Search" placeholder="Find Reseller">
                             @csrf
@@ -345,7 +344,7 @@
                         <div class="control">
                             <button class="button is-info is-small" type="submit"> Search</button>
                             </form>
-                        </div>
+                        </div> --}}
                             {{-- <a class="button is-info is-small" type="submit">
                                 Search
                             </a> --}}
@@ -359,11 +358,11 @@
                                 Search
                             </a>
                         </div> --}}
-                </div>      
+                {{-- </div>       --}}
                 {{-- end of search bar--}} 
             {{-- start of table--}}      
             <div class="" style="overflow-y: auto;">      
-            <table class="table is-clear-fix is-bordered is-fullwidth is-striped" style="margin-bottom: 1.5em">
+            <table id="ResellerAccountTable" class="table is-clear-fix is-bordered is-fullwidth is-striped" style="margin-bottom: 1.5em; margin-top: 1.5em;">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -488,13 +487,22 @@
                     @endif
                 </tbody>
             </table>   
-          {{$resellers->links()}}
-
+          {{-- {{$resellers->links()}} --}}
+            <br>
           <a class="button is-link" href="/admin/view/all">Go Back</a>
 
         </div>
       </div>         
     </div>
+
+    <script>
+    $('#ResellerAccountTable').DataTable({
+        "serverSide": false, 
+        "retrieve": true,
+        "ordering": false
+    });
+
+    </script>
     
     <script>
     function toggleEWBal() {
@@ -555,71 +563,73 @@
         var modifyPwd = $('#modifyPwd').val();
         var radio = $('input[name=balOption]:checked').val();
         var userId = $(this).attr('data-userId');
-
+        
         $.ajax({
-                headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                url: "{{ route('modifyVal') }}",
-                method: "POST",
-                data:{
-                    proceed:"TRUE",
-                    radio:radio,
-                    amount:amount,
-                    modifyPwd:modifyPwd,
-                    userId:userId
-                }, 
-                dataType: "json",
-                success:function(data)
-                {
-                    if(data.success.length > 0){
-                        $.ajax({
-                            headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                            url: "{{ route('modifybalance') }}",
-                            method: "POST",
-                            data:{
-                                proceed:"TRUE",
-                                radio:radio,
-                                amount:amount,
-                                modifyPwd:modifyPwd,
-                                userId:userId
-                            }, 
-                            dataType: "json",
-                            success:function(data)
-                            {
-                                if(data.success.length > 0){
-                                    location.reload();
-                                    
-                                }else{
-                                    bulmaToast.toast({ 
-                                        message: data.error[0],
-                                        dismissible: true,
-                                        duration: 3000,
-                                        pauseOnHover: true,
-                                        animate: { in: "fadeIn", out: "fadeOut" },
-                                        type: "is-danger" 
-                                    });
-                                }
-                            },
-                            error: function(xhr, ajaxOptions, thrownError){
-                                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: "{{ route('modifyVal') }}",
+            method: "POST",
+            data:{
+                proceed:"TRUE",
+                radio:radio,
+                amount:amount,
+                modifyPwd:modifyPwd,
+                userId:userId
+            }, 
+            dataType: "json",
+            success:function(data)
+            {
+                if(data.success.length > 0){
+                    $.ajax({
+                        headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        url: "{{ route('modifybalance') }}",
+                        method: "POST",
+                        data:{
+                            proceed:"TRUE",
+                            radio:radio,
+                            amount:amount,
+                            modifyPwd:modifyPwd,
+                            userId:userId
+                        }, 
+                        dataType: "json",
+                        success:function(data)
+                        {
+                            if(data.success.length > 0){
+                                location.reload();
+                                
+                            }else{
+                                bulmaToast.toast({ 
+                                    message: data.error[0],
+                                    dismissible: true,
+                                    duration: 3000,
+                                    pauseOnHover: true,
+                                    animate: { in: "fadeIn", out: "fadeOut" },
+                                    type: "is-danger" 
+                                });
                             }
-                        });
-                    }else{
-                        bulmaToast.toast({ 
-                            message: data.error[0],
-                            dismissible: true,
-                            duration: 3000,
-                            pauseOnHover: true,
-                            animate: { in: "fadeIn", out: "fadeOut" },
-                            type: "is-danger" 
-                        });
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError){
-                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        },
+                        error: function(xhr, ajaxOptions, thrownError){
+                            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }
+                    });
+                }else{
+                    bulmaToast.toast({ 
+                        message: data.error[0],
+                        dismissible: true,
+                        duration: 3000,
+                        pauseOnHover: true,
+                        animate: { in: "fadeIn", out: "fadeOut" },
+                        type: "is-danger" 
+                    });
                 }
-            });
+            },
+            error: function(xhr, ajaxOptions, thrownError){
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+        
     });
     </script>
+
 
 @endsection
 

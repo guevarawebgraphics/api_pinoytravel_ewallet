@@ -96,9 +96,8 @@
           <br>
           <br>
           {{-- start of search bar--}}    
-            <div class="field has-addons is-grouped is-grouped-right">
+            {{-- <div class="field has-addons is-grouped is-grouped-right">
                 <div class="control">
-                        {{-- <form action="/test2" method="GET"> --}}
                         <form action="/admin/search/reseller" method="GET">
                         <input class="input is-small" type="text" name="Search" placeholder="Find Reseller">
                         @csrf
@@ -108,11 +107,11 @@
                         </form>
                     </div>
                       
-            </div>      
+            </div>       --}}
             {{-- end of search bar--}} 
             {{-- start of table--}}  
             <div class="" style="overflow-y: auto;">        
-            <table class="table is-clear-fix is-bordered is-fullwidth is-striped" style="margin-bottom: 1.5em">
+            <table id="ResellerAccountTable" class="table is-clear-fix is-bordered is-fullwidth is-striped" style="margin-bottom: 1.5em; margin-top: 1.5em;">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -241,11 +240,20 @@
         
             {{-- end of table--}}          
           {{-- form end--}}          
-          {{$resellers->links()}}
+          {{-- {{$resellers->links()}} --}}
+          <br>
           <a class="button is-link" href="/admin/view/all">Go Back</a>
         </div>  
       </div>         
     </div>  
+
+   <script>
+     $('#ResellerAccountTable').DataTable({
+        "serverSide": false, 
+        "retrieve": true,
+        "ordering": false
+    });
+  </script>
 @endsection
 
 

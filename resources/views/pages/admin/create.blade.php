@@ -128,7 +128,7 @@
           {{-- title--}}
           <h1 class="title is-4">Reseller Accounts</h1>
             {{-- start of search bar--}}    
-            <div class="field has-addons is-grouped is-grouped-right">
+            {{-- <div class="field has-addons is-grouped is-grouped-right">
                 <div class="control">
                     <form action="/admin/search/reseller" method="GET">
                     <input class="input is-small" type="text" name="Search" placeholder="Find Reseller">
@@ -138,11 +138,11 @@
                     <button class="button is-info is-small" type="submit"> Search</button>
                     </form>
                 </div>
-            </div>      
+            </div>       --}}
                 {{-- end of search bar--}}  
             {{-- start of table--}}        
             <div class="" style="overflow-y: auto;">  
-            <table class="table is-clear-fix is-bordered is-fullwidth is-striped" id="CreateReseller" style="margin-bottom: 1.5em">
+            <table id="ResellerAccountTable" class="table is-clear-fix is-bordered is-fullwidth is-striped" id="CreateReseller" style="margin-bottom: 1.5em; margin-top: 1.5em;">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -257,12 +257,18 @@
                 </tbody>
             </table>
             </div>
-            {{$resellers->links()}}
+            {{-- {{$resellers->links()}} --}}
         </div>            
     </div>         
 </div>  
 
-
+<script>
+$('#ResellerAccountTable').DataTable({
+    "serverSide": false, 
+    "retrieve": true,
+    "ordering": false
+});
+</script>
 @endsection
 
 

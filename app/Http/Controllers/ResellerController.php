@@ -36,7 +36,9 @@ class ResellerController extends Controller
         $resellers = ViewTotalUserBalance::orderBy('created_at', 'desc')
         ->where('is_blocked', '0')  
         ->where('is_admin', '0')          
-        ->paginate(20);
+        // ->paginate(20);
+        ->get();
+
 
         $wallet_balance = UserBalance::orderBy('created_at','desc')
         ->take(1)
@@ -126,7 +128,8 @@ class ResellerController extends Controller
         $resellers = ViewTotalUserBalance::orderBy('created_at', 'desc')
         ->where('is_blocked', '0')  
         ->where('is_admin', '0')          
-        ->paginate(20);
+        // ->paginate(20);
+        ->get();
 
         $walletBal = UserBalance::orderBy('created_at','desc')
          ->where('userId','=',$reseller->id)
@@ -283,7 +286,8 @@ class ResellerController extends Controller
         $resellers = ViewTotalUserBalance::orderBy('created_at', 'desc')
         ->where('is_blocked', '0')  
         ->where('is_admin', '0')          
-        ->paginate(20);
+        // ->paginate(20);
+        ->get();
 
         $walletBal = UserBalance::orderBy('created_at','DESC')
         ->get();
@@ -336,24 +340,6 @@ class ResellerController extends Controller
         return view('testing.test1', compact('reseller'));   
     }
 
-    // public function testall2(Request $request)
-    // {
-    //     // dd('SAD');
-    //     // $search = $request->input('Search');
-    //     // // dd($search);
-    //     // $reseller = Reseller::orderBy('created_at', 'desc')
-    //     // ->where('Name', 'like', '%'.$search.'%')
-    //     // ->paginate(20);
-        
-    //     // return view('testing.test1', compact('reseller'));        
-
-
-        
-    //     // $reseller = Reseller::orderBy('created_at', 'desc')
-    //     // ->where('is_blocked', '0')            
-    //     // ->paginate(20);
-    //     // return view('testing.test2', compact('reseller'));   
-    // }
     public function search(Request $request)
     {
         // echo "sad"; die;
@@ -621,10 +607,23 @@ class ResellerController extends Controller
         $output = array();
         $error = array();
         $success = array();
+ 
+        $viewBal = DB::connection('mysql')->select("SELECT * FROM view_total_userbalance WHERE userId = '".$request->userId."'");
+
 
         if($request->proceed != "TRUE"){
 
             $messages = "Problem occurred please contact webmaster.";
+            $error[] = $messages;
+
+        }else if(count($viewBal) > 0 && number_format((float)$viewBal[0]->total_balance, 2, '.', ',') == 0.00 && ($request->radio == "deduct")){
+
+            $messages = "Invalid deduction already ₱0.00 balance. ";
+            $error[] = $messages;
+
+        }else if(empty($viewBal)){
+
+            $messages = "Invalid deduction already ₱0.00 balance..";
             $error[] = $messages;
 
         }else if($request->amount == ""){
@@ -677,12 +676,12 @@ class ResellerController extends Controller
             if(!empty($total_userbalance[0]->userId)){
                 if($request->radio == "add"){
                     $finalAmount = $amount + $total_userbalance[0]->total_balance;
-                    // $type = "ADD";
+                    $type = "ADD";
                 }
                 else if($request->radio == "deduct")
                 {
                     $resAmount = $total_userbalance[0]->total_balance - $amount;
-                    // $type = "DEDUCT";
+                    $type = "DEDUCT";
                     if($resAmount < 0){
                         $finalAmount = number_format((float)0, 2, '.', '');
                     }else{
@@ -691,12 +690,14 @@ class ResellerController extends Controller
                 }
             }else{
                 $finalAmount = number_format((float)$amount, 2, '.', '');
+                $type = "ADD";
             }
 
             $ttl_userbal = new UserBalance;
             $ttl_userbal->userId = $userId;
             $ttl_userbal->total_balance = $finalAmount;
-            // $ttl_userbal->type = "";
+            $ttl_userbal->txnamount = $amount;
+            $ttl_userbal->type = $type;
             $ttl_userbal->updated_by = auth()->user()->name;
             $ttl_userbal->created_at = now();
             $ttl_userbal->updated_at = now();
@@ -812,5 +813,61 @@ class ResellerController extends Controller
         );
 
         echo json_encode($output);
+    }
+
+    public function getEPassbook(Request $request){
+        
+        $passbook = DB::connection('mysql')->select("SELECT * FROM total_userbalance WHERE userId = '".$request->userId."' ORDER BY created_at DESC");
+        $userBal = DB::connection('mysql')->select("SELECT * FROM view_total_userbalance WHERE userId = '".$request->userId."'");
+        $data = "";
+        $counter = 1;
+        if(count($passbook) > 0){
+            $data .= '<tr class="is-selected">
+                        <td><em><b style="color: #000000;">Closing Balance</b></em></td>
+                        <td></td>
+                        <td></td>
+                        <td><b style="color: #000000;">'.$userBal[0]->total_balance.'</b></td>
+                    </tr>';
+            foreach($passbook as $field){
+
+                if($field->type == "ADD"){
+                    $type = "Account Balance added by: ".$field->updated_by;
+                    $debit = $field->txnamount;
+                    $credit = "";
+                }
+                else if($field->type == "DEDUCT"){
+                    $type = "Account Balance deducted by: ".$field->updated_by;
+                    $debit = "";
+                    $credit = $field->txnamount;
+                }
+                else if($field->type == "TXN"){
+                    $type = "Transaction History";
+                    $debit = "";
+                    $credit = $field->txnamount;
+                }
+                else if($field->type == "TOPUP"){
+                    $type = "Top Up History";
+                    $debit = $field->txnamount;
+                    $credit = "";
+                }
+                else{
+                    $type = "OTHER";
+                    $debit = "";
+                    $credit = "";
+                }
+                
+                $data .='
+                        <tr class="">
+                            <td>'.date("F d Y - h:i a",strtotime($field->created_at)).'<br>
+                            <em>'.$type.'</em></td>
+                            <td>'.$debit.'</td>
+                            <td>'.$credit.'</td>
+                            <td>'.$field->total_balance.'</td>
+                        </tr>
+                        ';
+                $counter++;
+            }
+        }
+        echo $data;
     }
 }

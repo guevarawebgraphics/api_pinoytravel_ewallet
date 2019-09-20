@@ -20,17 +20,15 @@
                             <span class="tag is-link">{{Request::input('Search')}} <a class="delete is-small" href="/admin/view/all"></a></span>                    
                     </div>
                 @endif
-                <div class="control">
-                        {{-- <form action="/test2" method="GET"> --}}
+                {{-- <div class="control">
                         <form action="/admin/search/reseller" method="GET">
-                        {{-- <form action="/reseller/search" method="GET"> --}}
                         <input class="input is-small" type="text" name="Search" placeholder="Find Reseller">
                         @csrf
                     </div>
                     <div class="control">
                         <button class="button is-info is-small" type="submit"> Search</button>
                         </form>
-                    </div>
+                    </div> --}}
                         {{-- <a class="button is-info is-small" type="submit">
                             Search
                         </a> --}}
@@ -48,7 +46,7 @@
             {{-- end of search bar--}}  
             {{-- start of table--}}      
             <div class="" style="overflow-y: auto;">    
-            <table class="table is-clear-fix is-bordered is-fullwidth is-striped" style="margin-bottom: 1.5em">
+            <table id="ResellerAccountTable" class="table is-clear-fix is-bordered is-fullwidth is-striped" style="margin-bottom: 1.5em; margin-top: 1.5em;">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -178,11 +176,17 @@
 
                 </tbody>
             </table>
-          {{$resellers->links()}}
+          {{-- {{$resellers->links()}} --}}
           </div>
       </div>         
     </div>    
-
+    <script>
+    $('#ResellerAccountTable').DataTable({
+        "serverSide": false, 
+        "retrieve": true,
+        "ordering": false
+    });
+    </script>
         
 @endsection
 

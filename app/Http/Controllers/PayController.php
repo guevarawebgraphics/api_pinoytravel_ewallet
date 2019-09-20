@@ -255,6 +255,7 @@ class PayController extends Controller
             $ttl_userbal->userId = auth()->user()->id;
             $ttl_userbal->txhistoryId = $last_id[0]->id;
             $ttl_userbal->total_balance = $final_bal;
+            $ttl_userbal->txnamount = session()->get('amount');
             $ttl_userbal->type = "TXN";
             $ttl_userbal->created_at = now();
             $ttl_userbal->updated_at = now();
