@@ -3,7 +3,7 @@
     <h1 class="title is-4">Reseller EPassbook</h1>
     <br>
     <div class="" style="overflow-y: auto;">        
-            <table id="rcrdPassbookTable" class="table is-clear-fix is-bordered is-fullwidth is-striped" style="margin-bottom: 1.5em; margin-top: 1.5em;">
+            <table id="rcrdPassbookTable" class="table is-clear-fix is-bordered is-fullwidth is-hoverable" style="margin-bottom: 1.5em; margin-top: 1.5em;">
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -71,5 +71,20 @@ function toggleEWBal() {
             hideAccount.innerHTML = "Show Reseller EPassbook..";
 
         }
+}
+
+function pbDiv(id, rowId){
+    if(id != "NONE"){
+        var x = document.getElementById(id);
+        if (x.style.display === "none") {
+
+            x.style.display = "block";
+
+        } else {
+
+            x.style.display = "none";
+
+        } 
+    }
 }
 </script>

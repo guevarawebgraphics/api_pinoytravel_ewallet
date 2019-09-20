@@ -42,6 +42,7 @@ URL::forceRootUrl(env('APP_URL'));
             Route::post('/admin/new_admin/newAdmin', 'ResellerController@newAdmin')->name('newAdmin');
 
             Route::post('/getEPassbook', 'ResellerController@getEPassbook')->name('getEPassbook');
+            
 });
 // Route::get('/admin/view/all','ResellerController@all')->middleware('admin');
 

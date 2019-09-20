@@ -1,0 +1,44 @@
+CREATE VIEW view_passbook AS
+SELECT a.id, a.userId, a.txhistoryId,
+(select tu.merchId from transaction_details as tu where tu.userId = a.userId AND tu.id = a.txhistoryId) as txmerchId,
+(select tu.transId from transaction_details as tu where tu.userId = a.userId AND tu.id = a.txhistoryId) as txtransId,
+(select tu.amount from transaction_details as tu where tu.userId = a.userId AND tu.id = a.txhistoryId) as txbookingAmount,
+(select tu.refCode from transaction_details as tu where tu.userId = a.userId AND tu.id = a.txhistoryId) as txrefCode,
+(select tu.transEmail from transaction_details as tu where tu.userId = a.userId AND tu.id = a.txhistoryId) as txtransEmail,
+(select tu.procId from transaction_details as tu where tu.userId = a.userId AND tu.id = a.txhistoryId) as txprocId,
+(select tu.created_at from transaction_details as tu where tu.userId = a.userId AND tu.id = a.txhistoryId) as txbookingCreated,
+(select tu.updated_at from transaction_details as tu where tu.userId = a.userId AND tu.id = a.txhistoryId) as txbookingUpdated,
+
+a.tophistoryId,
+(select tu.txnid from top_up_history as tu where tu.userId = a.userId AND tu.id = a.tophistoryId AND tu.is_paid = 1) as tptxnid,
+(select tu.dpRefNo from top_up_history as tu where tu.userId = a.userId AND tu.id = a.tophistoryId AND tu.is_paid = 1) as tpdpRefNo,
+(select tu.status from top_up_history as tu where tu.userId = a.userId AND tu.id = a.tophistoryId AND tu.is_paid = 1) as tpstatus,
+(select tu.dpProcID from top_up_history as tu where tu.userId = a.userId AND tu.id = a.tophistoryId AND tu.is_paid = 1) as tpdpProcID,
+(select tu.refCode from top_up_history as tu where tu.userId = a.userId AND tu.id = a.tophistoryId AND tu.is_paid = 1) as tprefCode,
+(select tu.email from top_up_history as tu where tu.userId = a.userId AND tu.id = a.tophistoryId AND tu.is_paid = 1) as tpemail,
+(select tu.procId from top_up_history as tu where tu.userId = a.userId AND tu.id = a.tophistoryId AND tu.is_paid = 1) as tpprocId,
+(select tu.amount from top_up_history as tu where tu.userId = a.userId AND tu.id = a.tophistoryId AND tu.is_paid = 1) as tpamount,
+(select tu.is_paid from top_up_history as tu where tu.userId = a.userId AND tu.id = a.tophistoryId AND tu.is_paid = 1) as tpis_paid,
+(select tu.created_at from top_up_history as tu where tu.userId = a.userId AND tu.id = a.tophistoryId AND tu.is_paid = 1) as tpup_created,
+(select tu.updated_at from top_up_history as tu where tu.userId = a.userId AND tu.id = a.tophistoryId AND tu.is_paid = 1) as tpup_updated,
+
+a.total_balance,
+
+a.txnamount,
+
+a.description,
+
+a.updated_by,
+
+a.type,
+
+a.created_at,
+
+a.updated_at
+
+FROM total_userbalance AS a
+LEFT JOIN transaction_details AS b ON a.txhistoryId = b.id
+LEFT JOIN top_up_history AS c ON a.tophistoryId = c.id
+
+GROUP BY a.txhistoryId, a.tophistoryId
+ORDER BY a.created_at DESC
