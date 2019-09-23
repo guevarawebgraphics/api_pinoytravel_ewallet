@@ -883,7 +883,7 @@ class ResellerController extends Controller
                     <b>Reference Code : </b>'.$field->tprefCode.'<br>
                     <b>Email : </b>'.$field->tpemail.'<br>
                     <b>Proc ID : </b>'.$field->tpprocId.'<br>
-                    <b>Top Up Amount : </b>'.$field->tpamount.'<br>
+                    <b>Top Up Amount : </b>₱'.number_format((float)$field->tpamount, 2, '.', ',').'<br>
                     <b>Top Up Date : </b>'.date("F d Y - h:i a",strtotime($field->tpup_created)).'<br>
                     ';
                 }

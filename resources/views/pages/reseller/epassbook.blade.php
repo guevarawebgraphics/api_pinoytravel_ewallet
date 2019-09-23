@@ -11,10 +11,20 @@ if(session()->forget('merchId') != ""){
     session()->forget('procid');
 }
 ?>
-<br>
+
+<p class="is-large is-pulled-right" style="margin-top:1em; margin-right:10px;">Balance: <strong>
+        @if(count($userBal))
+          ₱{{number_format((float)$userBal[0]->total_balance, 2, '.', ',')}}
+        @else
+          ₱0.00
+        @endif
+    </strong></p>    
+  
+  <div style="margin:1.5em 1.5em 1.5em 1.5em;">
+        <h1 class="title is-size-4"><i class="fa fa-list-alt"></i> EPassbook</h1>
+  </div>
+
 <div id="divEWBal" class="box">
-    <h1 class="title is-4">Reseller EPassbook</h1>
-    <br>
     <div class="" style="overflow-y: auto;">        
             <table id="rcrdPassbookTable" class="table is-clear-fix is-bordered is-fullwidth is-hoverable" style="margin-bottom: 1.5em; margin-top: 1.5em;">
                 <thead>
