@@ -32,6 +32,9 @@ class LoginController extends Controller
             if($user->is_admin == 1){
                 return  redirect('/admin/view/all');
             }
+            else if($user->is_admin == 2){
+                return  redirect('/admin/view/all');
+            }
             else{
                 if($user->on_hold == 0)
                 {

@@ -50,7 +50,7 @@ if(session()->forget('merchId') != ""){
                                 {{-- START OF PAYPAL PAYMENT FORM--}}
                                 {{-- <form action="{{route('/reseller/topup/payment')}}" method="POST">       --}}
                               <form action="/reseller/topup/checkout" id="frmPost" method="POST">
-                                <select id="paymentAmount" name="paymentAmount" class="selector">
+                                <select id="paymentAmount" name="paymentAmount" class="selector" required>
                                   <option value="50">₱ 50</option>
                                   <option value="150">₱ 150</option>
                                   <option value="250">₱ 250</option>
@@ -346,12 +346,45 @@ if(session()->forget('merchId') != ""){
             </div>        
 </div>
 <script>
-//Continue this to validate individually the "Agreement"
+// //Continue this to validate individually the "Agreement"
 // var item = $('.is-active').attr("data-tab");
 // if(item != ""){
 //   alert(item);
 //   document.getElementById('frmPost').removeAttribute('action');
 //   // /reseller/topup/checkout
+// }
+// var load = $('#paymentAmount').val();
+// var mop = $('#selectProc1').val();
+// var chck = $('#userAgreement2').val();
+// if(load == ""){
+//   bulmaToast.toast({ 
+//       message: "Select Load Amount",
+//       dismissible: true,
+//       duration: 3000,
+//       pauseOnHover: true,
+//       animate: { in: "fadeIn", out: "fadeOut" },
+//       type: "is-danger" 
+//   });
+// }
+// else if(mop == ""){
+//   bulmaToast.toast({ 
+//       message: "Choose your Payment Option",
+//       dismissible: true,
+//       duration: 3000,
+//       pauseOnHover: true,
+//       animate: { in: "fadeIn", out: "fadeOut" },
+//       type: "is-danger" 
+//   });
+// }
+// else if(chck == ""){
+//   bulmaToast.toast({ 
+//       message: "You didn't agree with out terms & condition.",
+//       dismissible: true,
+//       duration: 3000,
+//       pauseOnHover: true,
+//       animate: { in: "fadeIn", out: "fadeOut" },
+//       type: "is-danger" 
+//   });
 // }
 </script>
 @endsection

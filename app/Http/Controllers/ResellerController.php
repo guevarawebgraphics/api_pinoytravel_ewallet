@@ -721,7 +721,11 @@ class ResellerController extends Controller
     }
 
     public function create_admin(){
-        return view('pages.admin.create_admin');
+        if(auth()->user()->is_admin == 2){
+            return view('pages.admin.create_admin');
+        }else{
+            return view('/');
+        }
     }
 
     public function newAdminVal(Request $request){
@@ -755,6 +759,14 @@ class ResellerController extends Controller
             }         
             else if (count($validateEmail) > 0){
                 $messages = "Email already exists!";
+                $error[] = $messages;
+            }
+            else if (filter_var($request->email, FILTER_VALIDATE_EMAIL) === false){
+                $messages = "Invalid email address. Ex: joe@example.com";
+                $error[] = $messages;
+            }
+            else if(!preg_match("/^([a-zA-Z' ]+)$/",$request->name)){
+                $messages = "No special characters for name field";
                 $error[] = $messages;
             }
             else {
@@ -939,5 +951,13 @@ class ResellerController extends Controller
             }
         }
         echo $data;
+    }
+
+    public function inactive(){
+        if(auth()->user()->is_admin == 2){
+            return view('pages.admin.inactive');
+        }else{
+            return view('/');
+        }
     }
 }

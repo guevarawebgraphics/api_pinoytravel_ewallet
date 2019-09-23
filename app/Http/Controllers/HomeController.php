@@ -47,6 +47,10 @@ class HomeController extends Controller
             {
                 return  redirect('/admin/view/all');
             }
+            else if($user_record[0]->is_admin == 2)
+            {
+                return  redirect('/admin/view/all');
+            }
             else
             {
                 return view('pages.reseller.reservation')->with('userBal', $userBal);

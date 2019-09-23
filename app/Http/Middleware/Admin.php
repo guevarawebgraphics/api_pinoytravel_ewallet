@@ -26,7 +26,7 @@ class Admin
             abort(404);
             // redirect('/home');
         }else {
-            if ($request->user()->is_admin != 1)
+            if ($request->user()->is_admin != 1 && $request->user()->is_admin != 2)
             // if ($request->user() && $request->user()->is_admin != 1)
             {
                 // return new Response(view('unauthorized')->with('role', 'ADMIN'));

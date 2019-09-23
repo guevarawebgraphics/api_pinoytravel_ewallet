@@ -59,7 +59,11 @@
                                 <a class="navbar-item has-text-link has-text-weight-bold" aria-disabled="true">
                                 {{-- <a class="navbar-item has-text-link has-text-weight-bold" href="/admin/view/all"> --}}
                                  {{-- {{ Auth::user()->name }} --}}
+                                 @if(Auth::user()->is_admin == 1)
                                  Administrator
+                                 @elseif(Auth::user()->is_admin == 2)
+                                 Super Administrator
+                                 @endif
                                 </a>
                                 <hr class="navbar-divider">                
                                 {{-- <a class="navbar-item" href="/admin/wallet/reseller"> --}}
@@ -69,9 +73,11 @@
                                 <a class="navbar-item" href="#">
                                     Reports
                                 </a>
+                                @if(Auth::user()->is_admin == 2)
                                 <a class="navbar-item" href="/admin/new_admin">
                                     Register a New Admin
                                 </a>
+                                @endif
                                 {{-- <a class="navbar-item" href="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX7056622.jpg">
                                     Reseller Acct 2
                                 </a>
