@@ -10,6 +10,7 @@ if(session()->forget('merchId') != ""){
             session()->forget('procid');
 }
 ?>
+
 <div class="is-pulled-right">
 
     <p class="is-large is-pulled-right" style="margin-top:1em; margin-right:10px;">Balance: <strong>
@@ -27,30 +28,12 @@ if(session()->forget('merchId') != ""){
 
 {{-- <div class="card"></div> --}}
 <div class="box">    
-        {{-- <label class="is-left">Amount to Top Up</label>
-         <div class="control">
-          <p class="control has-icons-left">
-                <input class="input is-primary" type="number" placeholder="Amount to top up"> <span class="icon is-small is-left"><i class="fa fa-money"></i></span>
-          </p>
-        </div>                             --}}
+        
 
-            <div class="block">
-                {{-- <div class="field has-addons">
-                    <p class="control tooltip is-tooltip-bottom" data-tooltip="Enter amount to top-up">
-                        <input type="text" class="input" placeholder="Enter Amount To Top Up">
-                    </p>
-                    <p class="control">
-                        <a href="" class="button is-success">Top Up</a>
-                    </p>
-                </div> --}}                
+            <div class="block">          
                 {{-- START OF RESELLER PAYMENT DETAILS--}}
                 <div class="box">
                   <article class="media">
-                    {{-- <div class="media-left">
-                      <figure class="image is-64x64">
-                        <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
-                      </figure>
-                    </div> --}}
                     <div class="media-content">
                       <div class="content">
                           <h3 class="title">Select Load Amount</h3>
@@ -66,7 +49,7 @@ if(session()->forget('merchId') != ""){
                               <div class="select">
                                 {{-- START OF PAYPAL PAYMENT FORM--}}
                                 {{-- <form action="{{route('/reseller/topup/payment')}}" method="POST">       --}}
-                              <form action="/reseller/topup/checkout" method="POST">
+                              <form action="/reseller/topup/checkout" id="frmPost" method="POST">
                                 <select id="paymentAmount" name="paymentAmount" class="selector">
                                   <option value="50">₱ 50</option>
                                   <option value="150">₱ 150</option>
@@ -97,25 +80,6 @@ if(session()->forget('merchId') != ""){
                                   @enderror
                                 </label>                                                                                                                                                                                                                                                                                                                                          
                                                                                                                                                                                                                                                                                                                                        
-                            {{-- <nav class="level is-mobile">
-                              <div class="level-left">
-                          <a class="level-item" aria-label="reply">
-                            <span class="icon is-small">
-                              <i class="fas fa-reply" aria-hidden="true"></i>
-                            </span>
-                          </a>
-                          <a class="level-item" aria-label="retweet">
-                            <span class="icon is-small">
-                              <i class="fas fa-retweet" aria-hidden="true"></i>
-                            </span>
-                          </a>
-                          <a class="level-item" aria-label="like">
-                            <span class="icon is-small">
-                              <i class="fas fa-heart" aria-hidden="true"></i>
-                            </span>
-                          </a>
-                        </div>
-                      </nav> --}}
                     </div>
                   </article>
                 </div>
@@ -125,37 +89,37 @@ if(session()->forget('merchId') != ""){
                 {{-- START OF TABS--}}
                 <div class="tabs is-boxed" id="tabs">
                   <ul>
-                    <li class="is-active" data-tab="1">
+                    <li class="top-up-tab is-active" data-tab="1">
                       <a>
                         <span class="icon is-small"><i class="fas fa-credit-card" aria-hidden="true"></i></span>
                         <span><strong>Card Payment</strong></span>
                       </a>
                     </li>
-                    <li data-tab="2">
+                    <li class="top-up-tab" data-tab="2">
                       <a>
                         <span class="icon is-small"><i class="fas fa-globe" aria-hidden="true"></i></span>
                         <span><strong>Online Banking</strong></span>
                       </a>
                     </li>
-                    <li data-tab="3">
+                    <li class="top-up-tab" data-tab="3">
                       <a>
                         <span class="icon is-small"><i class="fas fa-money-check-alt" aria-hidden="true"></i></span>
                         <span><strong>OTC Bank/ATM</strong></span>
                       </a>
                     </li>
-                    <li data-tab="4">
+                    <li class="top-up-tab" data-tab="4">
                       <a>
                         <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
                         <span><strong>Non Bank</strong></span>
                       </a>
                     </li>
-                    <li data-tab="5">
+                    <li class="top-up-tab" data-tab="5">
                       <a>
                         <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
                         <span><strong>GCash</strong></span>
                       </a>
                     </li>
-                    <li data-tab="6">
+                    <li class="top-up-tab" data-tab="6">
                       <a>
                         <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
                         <span><strong>Direct Deposit</strong></span>
@@ -194,7 +158,7 @@ if(session()->forget('merchId') != ""){
                                   </select> --}}
                                   
                         <div class="select is-fullwidth" style="margin-bottom:0.3em">
-                          <select id="selectProc1" name="selectProc1">
+                          <select id="selectProc1" name="selectProc1" required>
                             <option value="">Choose Payment Option</option>                            
                             @foreach ($responseProc1 as $responseNameProc1)
                               <option value="{{$responseNameProc1->procId}}">{{$responseNameProc1->longName}}</option>                            
@@ -381,7 +345,15 @@ if(session()->forget('merchId') != ""){
                       
             </div>        
 </div>
-
+<script>
+//Continue this to validate individually the "Agreement"
+// var item = $('.is-active').attr("data-tab");
+// if(item != ""){
+//   alert(item);
+//   document.getElementById('frmPost').removeAttribute('action');
+//   // /reseller/topup/checkout
+// }
+</script>
 @endsection
 
 
