@@ -76,6 +76,9 @@ Route::group(['middleware'=> ['auth']], function(){
     Route::post('pay/cancelEwallet', 'PayController@cancelEwallet')->name('cancelEwallet');
     Route::post('pay/cancelSession', 'PayController@cancelSession')->name('cancelSession');
 
+    Route::get('/reseller/passbook/getEPassbookReseller', 'ResellerPassbook@getEPassbookReseller')->name('getEPassbookReseller');
+    Route::get('/reseller/passbook','ResellerPassbook@index');
+
     // Route::post('/reseller/topup/payment','TopupController@topupPayment')->name('/reseller/topup/payment');
     // Route::get('/reseller/topup/success','TopupController@executePayment')->name('/reseller/topup/success');
     // Route::get('/reseller/topup/cancel','TopupController@cancelPayment')->name('/reseller/topup/cancel');

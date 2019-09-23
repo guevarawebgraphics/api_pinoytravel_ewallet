@@ -77,7 +77,9 @@
                             <a class="navbar-item" href="/reseller/commission/view">
                             Commission
                             </a>
-
+                            <a class="navbar-item" href="/reseller/passbook">
+                            EPassbook
+                            </a>
                         </div>
                     
                     <div class="navbar-end">
