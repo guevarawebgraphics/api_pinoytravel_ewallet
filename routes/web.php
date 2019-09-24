@@ -43,7 +43,9 @@ URL::forceRootUrl(env('APP_URL'));
 
             Route::post('/getEPassbook', 'ResellerController@getEPassbook')->name('getEPassbook');
 
-            Route::get('/admin/inactive', 'ResellerController@inactive');
+            Route::get('/admin/deleted', 'ResellerController@getDeletedAccounts');
+            Route::get('/admin/deleted/RcrdsDeletedAccounts', 'ResellerController@RcrdsDeletedAccounts')->name('RcrdsDeletedAccounts');
+            Route::post('/admin/deleted/activateAccount', 'ResellerController@activateAccount')->name('activateAccount');
 });
 // Route::get('/admin/view/all','ResellerController@all')->middleware('admin');
 

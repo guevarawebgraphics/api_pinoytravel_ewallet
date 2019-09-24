@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 20, 2019 at 07:10 AM
+-- Generation Time: Sep 24, 2019 at 10:22 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.2.20
 
@@ -220,12 +220,10 @@ CREATE TABLE `top_up_history` (
 --
 
 INSERT INTO `top_up_history` (`id`, `userId`, `txnid`, `dpRefNO`, `status`, `dpProcID`, `refCode`, `email`, `procId`, `amount`, `is_paid`, `created_at`, `updated_at`) VALUES
-(4, 3, 'BTSF03TIQY2J', 'NEW', 'NEW', 'BYAD', 'OY1HSJF1', 'keighdee@gmail.com', 'DPAY', '10000.00', 1, '2019-09-18 10:05:52', '2019-09-19 10:35:00'),
-(5, 9, 'W1RK0SJUEW9G', NULL, NULL, NULL, 'KMJWIFK0', 'kingrgdev@gmail.com', 'DPAY', '50.00', 0, '2019-09-18 10:16:44', '2019-09-18 10:16:44'),
-(6, 9, 'UAQSKW7GUIIE', NULL, NULL, NULL, 'RX1MKKXI', 'kingrgdev@gmail.com', 'BOG', '50.00', 0, '2019-09-19 04:59:21', '2019-09-19 04:59:21'),
-(7, 9, 'OCOZBRJR8Y2W', NULL, NULL, NULL, 'PSQWUJYW', 'kingrgdev@gmail.com', 'BOGX', '50.00', 0, '2019-09-19 05:01:38', '2019-09-19 05:01:38'),
-(8, 9, 'SBELAIIT90NE', NULL, NULL, NULL, 'EJ0VICKT', 'kingrgdev@gmail.com', 'CBC', '50.00', 0, '2019-09-19 05:01:55', '2019-09-19 05:01:55'),
-(9, 3, '1BVZPIGCYBBP', 'NEW', 'NEW', 'BYAD', 'DLOPJTQU', 'keighdee@gmail.com', 'DPAY', '10000.00', 1, '2019-09-20 03:47:59', '2019-09-20 03:48:35');
+(1, 3, 'VQY3OKERIRSA', 'NEW', 'NEW', 'BYAD', 'KTAHNDQY', 'keighdee@gmail.com', 'BPIB', '10000.00', 1, '2019-09-20 07:33:57', '2019-09-20 07:34:30'),
+(2, 3, 'WNUXI5RYK1TB', 'NEW', 'NEW', 'BYAD', 'UAEHR5SL', 'keighdee@gmail.com', 'DPAY', '50.00', 1, '2019-09-20 10:09:34', '2019-09-20 10:11:10'),
+(3, 3, 'UC3YHACQ2MJY', NULL, NULL, NULL, 'NZXIZRB6', 'keighdee@gmail.com', 'DPAY', '50.00', 0, '2019-09-20 10:09:34', '2019-09-20 10:09:34'),
+(4, 3, 'GVFHSSTBOLS4', NULL, NULL, NULL, '93MMH1MQ', 'keighdee@gmail.com', 'RCBC', '50.00', 0, '2019-09-23 02:53:28', '2019-09-23 02:53:28');
 
 -- --------------------------------------------------------
 
@@ -252,12 +250,15 @@ CREATE TABLE `total_userbalance` (
 --
 
 INSERT INTO `total_userbalance` (`id`, `userId`, `txhistoryId`, `tophistoryId`, `total_balance`, `txnamount`, `description`, `updated_by`, `type`, `created_at`, `updated_at`) VALUES
-(56, 3, NULL, NULL, '1000.00', '1000.00', NULL, 'Juan Dela Cruz', 'ADD', '2019-09-18 10:04:37', '2019-09-18 10:04:37'),
-(57, 3, NULL, NULL, '1001.41', '1.41', NULL, 'Juan Dela Cruz', 'ADD', '2019-09-18 10:04:54', '2019-09-18 10:04:54'),
-(85, 3, NULL, NULL, '999.41', '2.00', NULL, 'Juan Dela Cruz', 'DEDUCT', '2019-09-20 03:46:29', '2019-09-20 03:46:29'),
-(86, 3, NULL, NULL, '1003.41', '4.00', NULL, 'Juan Dela Cruz', 'ADD', '2019-09-20 03:47:05', '2019-09-20 03:47:05'),
-(87, 3, NULL, 9, '11003.41', '10000.00', NULL, NULL, 'TOPUP', '2019-09-20 03:48:35', '2019-09-20 03:48:35'),
-(88, 3, 5, NULL, '10728.41', '275.00', NULL, NULL, 'TXN', '2019-09-20 03:51:43', '2019-09-20 03:51:43');
+(1, 3, NULL, 1, '10000.00', '10000.00', NULL, NULL, 'TOPUP', '2019-09-20 07:34:30', '2019-09-20 07:34:30'),
+(2, 3, 1, NULL, '9725.00', '275.00', NULL, NULL, 'TXN', '2019-09-20 07:36:12', '2019-09-20 07:36:12'),
+(3, 3, NULL, NULL, '10959.00', '1234.00', NULL, 'Juan Dela Cruz', 'ADD', '2019-09-20 08:05:19', '2019-09-20 08:05:19'),
+(4, 3, NULL, NULL, '10900.00', '59.00', NULL, 'Juan Dela Cruz', 'DEDUCT', '2019-09-20 08:41:37', '2019-09-20 08:41:37'),
+(5, 3, NULL, 2, '10950.00', '50.00', NULL, NULL, 'TOPUP', '2019-09-20 10:11:10', '2019-09-20 10:11:10'),
+(6, 9, NULL, NULL, '1234.00', '1234.00', NULL, 'Juan Dela Cruz', 'ADD', '2019-09-20 10:19:57', '2019-09-20 10:19:57'),
+(7, 9, NULL, NULL, '0.00', '1234.00', NULL, 'Juan Dela Cruz', 'DEDUCT', '2019-09-20 10:20:07', '2019-09-20 10:20:07'),
+(8, 9, NULL, NULL, '123.00', '123.00', NULL, 'Juan Dela Cruz', 'ADD', '2019-09-20 10:20:16', '2019-09-20 10:20:16'),
+(9, 23, NULL, NULL, '150.99', '150.99', NULL, 'Juan Dela Cruz', 'ADD', '2019-09-23 09:42:45', '2019-09-23 09:42:45');
 
 -- --------------------------------------------------------
 
@@ -284,8 +285,7 @@ CREATE TABLE `transaction_details` (
 --
 
 INSERT INTO `transaction_details` (`id`, `userId`, `merchId`, `transId`, `amount`, `refCode`, `transEmail`, `procId`, `deleted`, `created_at`, `updated_at`) VALUES
-(4, 3, 'PINOYTRAVEL-EWALLET', 'GMDYJWH3P8KJ', '275.00', 'GMDYJWH3', 'guevara.richard17@gmail.com', 'EWALLET', 0, '2019-09-19 10:38:16', '2019-09-19 10:38:16'),
-(5, 3, 'PINOYTRAVEL-EWALLET', 'TRHAVOT2USE4', '275.00', 'TRHAVOT2', 'guevara.richard17@gmail.com', 'EWALLET', 0, '2019-09-20 03:51:43', '2019-09-20 03:51:43');
+(1, 3, 'PINOYTRAVEL-EWALLET', 'IDGTXOJSXHOX', '275.00', 'IDGTXOJS', 'guevara.richard17@gmail.com', 'EWALLET', 0, '2019-09-20 07:36:12', '2019-09-20 07:36:12');
 
 -- --------------------------------------------------------
 
@@ -329,12 +329,81 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `address`, `contact_no`, `is_blocked`, `on_hold`, `wallet_bal`, `is_admin`, `remember_token`, `deleted`, `created_at`, `updated_at`) VALUES
-(1, 'Sample One', 'sampOne@gmail.com', '2019-06-05 06:45:56', '123qwe', 'Sample Onee', '09184352441', 0, 0, '0.00', 1, NULL, 0, '2019-06-05 06:48:09', '2019-06-05 06:48:09'),
+(1, 'Sample One', 'sampOne@gmail.com', '2019-06-05 06:45:56', '123qwe', 'Sample Onee', '09184352441', 1, 0, '0.00', 1, NULL, 0, '2019-06-05 06:48:09', '2019-06-05 06:48:09'),
 (2, 'Juan Dela Cruz', 'juandelacruz@gmail.com', NULL, '$2y$10$2Fgnu7sK0STxr9IuNHjz5u42/8dmBSvEO0NtViUZBbVQ5XvmMQ2qq', 'Sample Twoo', '09852421542', 0, 0, '0.00', 1, NULL, 0, '2019-06-05 07:16:18', '2019-06-05 07:16:18'),
-(3, 'Keigh Dee', 'keighdee@gmail.com', NULL, '$2y$10$2Fgnu7sK0STxr9IuNHjz5u42/8dmBSvEO0NtViUZBbVQ5XvmMQ2qq', 'JRU', '09776927838', 0, 0, '3000.00', 0, 'La9RVZ1SY4FrtzRb1vcE6p2KFDEnhHaawTJoGG9TmfYvQEUk98J9Poi6c9Zi', 0, '2019-06-06 02:27:19', '2019-09-18 10:38:14'),
-(9, 'King RG', 'kingrgdev@gmail.com', NULL, '$2y$10$aeySRF7/h1VOrc6B6gZoK.xNIel0Wq/8d5g.xGS8VC4fobUPD61IK', 'Stratford, Ontario', '09254214520', 0, 1, '0.00', 0, '68mjt9qKFELM9Er0Jtqhikz5jQ9U7rIpXexdyoxwvj6XYn99ROUqEGVUSa2n', 0, '2019-06-09 05:38:04', '2019-09-19 05:13:16'),
-(10, 'Kay Louise Diaz', 'kaydiaz@gmail.com', NULL, '$2y$10$bQoCj9I8Yk88sJarnMySh.y1TAMUJDgKaIuMMWtUOq.7rGkgCNNju', 'Mandaluyong', '09776927838', 0, 0, '0.00', 1, NULL, 0, '2019-09-19 06:05:32', '2019-09-19 06:05:32'),
-(16, 'Richard Guevara', 'guevara.richard17@gmail.com', NULL, '$2y$10$nG8tk6VyX8ah.EoeRZnkCekktp2Rdrwx74YXE/DDXT6hTdqxRKuZO', '49 Peralta compound san miguel pasig city, NCR Manila Philippines Asia', '12341234', 0, 0, '0.00', 1, NULL, 0, '2019-09-19 08:45:05', '2019-09-19 08:45:05');
+(3, 'Keigh Dee', 'keighdee@gmail.com', NULL, '$2y$10$2Fgnu7sK0STxr9IuNHjz5u42/8dmBSvEO0NtViUZBbVQ5XvmMQ2qq', 'JRU', '09776927838', 0, 0, '3000.00', 0, 'kNNlJ3NpP8sbH22bWBcMX0qOQYhYby1tE8PL2yXxIr7Yj4382NQd5uz35AuM', 0, '2019-06-06 02:27:19', '2019-09-18 10:38:14'),
+(9, 'King RG', 'kingrgdev@gmail.com', NULL, '$2y$10$aeySRF7/h1VOrc6B6gZoK.xNIel0Wq/8d5g.xGS8VC4fobUPD61IK', 'Stratford, Ontario', '09254214520', 0, 1, '0.00', 0, 'c7Hp6HdNilhce9DDLdN0vpNnL33m9iWVIi4VlMiXbCqfIGUJF1vrIMArIU6b', 0, '2019-06-09 05:38:04', '2019-09-24 08:15:25'),
+(10, 'Kay Louise Diaz', 'kaydiaz@gmail.com', NULL, '$2y$10$bQoCj9I8Yk88sJarnMySh.y1TAMUJDgKaIuMMWtUOq.7rGkgCNNju', 'Mandaluyong', '09776927838', 0, 0, '0.00', 1, NULL, 0, '2019-09-19 06:05:32', '2019-09-24 08:10:56'),
+(16, 'Richard Guevara', 'guevara.richard17@gmail.com', NULL, '$2y$10$nG8tk6VyX8ah.EoeRZnkCekktp2Rdrwx74YXE/DDXT6hTdqxRKuZO', '49 Peralta compound san miguel pasig city, NCR Manila Philippines Asia', '12341234', 0, 0, '0.00', 1, NULL, 0, '2019-09-19 08:45:05', '2019-09-19 08:45:05'),
+(22, 'Reseller Super', 'superreseller@mail.com', NULL, '$2y$10$NUsyGO0RH3bK/.0xJE/AQugSsvNTCwrwAdgjKpmCUVU0t6yRoDi4O', '49 Peralta compound san miguel pasig city, NCR Manila Philippines Asia', '09776927838', 0, 0, '0.00', 2, NULL, 0, '2019-09-23 03:44:51', '2019-09-23 03:44:51'),
+(23, 'Post Malone', 'postmalone@pm.com', NULL, '$2y$10$LGg0E2b4Q6WdlmqUOU0hEusjxJfXhS7XfuXxmrWLxuCfxa5pA7vuG', '49 Peralta compound san miguel pasig city, NCR Manila Philippines Asia', '09776927838', 0, 0, '0.00', 0, NULL, 0, '2019-09-23 09:36:19', '2019-09-24 08:11:16');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_deleted_users`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_deleted_users` (
+`id` int(10) unsigned
+,`name` varchar(191)
+,`email` varchar(191)
+,`email_verified_at` timestamp
+,`password` varchar(191)
+,`address` varchar(191)
+,`contact_no` varchar(191)
+,`is_blocked` tinyint(4)
+,`on_hold` tinyint(4)
+,`is_admin` tinyint(4)
+,`tu_id` bigint(20)
+,`userId` bigint(20)
+,`txhistoryId` bigint(20)
+,`tophistoryId` bigint(20)
+,`total_balance` decimal(13,2)
+,`description` varchar(191)
+,`updated_by` varchar(191)
+,`created_at` timestamp
+,`updated_at` timestamp
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_passbook`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_passbook` (
+`id` bigint(11)
+,`userId` bigint(11)
+,`txhistoryId` bigint(11)
+,`txmerchId` varchar(50)
+,`txtransId` varchar(50)
+,`txbookingAmount` decimal(13,2)
+,`txrefCode` varchar(50)
+,`txtransEmail` varchar(50)
+,`txprocId` varchar(50)
+,`txbookingCreated` timestamp
+,`txbookingUpdated` timestamp
+,`tophistoryId` bigint(11)
+,`tptxnid` varchar(50)
+,`tpdpRefNo` varchar(50)
+,`tpstatus` varchar(50)
+,`tpdpProcID` varchar(50)
+,`tprefCode` varchar(50)
+,`tpemail` varchar(50)
+,`tpprocId` varchar(50)
+,`tpamount` decimal(13,2)
+,`tpis_paid` int(11)
+,`tpup_created` timestamp
+,`tpup_updated` timestamp
+,`total_balance` decimal(13,2)
+,`txnamount` decimal(13,2)
+,`description` varchar(191)
+,`updated_by` varchar(191)
+,`type` varchar(191)
+,`created_at` timestamp
+,`updated_at` timestamp
+);
 
 -- --------------------------------------------------------
 
@@ -372,6 +441,24 @@ CREATE TABLE `view_total_userbalance` (
 DROP TABLE IF EXISTS `userbal`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `userbal`  AS  select `a`.`id` AS `userId`,(select sum(`tuhh`.`amount`) from `top_up_history` `tuhh` where `tuhh`.`userId` = `a`.`id` and `tuhh`.`is_paid` = 1) AS `total_topup`,(select sum(`trr`.`amount`) from `transaction_details` `trr` where `trr`.`userId` = `a`.`id`) AS `total_spent`,(select sum(`tuh`.`amount`) from `top_up_history` `tuh` where `tuh`.`userId` = `a`.`id` and `tuh`.`is_paid` = 1) - (select sum(`tr`.`amount`) from `transaction_details` `tr` where `tr`.`userId` = `a`.`id`) AS `total_balance` from ((`users` `a` left join `top_up_history` `b` on(`a`.`id` = `b`.`userId`)) left join `transaction_details` `c` on(`a`.`id` = `c`.`userId`)) where `b`.`is_paid` = 1 group by `a`.`id` ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_deleted_users`
+--
+DROP TABLE IF EXISTS `view_deleted_users`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_deleted_users`  AS  select `a`.`id` AS `id`,`a`.`name` AS `name`,`a`.`email` AS `email`,`a`.`email_verified_at` AS `email_verified_at`,`a`.`password` AS `password`,`a`.`address` AS `address`,`a`.`contact_no` AS `contact_no`,`a`.`is_blocked` AS `is_blocked`,`a`.`on_hold` AS `on_hold`,`a`.`is_admin` AS `is_admin`,(select `tu`.`id` from `total_userbalance` `tu` where `tu`.`userId` = `a`.`id` order by `tu`.`created_at` desc limit 1) AS `tu_id`,(select `tu`.`userId` from `total_userbalance` `tu` where `tu`.`userId` = `a`.`id` order by `tu`.`created_at` desc limit 1) AS `userId`,(select `tu`.`txhistoryId` from `total_userbalance` `tu` where `tu`.`userId` = `a`.`id` order by `tu`.`created_at` desc limit 1) AS `txhistoryId`,(select `tu`.`tophistoryId` from `total_userbalance` `tu` where `tu`.`userId` = `a`.`id` order by `tu`.`created_at` desc limit 1) AS `tophistoryId`,(select `tu`.`total_balance` from `total_userbalance` `tu` where `tu`.`userId` = `a`.`id` order by `tu`.`created_at` desc limit 1) AS `total_balance`,(select `tu`.`description` from `total_userbalance` `tu` where `tu`.`userId` = `a`.`id` order by `tu`.`created_at` desc limit 1) AS `description`,(select `tu`.`updated_by` from `total_userbalance` `tu` where `tu`.`userId` = `a`.`id` order by `tu`.`created_at` desc limit 1) AS `updated_by`,(select max(`tu`.`created_at`) from `total_userbalance` `tu` where `tu`.`userId` = `a`.`id`) AS `created_at`,(select max(`tu`.`updated_at`) from `total_userbalance` `tu` where `tu`.`userId` = `a`.`id`) AS `updated_at` from (`users` `a` left join `total_userbalance` `b` on(`a`.`id` = `b`.`userId`)) where `a`.`is_blocked` = 1 group by `a`.`id` order by `b`.`created_at` desc ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_passbook`
+--
+DROP TABLE IF EXISTS `view_passbook`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_passbook`  AS  select `a`.`id` AS `id`,`a`.`userId` AS `userId`,`a`.`txhistoryId` AS `txhistoryId`,(select `tu`.`merchId` from `transaction_details` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`txhistoryId`) AS `txmerchId`,(select `tu`.`transId` from `transaction_details` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`txhistoryId`) AS `txtransId`,(select `tu`.`amount` from `transaction_details` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`txhistoryId`) AS `txbookingAmount`,(select `tu`.`refCode` from `transaction_details` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`txhistoryId`) AS `txrefCode`,(select `tu`.`transEmail` from `transaction_details` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`txhistoryId`) AS `txtransEmail`,(select `tu`.`procId` from `transaction_details` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`txhistoryId`) AS `txprocId`,(select `tu`.`created_at` from `transaction_details` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`txhistoryId`) AS `txbookingCreated`,(select `tu`.`updated_at` from `transaction_details` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`txhistoryId`) AS `txbookingUpdated`,`a`.`tophistoryId` AS `tophistoryId`,(select `tu`.`txnid` from `top_up_history` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`tophistoryId` and `tu`.`is_paid` = 1) AS `tptxnid`,(select `tu`.`dpRefNO` from `top_up_history` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`tophistoryId` and `tu`.`is_paid` = 1) AS `tpdpRefNo`,(select `tu`.`status` from `top_up_history` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`tophistoryId` and `tu`.`is_paid` = 1) AS `tpstatus`,(select `tu`.`dpProcID` from `top_up_history` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`tophistoryId` and `tu`.`is_paid` = 1) AS `tpdpProcID`,(select `tu`.`refCode` from `top_up_history` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`tophistoryId` and `tu`.`is_paid` = 1) AS `tprefCode`,(select `tu`.`email` from `top_up_history` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`tophistoryId` and `tu`.`is_paid` = 1) AS `tpemail`,(select `tu`.`procId` from `top_up_history` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`tophistoryId` and `tu`.`is_paid` = 1) AS `tpprocId`,(select `tu`.`amount` from `top_up_history` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`tophistoryId` and `tu`.`is_paid` = 1) AS `tpamount`,(select `tu`.`is_paid` from `top_up_history` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`tophistoryId` and `tu`.`is_paid` = 1) AS `tpis_paid`,(select `tu`.`created_at` from `top_up_history` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`tophistoryId` and `tu`.`is_paid` = 1) AS `tpup_created`,(select `tu`.`updated_at` from `top_up_history` `tu` where `tu`.`userId` = `a`.`userId` and `tu`.`id` = `a`.`tophistoryId` and `tu`.`is_paid` = 1) AS `tpup_updated`,`a`.`total_balance` AS `total_balance`,`a`.`txnamount` AS `txnamount`,`a`.`description` AS `description`,`a`.`updated_by` AS `updated_by`,`a`.`type` AS `type`,`a`.`created_at` AS `created_at`,`a`.`updated_at` AS `updated_at` from ((`total_userbalance` `a` left join `transaction_details` `b` on(`a`.`txhistoryId` = `b`.`id`)) left join `top_up_history` `c` on(`a`.`tophistoryId` = `c`.`id`)) order by `a`.`created_at` desc ;
 
 -- --------------------------------------------------------
 
@@ -483,25 +570,25 @@ ALTER TABLE `oauth_personal_access_clients`
 -- AUTO_INCREMENT for table `top_up_history`
 --
 ALTER TABLE `top_up_history`
-  MODIFY `id` bigint(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `total_userbalance`
 --
 ALTER TABLE `total_userbalance`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `transaction_details`
 --
 ALTER TABLE `transaction_details`
-  MODIFY `id` bigint(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

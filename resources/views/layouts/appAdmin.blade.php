@@ -70,12 +70,17 @@
                                 {{-- <a class="navbar-item" href="/reseller/wallet"> --}}
                                     {{-- Reseller Wallet Value --}}
                                 {{-- </a> --}}
-                                <a class="navbar-item" href="#">
+                                {{-- <a class="navbar-item" href="#">
                                     Reports
-                                </a>
-                                @if(Auth::user()->is_admin == 2)
+                                </a> --}}
+                                @if(Auth::user()->is_admin == 2 || Auth::user()->is_admin == 1)
                                 <a class="navbar-item" href="/admin/new_admin">
                                     Register a New Admin
+                                </a>
+                                @endif
+                                @if(Auth::user()->is_admin == 2)
+                                <a class="navbar-item" href="/admin/deleted">
+                                    Activate Deleted Accounts
                                 </a>
                                 @endif
                                 {{-- <a class="navbar-item" href="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX7056622.jpg">

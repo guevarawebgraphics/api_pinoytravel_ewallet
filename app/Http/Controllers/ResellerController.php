@@ -283,6 +283,7 @@ class ResellerController extends Controller
         // $resellers = Reseller::orderBy('name', 'desc')->paginate(1);
         $searched = 0;
         // $reseller = Reseller::orderBy('created_at', 'desc')
+        
         $resellers = ViewTotalUserBalance::orderBy('created_at', 'desc')
         ->where('is_blocked', '0')  
         ->where('is_admin', '0')          
@@ -721,7 +722,7 @@ class ResellerController extends Controller
     }
 
     public function create_admin(){
-        if(auth()->user()->is_admin == 2){
+        if(auth()->user()->is_admin == 2 || auth()->user()->is_admin == 1){
             return view('pages.admin.create_admin');
         }else{
             return view('/');
@@ -953,11 +954,73 @@ class ResellerController extends Controller
         echo $data;
     }
 
-    public function inactive(){
+    public function getDeletedAccounts(){
         if(auth()->user()->is_admin == 2){
             return view('pages.admin.inactive');
         }else{
             return view('/');
         }
+    }
+
+    public function RcrdsDeletedAccounts(){
+        $RcrdsDeleted = DB::connection('mysql')->select("SELECT * FROM view_deleted_users ORDER BY updated_at DESC");
+
+        $data = "";
+        
+        $counter = 1;
+        if(count($RcrdsDeleted) > 0){
+            foreach($RcrdsDeleted as $field){
+                $data .='
+                        <tr class="">
+                            <td> '.$field->name.'</td>                        
+                            <td> '.$field->email.'</td>
+                            <td> '.$field->address.'</td>
+                            <td> '.$field->contact_no.'</td>
+                            <td> ₱ '.number_format((float)$field->total_balance, 2, '.', ',').'</td>
+                            <td>
+                            <button id="btn'.$field->id.'" onClick="activate(\''.$field->id.'\')" data-target="'.$field->id.'" class="button is-rounded modal-button" data-id="'.$field->id.'">Activate</button>
+                            </td>
+                            
+                        </tr>
+                        ';
+                $counter++;
+            }
+        }
+        echo $data;
+    }
+
+    public function activateAccount(Request $request){
+        $message = "";
+        $output = array();
+        $error = array();
+        $success = array();
+ 
+        $users = DB::connection('mysql')->select("SELECT * FROM view_deleted_users WHERE id = '".$request->userId."'");
+
+
+        if($request->userId != ""){
+            DB::table('users')
+            ->where('id', $request->userId)
+            ->update([
+            'deleted'=>0,
+            'is_blocked'=>0,
+            'updated_at' => now()
+            ]);
+
+            $messages = "Account: ".$users[0]->name." Successfully Activated";
+            $success[] = $messages;
+
+        }else{
+
+            $messages = "userId is required!";
+            $error[] = $messages;
+
+        }
+        $output = array(
+            'error'=>$error,
+            'success'=>$success
+        );
+
+        echo json_encode($output);
     }
 }

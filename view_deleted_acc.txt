@@ -1,0 +1,24 @@
+CREATE VIEW view_deleted_users AS
+
+select `a`.`id` AS `id`,`a`.`name` AS `name`,`a`.`email` AS `email`,`a`.`email_verified_at` AS `email_verified_at`,`a`.`password` AS `password`,`a`.`address` AS `address`,
+
+`a`.`contact_no` AS `contact_no`,`a`.`is_blocked` AS `is_blocked`,`a`.`on_hold` AS `on_hold`,`a`.`is_admin` AS `is_admin`,
+
+(select `tu`.`id` from `resellerdb`.`total_userbalance` `tu` where `tu`.`userId` = `a`.`id` order by `tu`.`created_at` desc limit 1) AS `tu_id`,
+
+(select `tu`.`userId` from `resellerdb`.`total_userbalance` `tu` where `tu`.`userId` = `a`.`id` order by `tu`.`created_at` desc limit 1) AS `userId`,
+
+(select `tu`.`txhistoryId` from `resellerdb`.`total_userbalance` `tu` where `tu`.`userId` = `a`.`id` order by `tu`.`created_at` desc limit 1) AS `txhistoryId`,
+
+(select `tu`.`tophistoryId` from `resellerdb`.`total_userbalance` `tu` where `tu`.`userId` = `a`.`id` order by `tu`.`created_at` desc limit 1) AS `tophistoryId`,
+
+(select `tu`.`total_balance` from `resellerdb`.`total_userbalance` `tu` where `tu`.`userId` = `a`.`id` order by `tu`.`created_at` desc limit 1) AS `total_balance`,
+
+(select `tu`.`description` from `resellerdb`.`total_userbalance` `tu` where `tu`.`userId` = `a`.`id` order by `tu`.`created_at` desc limit 1) AS `description`,
+
+(select `tu`.`updated_by` from `resellerdb`.`total_userbalance` `tu` where `tu`.`userId` = `a`.`id` order by `tu`.`created_at` desc limit 1) AS `updated_by`,
+
+
+(select max(`tu`.`created_at`) from `resellerdb`.`total_userbalance` `tu` where `tu`.`userId` = `a`.`id`) AS `created_at`,(select max(`tu`.`updated_at`) from `resellerdb`.`total_userbalance` `tu`
+
+ where `tu`.`userId` = `a`.`id`) AS `updated_at` from (`resellerdb`.`users` `a` left join `resellerdb`.`total_userbalance` `b` on(`a`.`id` = `b`.`userId`)) where `a`.`is_blocked` = 1 group by `a`.`id` order by `b`.`created_at` desc
