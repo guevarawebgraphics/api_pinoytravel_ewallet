@@ -152,14 +152,14 @@
                                     <div class="field">
                                         <label class="label">Enter your amount</label>
                                         <div class="control">
-                                            <input class="input decimal"  id='second' type="text"  placeholder="e.g 15000.00" require>
+                                            <input class="input decimal input_decimal"  id='second' type="text"  placeholder="e.g 15000.00" require>
                                         </div>
                                     </div>
                                     <br>
                                     <div class="field">
                                     <div class="control">
                                         <label class="radio">
-                                        <input type="radio" name="balOption" class="input_amount" value="add">
+                                        <input type="radio" name="balOption" class="input_amount" value="add" checked>
                                         Add to reseller account
                                         </label>
                                         <label class="radio">
@@ -534,6 +534,30 @@
     })
 
     $('.input_amount').change(function(){ 
+        var x = $('input[name=balOption]:checked').val();
+        var firstValue  = Number("<?php echo number_format((float)$balCompute, 2, '.', ''); ?>");
+        var secondValue = Number($('#second').val());
+
+        if(secondValue != ""){
+            if(x == "add"){
+                var resValue = firstValue + secondValue;
+                $('#total_expenses1').html(formatter.format(resValue));
+            }
+            else if(x == "deduct"){
+                var resValue = firstValue - secondValue;
+                if(resValue < 0){
+                    $('#total_expenses1').html(formatter.format(0));
+                }else{
+                    $('#total_expenses1').html(formatter.format(resValue));
+                }
+            }
+        }else{
+            $('#total_expenses1').html(formatter.format(0));
+        }   
+    });
+
+
+    $('.input_decimal').keyup(function(){ 
         var x = $('input[name=balOption]:checked').val();
         var firstValue  = Number("<?php echo number_format((float)$balCompute, 2, '.', ''); ?>");
         var secondValue = Number($('#second').val());
