@@ -45,7 +45,7 @@
     <body>
         {{-- @include('inc.navbar') --}}
         <div class="container animated fadeIn">
-            {{-- DEFAULT VIEW FOR DASHBOARD IS RESERVATIONS--}}
+            {{-- DEFAULT VIEW FOR DASHBOARD sIS RESERVATIONS--}}
 
             <nav class="navbar" role="navigation" aria-label="main navigation">
                     <div class="navbar-brand">

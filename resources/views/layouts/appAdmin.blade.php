@@ -29,6 +29,13 @@
         <script src="{{asset('js/pace.min.js')}}"></script>
         <style>.pace { -webkit-pointer-events: none; pointer-events: none; -webkit-user-select: none; -moz-user-select: none; user-select: none; } .pace-inactive { display: none; } .pace .pace-progress { background: #29a0da; position: fixed; z-index: 2000; top: 0; right: 100%; width: 100%; height: 4px; }</style>
 
+        <script>
+        $(document).ready(function(){
+        $("#menuBtn").click(function(){
+            $(".menuDiv").slideToggle();
+        });
+        });
+        </script>
     </head>
     <body>
         {{-- @include('inc.navbar') --}}
@@ -40,14 +47,14 @@
                         <img src="{{asset('img/icon/pt_logo.png')}}" alt="PinoyTravel" width="112" height="28">
                     </a>
                 
-                    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                    <a role="button" class="navbar-burger burger" id="menuBtn" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                     </a>
                     </div>
                 
-                    <div id="navbarBasicExample" class="navbar-menu">
+                    <div id="navbarBasicExample" class="navbar-menu menuDiv">
                     <div class="navbar-end">
                         <div class="navbar-item">
                         <div class="navbar-item has-dropdown is-hoverable">
