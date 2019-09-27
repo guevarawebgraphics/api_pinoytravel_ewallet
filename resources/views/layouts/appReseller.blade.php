@@ -112,12 +112,12 @@
                                 <a class="navbar-item" href="/reseller/transaction_history">
                                     Transaction History
                                 </a>
-                                <a class="navbar-item" href="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX7056622.jpg">
+                                {{-- <a class="navbar-item" href="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX7056622.jpg">
                                     Reseller Acct 2
                                 </a>
                                 <a class="navbar-item" href="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX7056622.jpg">
                                     Reseller Acct 3                    
-                                </a>
+                                </a> --}}
                                 {{-- <hr class="navbar-divider"> --}}
                                 {{-- <a class="navbar-item">
                                     Reseller Acct 2                    
