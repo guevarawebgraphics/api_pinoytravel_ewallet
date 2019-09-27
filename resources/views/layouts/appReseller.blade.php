@@ -106,6 +106,9 @@
                                 <a class="navbar-item" href="/reseller/top_up_history">
                                     Top Up History
                                 </a>
+                                <a class="navbar-item" href="/reseller/unpaid">
+                                    Pending Top Up History
+                                </a>
                                 <a class="navbar-item" href="/reseller/transaction_history">
                                     Transaction History
                                 </a>

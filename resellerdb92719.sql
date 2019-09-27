@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2019 at 10:22 AM
+-- Generation Time: Sep 27, 2019 at 12:30 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.2.20
 
@@ -202,11 +202,11 @@ INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 CREATE TABLE `top_up_history` (
   `id` bigint(8) NOT NULL,
   `userId` bigint(8) NOT NULL,
-  `txnid` varchar(50) NOT NULL,
+  `txnid` varchar(50) DEFAULT NULL,
   `dpRefNO` varchar(50) DEFAULT NULL,
   `status` varchar(50) DEFAULT NULL,
   `dpProcID` varchar(50) DEFAULT NULL,
-  `refCode` varchar(50) NOT NULL,
+  `refCode` varchar(50) DEFAULT NULL,
   `email` varchar(50) NOT NULL,
   `procId` varchar(50) NOT NULL,
   `amount` decimal(13,2) NOT NULL,
@@ -222,8 +222,11 @@ CREATE TABLE `top_up_history` (
 INSERT INTO `top_up_history` (`id`, `userId`, `txnid`, `dpRefNO`, `status`, `dpProcID`, `refCode`, `email`, `procId`, `amount`, `is_paid`, `created_at`, `updated_at`) VALUES
 (1, 3, 'VQY3OKERIRSA', 'NEW', 'NEW', 'BYAD', 'KTAHNDQY', 'keighdee@gmail.com', 'BPIB', '10000.00', 1, '2019-09-20 07:33:57', '2019-09-20 07:34:30'),
 (2, 3, 'WNUXI5RYK1TB', 'NEW', 'NEW', 'BYAD', 'UAEHR5SL', 'keighdee@gmail.com', 'DPAY', '50.00', 1, '2019-09-20 10:09:34', '2019-09-20 10:11:10'),
-(3, 3, 'UC3YHACQ2MJY', NULL, NULL, NULL, 'NZXIZRB6', 'keighdee@gmail.com', 'DPAY', '50.00', 0, '2019-09-20 10:09:34', '2019-09-20 10:09:34'),
-(4, 3, 'GVFHSSTBOLS4', NULL, NULL, NULL, '93MMH1MQ', 'keighdee@gmail.com', 'RCBC', '50.00', 0, '2019-09-23 02:53:28', '2019-09-23 02:53:28');
+(3, 3, 'UC3YHACQ2MJY', NULL, NULL, NULL, 'NZXIZRB6', 'keighdee@gmail.com', 'DPAY', '50.00', 1, '2019-09-20 10:09:34', '2019-09-27 09:58:28'),
+(4, 3, 'GVFHSSTBOLS4', NULL, NULL, NULL, '93MMH1MQ', 'keighdee@gmail.com', 'RCBC', '50.00', 1, '2019-09-23 02:53:28', '2019-09-27 08:42:52'),
+(5, 3, NULL, NULL, NULL, NULL, NULL, 'keighdee@gmail.com', 'DIRECTD', '50.00', 1, '2019-09-27 07:12:24', '2019-09-27 08:36:49'),
+(6, 3, NULL, NULL, NULL, NULL, NULL, 'keighdee@gmail.com', 'DIRECTD', '50.00', 1, '2019-09-27 07:15:07', '2019-09-27 08:33:53'),
+(17, 3, NULL, NULL, NULL, NULL, NULL, 'keighdee@gmail.com', 'DIRECTD', '50.00', 0, '2019-09-27 10:24:49', '2019-09-27 10:24:49');
 
 -- --------------------------------------------------------
 
@@ -258,7 +261,12 @@ INSERT INTO `total_userbalance` (`id`, `userId`, `txhistoryId`, `tophistoryId`, 
 (6, 9, NULL, NULL, '1234.00', '1234.00', NULL, 'Juan Dela Cruz', 'ADD', '2019-09-20 10:19:57', '2019-09-20 10:19:57'),
 (7, 9, NULL, NULL, '0.00', '1234.00', NULL, 'Juan Dela Cruz', 'DEDUCT', '2019-09-20 10:20:07', '2019-09-20 10:20:07'),
 (8, 9, NULL, NULL, '123.00', '123.00', NULL, 'Juan Dela Cruz', 'ADD', '2019-09-20 10:20:16', '2019-09-20 10:20:16'),
-(9, 23, NULL, NULL, '150.99', '150.99', NULL, 'Juan Dela Cruz', 'ADD', '2019-09-23 09:42:45', '2019-09-23 09:42:45');
+(9, 23, NULL, NULL, '150.99', '150.99', NULL, 'Juan Dela Cruz', 'ADD', '2019-09-23 09:42:45', '2019-09-23 09:42:45'),
+(10, 9, NULL, NULL, '118.00', '5.00', NULL, 'Reseller Super', 'DEDUCT', '2019-09-27 06:11:44', '2019-09-27 06:11:44'),
+(11, 3, NULL, 6, '11000.00', '50.00', NULL, NULL, 'TOPUP', '2019-09-27 08:33:53', '2019-09-27 08:33:53'),
+(12, 3, NULL, 5, '11050.00', '50.00', NULL, NULL, 'TOPUP', '2019-09-27 08:36:49', '2019-09-27 08:36:49'),
+(13, 3, NULL, 4, '11100.00', '50.00', NULL, NULL, 'TOPUP', '2019-09-27 08:42:52', '2019-09-27 08:42:52'),
+(14, 3, NULL, 3, '11150.00', '50.00', NULL, NULL, 'TOPUP', '2019-09-27 09:58:28', '2019-09-27 09:58:28');
 
 -- --------------------------------------------------------
 
@@ -331,12 +339,12 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `address`, `contact_no`, `is_blocked`, `on_hold`, `wallet_bal`, `is_admin`, `remember_token`, `deleted`, `created_at`, `updated_at`) VALUES
 (1, 'Sample One', 'sampOne@gmail.com', '2019-06-05 06:45:56', '123qwe', 'Sample Onee', '09184352441', 1, 0, '0.00', 1, NULL, 0, '2019-06-05 06:48:09', '2019-06-05 06:48:09'),
 (2, 'Juan Dela Cruz', 'juandelacruz@gmail.com', NULL, '$2y$10$2Fgnu7sK0STxr9IuNHjz5u42/8dmBSvEO0NtViUZBbVQ5XvmMQ2qq', 'Sample Twoo', '09852421542', 0, 0, '0.00', 1, NULL, 0, '2019-06-05 07:16:18', '2019-06-05 07:16:18'),
-(3, 'Keigh Dee', 'keighdee@gmail.com', NULL, '$2y$10$2Fgnu7sK0STxr9IuNHjz5u42/8dmBSvEO0NtViUZBbVQ5XvmMQ2qq', 'JRU', '09776927838', 0, 0, '3000.00', 0, 'kNNlJ3NpP8sbH22bWBcMX0qOQYhYby1tE8PL2yXxIr7Yj4382NQd5uz35AuM', 0, '2019-06-06 02:27:19', '2019-09-18 10:38:14'),
-(9, 'King RG', 'kingrgdev@gmail.com', NULL, '$2y$10$aeySRF7/h1VOrc6B6gZoK.xNIel0Wq/8d5g.xGS8VC4fobUPD61IK', 'Stratford, Ontario', '09254214520', 0, 1, '0.00', 0, 'c7Hp6HdNilhce9DDLdN0vpNnL33m9iWVIi4VlMiXbCqfIGUJF1vrIMArIU6b', 0, '2019-06-09 05:38:04', '2019-09-24 08:15:25'),
+(3, 'Keigh Dee', 'keighdee@gmail.com', NULL, '$2y$10$2Fgnu7sK0STxr9IuNHjz5u42/8dmBSvEO0NtViUZBbVQ5XvmMQ2qq', 'JRU', '09776927838', 0, 0, '3000.00', 0, 'y1XwoVi30zE4Lm7Gajf2hdFdS37tL8KQn1BWGAHG1pF4YVcC8QCEW1tnhtF8', 0, '2019-06-06 02:27:19', '2019-09-18 10:38:14'),
+(9, 'King RG', 'kingrgdev@gmail.com', NULL, '$2y$10$aeySRF7/h1VOrc6B6gZoK.xNIel0Wq/8d5g.xGS8VC4fobUPD61IK', 'Stratford, Ontario', '09254214520', 0, 1, '0.00', 0, '4UYxuZ3eH0NL2d3wA7Zhq0RQ11g4kV1oEPqs7baIRkk8aXXS1ZvfsxEuiTsd', 0, '2019-06-09 05:38:04', '2019-09-24 08:15:25'),
 (10, 'Kay Louise Diaz', 'kaydiaz@gmail.com', NULL, '$2y$10$bQoCj9I8Yk88sJarnMySh.y1TAMUJDgKaIuMMWtUOq.7rGkgCNNju', 'Mandaluyong', '09776927838', 0, 0, '0.00', 1, NULL, 0, '2019-09-19 06:05:32', '2019-09-24 08:10:56'),
 (16, 'Richard Guevara', 'guevara.richard17@gmail.com', NULL, '$2y$10$nG8tk6VyX8ah.EoeRZnkCekktp2Rdrwx74YXE/DDXT6hTdqxRKuZO', '49 Peralta compound san miguel pasig city, NCR Manila Philippines Asia', '12341234', 0, 0, '0.00', 1, NULL, 0, '2019-09-19 08:45:05', '2019-09-19 08:45:05'),
 (22, 'Reseller Super', 'superreseller@mail.com', NULL, '$2y$10$NUsyGO0RH3bK/.0xJE/AQugSsvNTCwrwAdgjKpmCUVU0t6yRoDi4O', '49 Peralta compound san miguel pasig city, NCR Manila Philippines Asia', '09776927838', 0, 0, '0.00', 2, NULL, 0, '2019-09-23 03:44:51', '2019-09-23 03:44:51'),
-(23, 'Post Malone', 'postmalone@pm.com', NULL, '$2y$10$LGg0E2b4Q6WdlmqUOU0hEusjxJfXhS7XfuXxmrWLxuCfxa5pA7vuG', '49 Peralta compound san miguel pasig city, NCR Manila Philippines Asia', '09776927838', 0, 0, '0.00', 0, NULL, 0, '2019-09-23 09:36:19', '2019-09-24 08:11:16');
+(23, 'Post Malone', 'postmalone@pm.com', NULL, '$2y$10$LGg0E2b4Q6WdlmqUOU0hEusjxJfXhS7XfuXxmrWLxuCfxa5pA7vuG', '49 Peralta compound san miguel pasig city, NCR Manila Philippines Asia', '09776927838', 1, 0, '0.00', 0, NULL, 1, '2019-09-23 09:36:19', '2019-09-27 05:52:27');
 
 -- --------------------------------------------------------
 
@@ -570,13 +578,13 @@ ALTER TABLE `oauth_personal_access_clients`
 -- AUTO_INCREMENT for table `top_up_history`
 --
 ALTER TABLE `top_up_history`
-  MODIFY `id` bigint(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `total_userbalance`
 --
 ALTER TABLE `total_userbalance`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `transaction_details`

@@ -92,6 +92,9 @@ Route::group(['middleware'=> ['auth']], function(){
     Route::post('/reseller/topup/directdepositval', 'ResellerController@directdepositval')->name('directdepositval');
     Route::post('/reseller/topup/directdeposit', 'ResellerController@directdeposit')->name('directdeposit');
 
+    Route::get('/reseller/unpaid/getUnpaidReseller', 'ResellerUnpaid@getUnpaidReseller')->name('getUnpaidReseller');
+    Route::get('/reseller/unpaid','ResellerUnpaid@index');
+    
     // Route::post('/reseller/topup/payment','TopupController@topupPayment')->name('/reseller/topup/payment');
     // Route::get('/reseller/topup/success','TopupController@executePayment')->name('/reseller/topup/success');
     // Route::get('/reseller/topup/cancel','TopupController@cancelPayment')->name('/reseller/topup/cancel');
