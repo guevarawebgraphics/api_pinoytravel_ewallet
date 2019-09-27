@@ -1101,9 +1101,11 @@ class ResellerController extends Controller
             foreach($unpaid as $field){
                 $data .= '
                 <tr class="">
-                    <td>'.date("F d Y - h:i a",strtotime($field->created_at)).'</td>
+                    <td>'.$field->txnid.'</td>
+                    <td>'.$field->refCode.'</td>
                     <td>₱'.number_format((float)$field->amount, 2, '.', ',').'</td>
                     <td>'.$field->procId.'</td>
+                    <td>'.date("F d Y - h:i a",strtotime($field->created_at)).'</td>
                     <td><center><button class="button is-rounded" id="btn'.$field->id.'" onClick="markAs(\''.$field->id.'\',\''.$field->userId.'\')" style="">Tag As Paid</button></center></td>
                     
                 </tr>

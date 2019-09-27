@@ -6,15 +6,19 @@
             <table id="rcrdUnpaidTable" class="table is-clear-fix is-bordered is-fullwidth is-hoverable is-striped" style="margin-bottom: 1.5em; margin-top: 1.5em;">
                 <thead>
                     <tr>
-                        <th>Date</th>
+                        <th>Transaction ID</th>
+                        <th>Reference Code</th>
                         <th>Amount</th>
                         <th>Payment Type</th>
+                        <th>Date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
               
                 <tbody id="rcrdUnpaid">
                     <tr class="">
+                        <td></td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
