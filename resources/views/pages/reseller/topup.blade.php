@@ -268,7 +268,15 @@ if(session()->forget('merchId') != ""){
                 </form>
                   <div data-content="6">
                       <div class="box">
-                        <p><b><label class="has-text-danger">ZERO PAYMENT GATEWAY FEE!!</label> Pay CASH directly to PinoyTravel through over-the-counter bank deposit or ONLINE TRANSFER. This process may take 8-12 hours. Please make sure that your booking expiration is not within this period.</b></p>
+                        <p><b>
+                          
+                          {{-- <label class="has-text-danger">ZERO PAYMENT GATEWAY FEE!!</label>  --}}
+                          
+                          Pay CASH directly to PinoyTravel through over-the-counter bank deposit or ONLINE TRANSFER. This process may take 8-12 hours. 
+                          
+                          {{-- Please make sure that your booking expiration is not within this period. --}}
+                        
+                        </b></p>
                       </div>
 
                       <ul>
@@ -288,6 +296,8 @@ if(session()->forget('merchId') != ""){
                          <li><p>5. PinoyTravel will verify your payment. Once verified your travel voucher will be sent to your email.</p></li>
                          <li><p>6. If you agree with these terms, please the click the “I Agree..” box, press “Continue with Payment” and follow steps 1- 4 as stated above.</p></li>
                       </ul>
+
+                      <button class="button is-link" id="drtDepo" style="margin-top: 1.5em;">Continue</button>
                     </div>
                 </div>
                 {{-- END OF TAB CONTENT--}}
@@ -386,6 +396,51 @@ if(session()->forget('merchId') != ""){
 //       type: "is-danger" 
 //   });
 // }
+
+$("#drtDepo").click(function(){
+  directDeposit();
+});
+function directDeposit(){
+  var amount = $("#paymentAmount").val();
+  var app_redirect = "<?php echo env('APP_REDIRECT'); ?>";
+
+  if(amount == ""){
+    alert("Amount is required!");
+  }else{
+      $.ajax({
+        headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        url: "{{ route('directdeposit') }}",
+        method: "POST",
+        data:{
+            proceed:"TRUE",
+            amount:amount
+        }, 
+        dataType: "json",
+        success:function(data)
+        {
+            if(data.success.length > 0)
+            {
+              window.location = "//"+app_redirect+"/message/pending";
+            }
+            else
+            {
+              bulmaToast.toast({ 
+                  message: data.error[0],
+                  dismissible: true,
+                  duration: 3000,
+                  pauseOnHover: true,
+                  animate: { in: "fadeIn", out: "fadeOut" },
+                  type: "is-danger" 
+              });
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+  }
+}
+
 </script>
 @endsection
 

@@ -1023,4 +1023,40 @@ class ResellerController extends Controller
 
         echo json_encode($output);
     }
+
+    public function directdeposit(Request $request){
+        $message = "";
+        $output = array();
+        $error = array();
+        $success = array();
+
+        if($request->proceed == "TRUE" && $request->amount != ""){
+            
+            $top_up = new TopUpHistory;
+            $top_up->userId = auth()->user()->id;
+            $top_up->txnid = NULL;
+            $top_up->dpRefNo = NULL;
+            $top_up->status = NULL;
+            $top_up->dpProcID = NULL;
+            $top_up->refCode = NULL;
+            $top_up->email = auth()->user()->email;
+            $top_up->procId = "DRCTD";
+            $top_up->amount = $request->amount;
+            $top_up->is_paid = 0;
+            $top_up->save();
+
+            $messages = "Payment Pending!";
+            $success[] = $messages;
+        }else{
+            $messages = "Amount is required!";
+            $error[] = $messages;    
+        }
+        $output = array(
+            'error'=>$error,
+            'success'=>$success
+        );
+
+        echo json_encode($output);
+
+    }
 }

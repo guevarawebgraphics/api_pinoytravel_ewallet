@@ -60,6 +60,10 @@ Route::group(['middleware'=> ['auth']], function(){
     Route::get('/message/success', function () {
         return view('pages.message.success');
     });
+
+    Route::get('/message/pending', function () {
+        return view('pages.message.pending');
+    });
     // Route::get('/reseller/wallet','ResellerController@resellerWallet');
 
     
@@ -81,6 +85,8 @@ Route::group(['middleware'=> ['auth']], function(){
 
     Route::get('/reseller/passbook/getEPassbookReseller', 'ResellerPassbook@getEPassbookReseller')->name('getEPassbookReseller');
     Route::get('/reseller/passbook','ResellerPassbook@index');
+
+    Route::post('/reseller/topup/directdeposit', 'ResellerController@directdeposit')->name('directdeposit');
 
     // Route::post('/reseller/topup/payment','TopupController@topupPayment')->name('/reseller/topup/payment');
     // Route::get('/reseller/topup/success','TopupController@executePayment')->name('/reseller/topup/success');
