@@ -235,7 +235,7 @@ if(session()->forget('merchId') != ""){
                           <label class="checkbox">
                               <input type="checkbox" onclick="showMe()">
                               I agree to the <a href="#">terms and conditions</a>
-                            </label>
+                          </label>
                             <div class="control" style="margin-top:1em">   
                           <input class="button is-link" id="topupBtn4" value="Top Up" type="submit">                   
                             </div>
@@ -291,12 +291,16 @@ if(session()->forget('merchId') != ""){
 
                          </li>
                          <li><p>2. Take a clear picture of the deposit slip or screenshot of the online transfer confirmation, as your PROOF of payment.</p></li>
-                         <li><p>3. Go back to the PinoyTravel MAIN PAGE and click “VERIFY DIRECT PAYMENT” (located at the upper right corner beside “To Pay” red Button) to upload your proof of payment.</p></li>
-                         <li><p>4. Check the EMAIL with subject DIRECT PAYMENT CONFIRMATION for the actual amount you need to deposit. Follow next steps indicated in the email.</p></li>
-                         <li><p>5. PinoyTravel will verify your payment. Once verified your travel voucher will be sent to your email.</p></li>
-                         <li><p>6. If you agree with these terms, please the click the “I Agree..” box, press “Continue with Payment” and follow steps 1- 4 as stated above.</p></li>
+                         <li><p>3. Email the PROOF of payment to support@pinoytravel.com.ph with the subject of "TOP UP RESELLER VERIFY PAYMENT".</p></li>
+                         <li><p>4. PinoyTravel will verify your payment. Once verified your top up payment will reflect to your current balance.</p></li>
+                         <li><p>5. If you agree with these terms, please the click the “I Agree..” box, then press “Continue”.</p></li>
                       </ul>
-
+                      <br>
+                      <label class="checkbox">
+                          <input type="checkbox" onclick="" id="agreementDepo" value="TRUE">
+                          I agree to the <a href="#">terms and conditions</a>
+                      </label>
+                      <br>
                       <button class="button is-link" id="drtDepo" style="margin-top: 1.5em;">Continue</button>
                     </div>
                 </div>
@@ -400,27 +404,66 @@ if(session()->forget('merchId') != ""){
 $("#drtDepo").click(function(){
   directDeposit();
 });
+
 function directDeposit(){
   var amount = $("#paymentAmount").val();
   var app_redirect = "<?php echo env('APP_REDIRECT'); ?>";
 
-  if(amount == ""){
-    alert("Amount is required!");
-  }else{
-      $.ajax({
+  if($('#agreementDepo').prop("checked") == true)
+  {
+    var is_agreed = "TRUE";
+  }
+  else
+  {
+    var is_agreed = "FALSE";
+  }
+
+  $.ajax({
         headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        url: "{{ route('directdeposit') }}",
+        url: "{{ route('directdepositval') }}",
         method: "POST",
         data:{
             proceed:"TRUE",
-            amount:amount
+            amount:amount,
+            is_agreed:is_agreed
+
         }, 
         dataType: "json",
         success:function(data)
         {
             if(data.success.length > 0)
             {
-              window.location = "//"+app_redirect+"/message/pending";
+              $.ajax({
+                headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: "{{ route('directdeposit') }}",
+                method: "POST",
+                data:{
+                    proceed:"TRUE",
+                    amount:amount
+                }, 
+                dataType: "json",
+                success:function(data)
+                {
+                    if(data.success.length > 0)
+                    {
+                      window.location = "//"+app_redirect+"/message/pending";
+                    }
+                    else
+                    {
+                      bulmaToast.toast({ 
+                          message: data.error[0],
+                          dismissible: true,
+                          duration: 3000,
+                          pauseOnHover: true,
+                          animate: { in: "fadeIn", out: "fadeOut" },
+                          type: "is-danger" 
+                      });
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError){
+                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+              });
             }
             else
             {
@@ -435,10 +478,9 @@ function directDeposit(){
             }
         },
         error: function(xhr, ajaxOptions, thrownError){
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
-  }
 }
 
 </script>

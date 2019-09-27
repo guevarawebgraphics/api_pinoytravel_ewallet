@@ -863,7 +863,7 @@ class ResellerController extends Controller
                     $content = "";
                 }
                 else if($field->type == "TXN"){
-                    $type = "Transaction History <em>(booked)</em>";
+                    $type = "Transaction History";
                     $debit = "";
                     $credit = number_format((float)$field->txnamount, 2, '.', ',');
                     $style = 'style="border-left:13px solid hsl(348, 100%, 61%);"';
@@ -881,7 +881,7 @@ class ResellerController extends Controller
                     ';
                 }
                 else if($field->type == "TOPUP"){
-                    $type = "Top Up History <em>(paid)</em>";
+                    $type = "Top Up History";
                     $debit = number_format((float)$field->txnamount, 2, '.', ',');
                     $credit = "";
                     $style = 'style="border-left:13px solid hsl(141, 71%, 48%);"';
@@ -1024,6 +1024,35 @@ class ResellerController extends Controller
         echo json_encode($output);
     }
 
+    public function directdepositval(Request $request){
+        $message = "";
+        $output = array();
+        $error = array();
+        $success = array();
+
+        if($request->proceed != "TRUE"){
+            $messages = "Can't proceed an error occured..";
+            $error[] = $messages;
+        }else if($request->amount == ""){
+            $messages = "Amount is required!";
+            $error[] = $messages;
+        }else if($request->is_agreed != "TRUE"){
+            $messages = "Please accept our agreement to continue..";
+            $error[] = $messages;
+        }else{
+            $messages = "Successfully validated!";
+            $success[] = $messages;
+        }
+
+        $output = array(
+            'error'=>$error,
+            'success'=>$success
+        );
+
+        echo json_encode($output);
+
+    }
+
     public function directdeposit(Request $request){
         $message = "";
         $output = array();
@@ -1040,7 +1069,7 @@ class ResellerController extends Controller
             $top_up->dpProcID = NULL;
             $top_up->refCode = NULL;
             $top_up->email = auth()->user()->email;
-            $top_up->procId = "DRCTD";
+            $top_up->procId = "DIRECTD";
             $top_up->amount = $request->amount;
             $top_up->is_paid = 0;
             $top_up->save();
@@ -1058,5 +1087,91 @@ class ResellerController extends Controller
 
         echo json_encode($output);
 
+    }
+
+    public function getunpaid(Request $request){
+        $unpaid = DB::connection('mysql')->select("SELECT * FROM top_up_history WHERE userId = '".$request->userId."' AND is_paid = 0
+        ORDER BY created_at DESC");
+
+        $data = "";
+        $counter = 1;
+        if(count($unpaid) > 0){
+            foreach($unpaid as $field){
+                $data .= '
+                <tr class="">
+                    <td>'.date("F d Y - h:i a",strtotime($field->created_at)).'</td>
+                    <td>₱'.number_format((float)$field->amount, 2, '.', ',').'</td>
+                    <td>'.$field->procId.'</td>
+                    <td><center><button class="button is-rounded" id="btn'.$field->id.'" onClick="markAs(\''.$field->id.'\',\''.$field->userId.'\')" style="">Tag As Paid</button></center></td>
+                    
+                </tr>
+                ';
+                $counter++;
+            }
+        }
+        echo $data;
+    }
+    public function markaspaid(Request $request){
+        $message = "";
+        $output = array();
+        $error = array();
+        $success = array();
+
+        if($request->proceed == "TRUE" && $request->paidId != "" && $request->userId != ""){
+            
+            $top_up_info = DB::connection('mysql')->select("SELECT * from top_up_history WHERE id = '".$request->paidId."' AND userId = '".$request->userId."'");
+            
+            $userBal = DB::connection('mysql')->select("SELECT * from total_userbalance WHERE userId = '".$request->userId."' ORDER BY created_at DESC LIMIT 1");
+
+            DB::table('top_up_history')
+            ->where('id', $request->paidId)
+            ->update([
+            'is_paid' => '1',
+            'updated_at' => now()
+            ]);
+
+            if(!empty($userBal))
+            {
+                $ttl_bal = $userBal[0]->total_balance;
+                $final_bal = $ttl_bal + $top_up_info[0]->amount;
+
+                $ttl_userbal = new UserBalance;
+                $ttl_userbal->userId = $request->userId;
+                $ttl_userbal->tophistoryId = $top_up_info[0]->id;
+                $ttl_userbal->total_balance = $final_bal;
+                $ttl_userbal->txnamount = $top_up_info[0]->amount;
+                $ttl_userbal->type = "TOPUP";
+                $ttl_userbal->created_at = now();
+                $ttl_userbal->updated_at = now();
+                $ttl_userbal->save();
+            }
+            else
+            {
+                $ttl_userbal = new UserBalance;
+                $ttl_userbal->userId = $request->userId;
+                $ttl_userbal->tophistoryId = $top_up_info[0]->id;
+                $ttl_userbal->total_balance = $top_up_info[0]->amount;
+                $ttl_userbal->txnamount = $top_up_info[0]->amount;
+                $ttl_userbal->type = "TOPUP";
+                $ttl_userbal->created_at = now();
+                $ttl_userbal->updated_at = now();
+                $ttl_userbal->save();
+            }
+
+
+
+            $messages = "Successfully paid!";
+            $success[] = $messages;    
+        }else{
+            $messages = "UnpaidID is required!";
+            $error[] = $messages;    
+        }
+
+        $output = array(
+            'error'=>$error,
+            'success'=>$success
+        );
+
+        echo json_encode($output);
     }
 }

@@ -46,6 +46,9 @@ URL::forceRootUrl(env('APP_URL'));
             Route::get('/admin/deleted', 'ResellerController@getDeletedAccounts');
             Route::get('/admin/deleted/RcrdsDeletedAccounts', 'ResellerController@RcrdsDeletedAccounts')->name('RcrdsDeletedAccounts');
             Route::post('/admin/deleted/activateAccount', 'ResellerController@activateAccount')->name('activateAccount');
+
+            Route::post('/getunpaid', 'ResellerController@getunpaid')->name('getunpaid');
+            Route::post('/admin/reseller/markaspaid', 'ResellerController@markaspaid')->name('markaspaid');
 });
 // Route::get('/admin/view/all','ResellerController@all')->middleware('admin');
 
@@ -86,6 +89,7 @@ Route::group(['middleware'=> ['auth']], function(){
     Route::get('/reseller/passbook/getEPassbookReseller', 'ResellerPassbook@getEPassbookReseller')->name('getEPassbookReseller');
     Route::get('/reseller/passbook','ResellerPassbook@index');
 
+    Route::post('/reseller/topup/directdepositval', 'ResellerController@directdepositval')->name('directdepositval');
     Route::post('/reseller/topup/directdeposit', 'ResellerController@directdeposit')->name('directdeposit');
 
     // Route::post('/reseller/topup/payment','TopupController@topupPayment')->name('/reseller/topup/payment');

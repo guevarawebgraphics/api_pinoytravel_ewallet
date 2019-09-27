@@ -1,5 +1,5 @@
 <br>
-<div id="divEWBal" class="box" style="display:none;">
+<div id="" class="box">
     <h1 class="title is-4">Reseller EPassbook</h1>
     <br>
     <div class="" style="overflow-y: auto;">        
@@ -25,12 +25,9 @@
         </div>
 </div>
 
-<a class="is-link" onClick="toggleEWBal();" data-attribute="{{ $reseller->id }}">
-    <em id="hideLabel">Show Reseller EPassbook..</em>
-</a>
 
 <script>
-
+getEPassbook();
 function getEPassbook(){
     var userId = "{{ $reseller->id }}";
     $.ajax({
@@ -53,25 +50,25 @@ function getEPassbook(){
     });
 }
 
-function toggleEWBal() {
-        var x = document.getElementById("divEWBal");
-        if (x.style.display === "none") {
+// function toggleEWBal() {
+//         var x = document.getElementById("divEWBal");
+//         if (x.style.display === "none") {
 
-            x.style.display = "block";
+//             x.style.display = "block";
 
-            var hideAccount = document.getElementById("hideLabel");
-            hideAccount.innerHTML = "Hide Reseller EPassbook..";
-            getEPassbook();
+//             var hideAccount = document.getElementById("hideLabel");
+//             hideAccount.innerHTML = "Hide Reseller EPassbook..";
+//             getEPassbook();
 
-        } else {
+//         } else {
 
-            x.style.display = "none";
+//             x.style.display = "none";
 
-            var hideAccount = document.getElementById("hideLabel");
-            hideAccount.innerHTML = "Show Reseller EPassbook..";
+//             var hideAccount = document.getElementById("hideLabel");
+//             hideAccount.innerHTML = "Show Reseller EPassbook..";
 
-        }
-}
+//         }
+// }
 
 function pbDiv(id, rowId){
     if(id != "NONE"){
