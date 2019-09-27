@@ -21,7 +21,7 @@ if(session()->forget('merchId') != ""){
 </strong></p>    
 
 <div style="margin:1.5em 1.5em 1.5em 1.5em;">
-    <h1 class="title is-size-4"><i class="fa fa-list-alt"></i> Pending Topup</h1>
+    <h1 class="title is-size-4"><i class="fa fa-history"></i> Pending Topup</h1>
 </div>
 
 

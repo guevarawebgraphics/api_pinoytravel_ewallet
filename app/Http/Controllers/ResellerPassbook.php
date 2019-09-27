@@ -53,7 +53,7 @@ class ResellerPassbook extends Controller
                     $content = "";
                 }
                 else if($field->type == "TXN"){
-                    $type = "Transaction History <em>(booked)</em>";
+                    $type = "Transaction History";
                     $debit = "";
                     $credit = number_format((float)$field->txnamount, 2, '.', ',');
                     $style = 'style="border-left:13px solid hsl(348, 100%, 61%);"';
@@ -71,7 +71,7 @@ class ResellerPassbook extends Controller
                     ';
                 }
                 else if($field->type == "TOPUP"){
-                    $type = "Top Up History <em>(paid)</em>";
+                    $type = "Top Up History";
                     $debit = number_format((float)$field->txnamount, 2, '.', ',');
                     $credit = "";
                     $style = 'style="border-left:13px solid hsl(141, 71%, 48%);"';

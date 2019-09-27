@@ -1058,16 +1058,18 @@ class ResellerController extends Controller
         $output = array();
         $error = array();
         $success = array();
+        $transactionId = strtoupper(str_random(12));
+        $referenceCode = strtoupper(str_random(8));
 
         if($request->proceed == "TRUE" && $request->amount != ""){
             
             $top_up = new TopUpHistory;
             $top_up->userId = auth()->user()->id;
-            $top_up->txnid = NULL;
+            $top_up->txnid = $transactionId;
             $top_up->dpRefNo = NULL;
             $top_up->status = NULL;
             $top_up->dpProcID = NULL;
-            $top_up->refCode = NULL;
+            $top_up->refCode = $referenceCode;
             $top_up->email = auth()->user()->email;
             $top_up->procId = "DIRECTD";
             $top_up->amount = $request->amount;
