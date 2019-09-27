@@ -433,6 +433,10 @@ function directDeposit(){
         {
             if(data.success.length > 0)
             {
+              var x = document.getElementById("drtDepo");
+              x.innerHTML = "Loading...";
+              document.getElementById("drtDepo").disabled = true;
+
               $.ajax({
                 headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 url: "{{ route('directdeposit') }}",
