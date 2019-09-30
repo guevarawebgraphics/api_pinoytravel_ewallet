@@ -14,7 +14,7 @@ class PayController extends Controller
 {
     public function index(Request $request)
     {
-        if(auth()->user()->on_hold == 1)
+        if(!empty(auth()->user()->on_hold) && auth()->user()->on_hold == 1)
         {
             return  redirect('/');
         }
