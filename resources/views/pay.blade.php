@@ -40,7 +40,54 @@ if(loggedIn == "false"){
                 $sha1digest = sha1($digest_str); 
 
                 if($sha1digest == $digest){
+                    
+                    session()->put('merchId',$merchId);
+                    session()->put('txnid',$txnid);
+                    session()->put('amount',$amount);
+                    session()->put('param1',$param1);
+                    session()->put('param2',$param2);
+                    session()->put('procid',$procid);
+                    session()->put('digest',$digest);
 
+                }else{
+                    ?>
+                    <script>
+                        window.location = '//'+app_redirect+'/home?digest=false';
+                    </script>
+                    <?php
+                }
+            }else{
+                ?>
+                <script>
+                    window.location = '//'+app_redirect+'/home?booking_url=missing';
+                </script>
+                <?php
+            }
+        }else{
+            if(isset($_GET["merchantid"], $_GET["txnid"], $_GET["amount"], $_GET["param1"], $_GET["param2"], $_GET["procid"], $_GET["digest"])){
+                
+                session()->forget('merchId');
+                session()->forget('txnid');
+                session()->forget('amount');
+                session()->forget('param1');
+                session()->forget('param2');
+                session()->forget('procid');
+                session()->forget('digest');
+                
+                $merchId = $_GET["merchantid"];
+                $txnid = $_GET["txnid"];
+                $amount = $_GET["amount"];
+                $param1 = $_GET["param1"];
+                $param2 = $_GET["param2"];
+                $procid = $_GET["procid"];
+                $digest = $_GET["digest"];
+
+                $secret_key = env("APP_EWALLET_SECRET_KEY");
+                $digest_str = $merchId.':'.$txnid.':'.number_format((float)$amount, 2, '.', ',').':PHP:Payment for '.$param1.':'.$param2.':'.$secret_key;
+                $sha1digest = sha1($digest_str); 
+
+                if($sha1digest == $digest){
+                    
                     session()->put('merchId',$merchId);
                     session()->put('txnid',$txnid);
                     session()->put('amount',$amount);
@@ -133,13 +180,14 @@ if(loggedIn == "false"){
         //Agreement
         if($('#chkAgreement').prop("checked") == true){
             var is_agreed = $("#chkAgreement").val();
+            var digest = "<?php echo $_GET['digest']; ?>";
             //Validation
                 //Proceed with the payment
             $.ajax({
                 headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 url: "{{ route('payVal') }}",
                 method: "POST",
-                data:{payVal: "TRUE", chkVal: is_agreed}, 
+                data:{payVal: "TRUE", chkVal: is_agreed, digest:digest}, 
                 dataType: "json",
                 success:function(data)
                 {

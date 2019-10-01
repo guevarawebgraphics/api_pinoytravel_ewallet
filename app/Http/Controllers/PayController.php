@@ -147,21 +147,6 @@ class PayController extends Controller
         $refCode = session()->get('param1');
         $txnDtls = DB::connection('mysql')->select("SELECT * FROM transaction_details WHERE transId = '".$transId."' AND refCode = '".$refCode."'");
 
-        // $userBal = DB::connection('mysql')->select("
-        // SELECT a.id as userId, 
-        //     (select sum(tuhh.amount) from top_up_history as tuhh where tuhh.userId = a.id AND tuhh.is_paid = 1) as total_topup,
-        //     (select sum(trr.amount) from transaction_details as trr where trr.userId = a.id) as total_spent,
-        //     ((select sum(tuh.amount) from top_up_history as tuh where tuh.userId = a.id AND tuh.is_paid = 1)
-        //     -
-        //     (select sum(tr.amount) from transaction_details as tr where tr.userId = a.id)) as total_balance
-            
-        // FROM users AS a
-        // LEFT JOIN  top_up_history AS b ON a.id = b.userId
-        // LEFT JOIN transaction_details as c ON a.id = c.userId
-        // WHERE a.id = '".auth()->user()->id."' AND b.is_paid = 1
-        // GROUP BY a.id
-        // ");
-         
         // $userBal = DB::connection('mysql')->select("SELECT * FROM total_userbalance WHERE userId = '".auth()->user()->id."' ORDER BY created_at DESC LIMIT 1");
         $userBal = DB::connection('mysql')->select("SELECT * FROM view_total_userbalance WHERE userId = '".auth()->user()->id."'");
 
@@ -181,9 +166,14 @@ class PayController extends Controller
             $messages = "Please read and accept our policies to proceed with your payment";
             $error[] = $messages;
         }
+        else if($request->digest != session()->get('digest'))
+        {
+            $messages = "Digest expired! Please reload the page.";
+            $error[] = $messages; 
+        }
         else if(!empty($txnDtls))
         {
-            $messages = "<b>Transaction ID</b>&nbsp; and &nbsp;<b>Ref. Code</b>&nbsp; already paid!";
+            $messages = "<b>Transaction ID :</b>&nbsp;".$transId." and &nbsp;<b>Ref. Code</b>&nbsp;".$refCode." already paid!";
             $error[] = $messages;
         }
         else if($totalBalance < session()->get('amount')){
@@ -214,58 +204,59 @@ class PayController extends Controller
         $error = array();
         $success = array();
 
-        // $userBal = DB::connection('mysql')->select("
-        // SELECT a.id as userId, 
-        //     (select sum(tuhh.amount) from top_up_history as tuhh where tuhh.userId = a.id AND tuhh.is_paid = 1) as total_topup,
-        //     (select sum(trr.amount) from transaction_details as trr where trr.userId = a.id) as total_spent,
-        //     ((select sum(tuh.amount) from top_up_history as tuh where tuh.userId = a.id AND tuh.is_paid = 1)
-        //     -
-        //     (select sum(tr.amount) from transaction_details as tr where tr.userId = a.id)) as total_balance
-            
-        // FROM users AS a
-        // LEFT JOIN  top_up_history AS b ON a.id = b.userId
-        // LEFT JOIN transaction_details as c ON a.id = c.userId
-        // WHERE a.id = '".auth()->user()->id."' AND b.is_paid = 1
-        // GROUP BY a.id
-        // ");
-
         $userBal = DB::connection('mysql')->select("SELECT * FROM total_userbalance WHERE userId = '".auth()->user()->id."' ORDER BY created_at DESC LIMIT 1");
         
         if(count($userBal)){
 
+            $transId = session()->get('txnid');
+            $refCode = session()->get('param1');
+            $txn_info = DB::connection('mysql')->select("SELECT * FROM transaction_details WHERE transId = '".$transId."' AND refCode = '".$refCode."'");    
+
+            if(empty($txn_info)){
+
             //Save Transaction Details
-            $txnDtls = new TransactionDetails;
-            $txnDtls->userId = auth()->user()->id;
-            $txnDtls->merchId = session()->get('merchId');
-            $txnDtls->transId = session()->get('txnid');
-            $txnDtls->amount = session()->get('amount');
-            $txnDtls->refCode = session()->get('param1');
-            $txnDtls->transEmail = session()->get('param2');
-            $txnDtls->procId = session()->get('procid');
-            $txnDtls->deleted = 0;
-            $txnDtls->save();
+                $txnDtls = new TransactionDetails;
+                $txnDtls->userId = auth()->user()->id;
+                $txnDtls->merchId = session()->get('merchId');
+                $txnDtls->transId = session()->get('txnid');
+                $txnDtls->amount = session()->get('amount');
+                $txnDtls->refCode = session()->get('param1');
+                $txnDtls->transEmail = session()->get('param2');
+                $txnDtls->procId = session()->get('procid');
+                $txnDtls->deleted = 0;
+                $txnDtls->save();
+            //End of Save
 
             //Balance Deduction
-            $final_bal = $userBal[0]->total_balance - session()->get('amount');
-            $getrefCode = session()->get('param1');
-            $gettxnid = session()->get('txnid');
+                $final_bal = $userBal[0]->total_balance - session()->get('amount');
+                $getrefCode = session()->get('param1');
+                $gettxnid = session()->get('txnid');
 
-            $last_id = DB::connection('mysql')->select("SELECT * FROM transaction_details WHERE transID = '".$gettxnid."' AND refCode = '".$getrefCode."'");
-            $ttl_userbal = new UserBalance;
-            $ttl_userbal->userId = auth()->user()->id;
-            $ttl_userbal->txhistoryId = $last_id[0]->id;
-            $ttl_userbal->total_balance = $final_bal;
-            $ttl_userbal->txnamount = session()->get('amount');
-            $ttl_userbal->type = "TXN";
-            $ttl_userbal->created_at = now();
-            $ttl_userbal->updated_at = now();
-            $ttl_userbal->save();
+                $last_id = DB::connection('mysql')->select("SELECT * FROM transaction_details WHERE transID = '".$gettxnid."' AND refCode = '".$getrefCode."'");
+                $ttl_userbal = new UserBalance;
+                $ttl_userbal->userId = auth()->user()->id;
+                $ttl_userbal->txhistoryId = $last_id[0]->id;
+                $ttl_userbal->total_balance = $final_bal;
+                $ttl_userbal->txnamount = session()->get('amount');
+                $ttl_userbal->type = "TXN";
+                $ttl_userbal->created_at = now();
+                $ttl_userbal->updated_at = now();
+                $ttl_userbal->save();
+            //Balance End
 
             $messages = "Reference Code: ".session()->get('param1')." Successfully paid! ".session()->get('amount')." deducted to your wallet.";
             $success[] = $messages;
+
+            }
+            
+            else{
+                $messages = "Transaction ID: ".$txn_info[0]->transId." and Ref Code: ".$txn_info[0]->refCode." already paid!";
+                $error[] = $messages;
+            }
+            
         }else{
-            $messages = "An occured error, Please try again";
-            $success[] = $messages;
+            $messages = "Not enough reseller balance";
+            $error[] = $messages;
         }
 
         $output = array(
