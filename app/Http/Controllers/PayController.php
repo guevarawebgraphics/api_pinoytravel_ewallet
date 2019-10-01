@@ -249,11 +249,11 @@ class PayController extends Controller
 
             }
             
-            else{
-                $messages = "Transaction ID: ".$txn_info[0]->transId." and Ref Code: ".$txn_info[0]->refCode." already paid!";
-                $error[] = $messages;
-            }
-            
+            // else{
+            //     $messages = "Transaction ID: ".$txn_info[0]->transId." and Ref Code: ".$txn_info[0]->refCode." already paid!";
+            //     $error[] = $messages;
+            // }
+
         }else{
             $messages = "Not enough reseller balance";
             $error[] = $messages;
