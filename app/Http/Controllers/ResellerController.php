@@ -642,6 +642,11 @@ class ResellerController extends Controller
             $messages = "Manage Account Balance password is required";
             $error[] = $messages;
 
+        }else if($request->remarks == ""){
+
+            $messages = "Remarks is required!";
+            $error[] = $messages;
+
         }else{
 
             if(Hash::check($request->modifyPwd, auth()->user()->password)){
@@ -672,6 +677,7 @@ class ResellerController extends Controller
             
             $amount = number_format((float)$request->amount, 2, '.', '');
             $userId = $request->userId;
+            $remarks = $request->remarks;
             $total_userbalance = DB::connection('mysql')->select("SELECT * FROM total_userbalance WHERE userId = '".$userId."' ORDER BY created_at DESC LIMIT 1");
 
             if(!empty($total_userbalance[0]->userId)){
@@ -698,6 +704,7 @@ class ResellerController extends Controller
             $ttl_userbal->userId = $userId;
             $ttl_userbal->total_balance = $finalAmount;
             $ttl_userbal->txnamount = $amount;
+            $ttl_userbal->description = $remarks;
             $ttl_userbal->type = $type;
             $ttl_userbal->updated_by = auth()->user()->name;
             $ttl_userbal->created_at = now();
@@ -845,10 +852,12 @@ class ResellerController extends Controller
             foreach($passbook as $field){
 
                 if($field->type == "ADD"){
-                    $type = "Account Balance added by: ".$field->updated_by;
+                    // $type = "Account Balance added by: ".$field->updated_by;
                     // $debit = number_format((float)$field->txnamount, 2, '.', ',');
                     // $credit = "";
 
+                    $type = 'Account Balance added by: '.$field->updated_by.'<br>
+                            <p>Remarks:&nbsp;&nbsp;<em>'.$field->description.'</em></p>';
                     $debit = "";
                     $credit = number_format((float)$field->txnamount, 2, '.', ',');
 
@@ -858,10 +867,12 @@ class ResellerController extends Controller
                     $content = "";
                 }
                 else if($field->type == "DEDUCT"){
-                    $type = "Account Balance deducted by: ".$field->updated_by;
+                    // $type = "Account Balance deducted by: ".$field->updated_by;
                     // $debit = "";
                     // $credit = number_format((float)$field->txnamount, 2, '.', ',');
-
+                    
+                    $type = 'Account Balance deducted by: '.$field->updated_by.'<br>
+                            <p>Remarks:&nbsp;&nbsp;<em>'.$field->description.'</em></p>';
                     $debit = number_format((float)$field->txnamount, 2, '.', ',');
                     $credit = "";
 

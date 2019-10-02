@@ -35,10 +35,12 @@ class ResellerPassbook extends Controller
             foreach($passbook as $field){
 
                 if($field->type == "ADD"){
-                    $type = "Account Balance added by: ".$field->updated_by;
+                    // $type = "Account Balance added by: ".$field->updated_by;
                     // $debit = number_format((float)$field->txnamount, 2, '.', ',');
                     // $credit = "";
 
+                    $type = 'Account Balance added by: '.$field->updated_by.'<br>
+                            <p>Remarks:&nbsp;&nbsp;<em>'.$field->description.'</em></p>';
                     $debit = "";
                     $credit = number_format((float)$field->txnamount, 2, '.', ',');
 
@@ -48,10 +50,12 @@ class ResellerPassbook extends Controller
                     $content = "";
                 }
                 else if($field->type == "DEDUCT"){
-                    $type = "Account Balance deducted by: ".$field->updated_by;
+                    // $type = "Account Balance deducted by: ".$field->updated_by;
                     // $debit = "";
                     // $credit = number_format((float)$field->txnamount, 2, '.', ',');
 
+                    $type = 'Account Balance deducted by: '.$field->updated_by.'<br>
+                            <p>Remarks:&nbsp;&nbsp;<em>'.$field->description.'</em></p>';
                     $debit = number_format((float)$field->txnamount, 2, '.', ',');
                     $credit = "";
 

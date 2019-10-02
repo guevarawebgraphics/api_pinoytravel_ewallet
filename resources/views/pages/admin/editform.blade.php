@@ -179,6 +179,12 @@
                                             Total account balance: <b><span id="total_expenses1"></span></b>
                                         </div>
                                     </div>
+                                    <br />
+                                    <div class="field">
+                                        <div class="control">
+                                            <textarea class="textarea is-primary" maxlength="150" id="remarks" placeholder="Remarks"></textarea>
+                                        </div>
+                                    </div>
                     
                                     <hr>
                     
@@ -587,6 +593,7 @@
         var modifyPwd = $('#modifyPwd').val();
         var radio = $('input[name=balOption]:checked').val();
         var userId = $(this).attr('data-userId');
+        var remarks = $('#remarks').val();
         
         $.ajax({
             headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -597,7 +604,8 @@
                 radio:radio,
                 amount:amount,
                 modifyPwd:modifyPwd,
-                userId:userId
+                userId:userId,
+                remarks:remarks
             }, 
             dataType: "json",
             success:function(data)
@@ -612,7 +620,8 @@
                             radio:radio,
                             amount:amount,
                             modifyPwd:modifyPwd,
-                            userId:userId
+                            userId:userId,
+                            remarks:remarks
                         }, 
                         dataType: "json",
                         success:function(data)
