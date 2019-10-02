@@ -3,7 +3,18 @@
         <div class="column auto" style=" overflow-x: auto;">
             <div class="box">
                     {{-- title--}}
-                    <h1 class="title is-4">Reseller Account Profile</h1>
+                    <p class="is-large is-pulled-right" style="margin-top:1em; margin-right:10px;">Overall PT-Reseller Balance: <strong>
+                        @if(count($sumBal))
+                        ₱{{ number_format((float)$sumBal[0]->total_balance, 2, '.', ',') }}
+                        @else
+                        ₱0.00
+                        @endif
+                    </strong></p>    
+                    
+                    <div style="margin:1.5em 1.5em 1.5em 0;">
+                        <h1 class="title is-size-4"> Reseller Account Profile</h1>
+                    </div>
+                    <hr>
                     {{-- form start--}}
                     <div class="field is-horizontal">
                           <div class="field-label is-normal">

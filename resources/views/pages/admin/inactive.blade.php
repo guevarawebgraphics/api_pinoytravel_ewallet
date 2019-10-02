@@ -2,8 +2,18 @@
 @section('content')  
 
 <div id="" class="box">
-        <h1 class="title is-4">Deleted Accounts</h1>
-        <br>
+        <p class="is-large is-pulled-right" style="margin-top:1em; margin-right:10px;">Overall PT-Reseller Balance: <strong>
+            @if(count($sumBal))
+            ₱{{ number_format((float)$sumBal[0]->total_balance, 2, '.', ',') }}
+            @else
+            ₱0.00
+            @endif
+        </strong></p>    
+        
+        <div style="margin:1.5em 1.5em 1.5em 0;">
+            <h1 class="title is-size-4"> Deleted Accounts</h1>
+        </div>
+        <hr>
         <div class="" style="overflow-y: auto; max-width:100%;">        
                 <table id="rcrdDeletedTable" class="table is-clear-fix is-bordered is-fullwidth is-striped" style="margin-bottom: 1.5em; margin-top: 1.5em;">
                     <thead>

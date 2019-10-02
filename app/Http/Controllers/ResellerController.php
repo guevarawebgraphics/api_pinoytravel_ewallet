@@ -44,9 +44,11 @@ class ResellerController extends Controller
         ->take(1)
         ->get();
 
+        $sumBal = DB::connection('mysql')->select("SELECT sum(total_balance) as total_balance FROM view_total_userbalance");
+
         // return view('pages.reseller.create');
         // return view('pages.reseller.create', compact('resellers'));     x        
-        return view('pages.admin.create', compact('resellers'))->with('walletBal',$wallet_balance);             
+        return view('pages.admin.create', compact('resellers','sumBal'))->with('walletBal',$wallet_balance);             
     }
 
     /**
@@ -136,8 +138,9 @@ class ResellerController extends Controller
          ->take(1)
          ->get();
 
-
-        return view('pages.admin.viewform', compact('reseller','resellers','walletBal'));
+        $sumBal = DB::connection('mysql')->select("SELECT sum(total_balance) as total_balance FROM view_total_userbalance");
+        
+        return view('pages.admin.viewform', compact('reseller','resellers','walletBal','sumBal'));
         
     }
     
@@ -165,7 +168,9 @@ class ResellerController extends Controller
          ->take(1)
          ->get();
         
-         return view('pages.admin.editform', compact('reseller','resellers','walletBal'));
+         $sumBal = DB::connection('mysql')->select("SELECT sum(total_balance) as total_balance FROM view_total_userbalance");
+        
+         return view('pages.admin.editform', compact('reseller','resellers','walletBal','sumBal'));
         //  return view('testing.test2', compact('reseller'));
     }
 
@@ -292,8 +297,10 @@ class ResellerController extends Controller
 
         $walletBal = UserBalance::orderBy('created_at','DESC')
         ->get();
+
+        $sumBal = DB::connection('mysql')->select("SELECT sum(total_balance) as total_balance FROM view_total_userbalance");
         
-        return view('pages.admin.view', compact('resellers', 'searched','walletBal'));    
+        return view('pages.admin.view', compact('resellers', 'searched','walletBal','sumBal'));    
     }
     //View on Edit
     public function all_edit()
@@ -730,7 +737,8 @@ class ResellerController extends Controller
 
     public function create_admin(){
         if(auth()->user()->is_admin == 2 || auth()->user()->is_admin == 1){
-            return view('pages.admin.create_admin');
+            $sumBal = DB::connection('mysql')->select("SELECT sum(total_balance) as total_balance FROM view_total_userbalance");
+            return view('pages.admin.create_admin', compact('sumBal'));
         }else{
             return view('/');
         }
@@ -870,7 +878,7 @@ class ResellerController extends Controller
                     // $type = "Account Balance deducted by: ".$field->updated_by;
                     // $debit = "";
                     // $credit = number_format((float)$field->txnamount, 2, '.', ',');
-                    
+
                     $type = 'Account Balance deducted by: '.$field->updated_by.'<br>
                             <p>Remarks:&nbsp;&nbsp;<em>'.$field->description.'</em></p>';
                     $debit = number_format((float)$field->txnamount, 2, '.', ',');
@@ -983,7 +991,9 @@ class ResellerController extends Controller
 
     public function getDeletedAccounts(){
         if(auth()->user()->is_admin == 2){
-            return view('pages.admin.inactive');
+            $sumBal = DB::connection('mysql')->select("SELECT sum(total_balance) as total_balance FROM view_total_userbalance");
+            
+            return view('pages.admin.inactive', compact('sumBal'));
         }else{
             return view('/');
         }

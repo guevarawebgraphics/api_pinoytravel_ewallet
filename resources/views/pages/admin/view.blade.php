@@ -1,11 +1,28 @@
 @extends('layouts.appAdmin')
 @section('content') 
        
+
         <div class="column auto" style=" overflow-x: auto;">
                 @include('includes.createNotifs') 
-            <div class="box">
-          {{-- title--}}
-          <h1 class="title is-4">Reseller Accounts</h1>      
+
+
+        
+
+        <div class="box">
+
+        <p class="is-large is-pulled-right" style="margin-top:1em; margin-right:10px;">Overall PT-Reseller Balance: <strong>
+            @if(count($sumBal))
+            ₱{{ number_format((float)$sumBal[0]->total_balance, 2, '.', ',') }}
+            @else
+            ₱0.00
+            @endif
+        </strong></p>    
+        
+        <div style="margin:1.5em 1.5em 1.5em 0;">
+            <h1 class="title is-size-4"> Reseller Account</h1>
+        </div>
+        <hr>
+
           <a href="/admin/create/reseller" class="button is-success"><span class="file-icon"><i class="fas fa-plus"></i></span>Create</a>    
           <br>
           <br>
