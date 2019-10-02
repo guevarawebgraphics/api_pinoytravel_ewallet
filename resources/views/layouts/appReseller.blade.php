@@ -66,17 +66,17 @@
                     
                     <div id="navbarBasicExample" class="navbar-menu menuDiv">
                         <div class="navbar-start">
-                            <a class="navbar-item" href="/reseller/reservation/view">
+                            {{-- <a class="navbar-item" href="/reseller/reservation/view">
                             Reservations
-                            </a>
+                            </a> --}}
                             @if(auth()->user()->on_hold == 0)
                                 <a class="navbar-item" href="/reseller/topup">
                                 Top-up E-Wallet
                                 </a>
                             @endif
-                            <a class="navbar-item" href="/reseller/commission/view">
+                            {{-- <a class="navbar-item" href="/reseller/commission/view">
                             Commission
-                            </a>
+                            </a> --}}
                             <a class="navbar-item" href="/reseller/passbook">
                             EPassbook
                             </a>
