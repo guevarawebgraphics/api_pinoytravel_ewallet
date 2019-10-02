@@ -36,8 +36,12 @@ class ResellerPassbook extends Controller
 
                 if($field->type == "ADD"){
                     $type = "Account Balance added by: ".$field->updated_by;
-                    $debit = number_format((float)$field->txnamount, 2, '.', ',');
-                    $credit = "";
+                    // $debit = number_format((float)$field->txnamount, 2, '.', ',');
+                    // $credit = "";
+
+                    $debit = "";
+                    $credit = number_format((float)$field->txnamount, 2, '.', ',');
+
                     $style = 'style="border-left:13px solid hsl(217, 71%, 53%);"';
                     $article = "is-link";
                     $title = "";
@@ -45,8 +49,12 @@ class ResellerPassbook extends Controller
                 }
                 else if($field->type == "DEDUCT"){
                     $type = "Account Balance deducted by: ".$field->updated_by;
-                    $debit = "";
-                    $credit = number_format((float)$field->txnamount, 2, '.', ',');
+                    // $debit = "";
+                    // $credit = number_format((float)$field->txnamount, 2, '.', ',');
+
+                    $debit = number_format((float)$field->txnamount, 2, '.', ',');
+                    $credit = "";
+
                     $style = 'style="border-left:13px solid hsl(48, 100%, 67%);"';
                     $article = "is-warning";
                     $title = "";
@@ -54,8 +62,12 @@ class ResellerPassbook extends Controller
                 }
                 else if($field->type == "TXN"){
                     $type = "Transaction History";
-                    $debit = "";
-                    $credit = number_format((float)$field->txnamount, 2, '.', ',');
+                    // $debit = "";
+                    // $credit = number_format((float)$field->txnamount, 2, '.', ',');
+
+                    $debit = number_format((float)$field->txnamount, 2, '.', ',');
+                    $credit = "";
+
                     $style = 'style="border-left:13px solid hsl(348, 100%, 61%);"';
                     // $article = "is-danger";
                     $article = "is-dark";
@@ -72,8 +84,12 @@ class ResellerPassbook extends Controller
                 }
                 else if($field->type == "TOPUP"){
                     $type = "Top Up History";
-                    $debit = number_format((float)$field->txnamount, 2, '.', ',');
-                    $credit = "";
+                    // $debit = number_format((float)$field->txnamount, 2, '.', ',');
+                    // $credit = "";
+
+                    $debit = "";
+                    $credit = number_format((float)$field->txnamount, 2, '.', ',');
+
                     $style = 'style="border-left:13px solid hsl(141, 71%, 48%);"';
                     // $article = "is-success";
                     $article = "is-dark";
@@ -132,8 +148,8 @@ class ResellerPassbook extends Controller
                             </article>
 
                             </td>
-                            <td>'.$debit.'</td>
                             <td>'.$credit.'</td>
+                            <td>'.$debit.'</td>
                             <td>'.number_format((float)$field->total_balance, 2, '.', ',').'</td>
                         </tr>
                         

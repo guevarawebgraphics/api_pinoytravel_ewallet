@@ -30,8 +30,8 @@ if(session()->forget('merchId') != ""){
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Debit</th>
                         <th>Credit</th>
+                        <th>Debit</th>
                         <th>Balance</th>
                     </tr>
                 </thead>
