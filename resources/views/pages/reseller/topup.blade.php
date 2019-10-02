@@ -85,41 +85,44 @@ if(session()->forget('merchId') != ""){
                 </div>
                 {{-- END OF RESELLER PAYMENT DETAILS--}}                                                          
                 
-                <h1 class="title is-5"> Choose Payment Option </h1>                                
+                {{-- <h1 class="title is-5"> Choose Payment Option </h1>                                 --}}
+                <h1 class="title is-5">Reseller Payment Method </h1> 
+                {{-- <p><em>Transactions are secure and encrypted</em></p>
+                <br /> --}}
                 {{-- START OF TABS--}}
                 <div class="tabs is-boxed" id="tabs">
                   <ul>
-                    <li class="top-up-tab is-active" data-tab="1">
+                    <li class="top-up-tab" data-tab="1" style="display:none;">
                       <a>
                         <span class="icon is-small"><i class="fas fa-credit-card" aria-hidden="true"></i></span>
                         <span><strong>Card Payment</strong></span>
                       </a>
                     </li>
-                    <li class="top-up-tab" data-tab="2">
+                    <li class="top-up-tab" data-tab="2" style="display:none;">
                       <a>
                         <span class="icon is-small"><i class="fas fa-globe" aria-hidden="true"></i></span>
                         <span><strong>Online Banking</strong></span>
                       </a>
                     </li>
-                    <li class="top-up-tab" data-tab="3">
+                    <li class="top-up-tab" data-tab="3" style="display:none;">
                       <a>
                         <span class="icon is-small"><i class="fas fa-money-check-alt" aria-hidden="true"></i></span>
                         <span><strong>OTC Bank/ATM</strong></span>
                       </a>
                     </li>
-                    <li class="top-up-tab" data-tab="4">
+                    <li class="top-up-tab" data-tab="4" style="display:none;">
                       <a>
                         <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
                         <span><strong>Non Bank</strong></span>
                       </a>
                     </li>
-                    <li class="top-up-tab" data-tab="5">
+                    <li class="top-up-tab" data-tab="5" style="display:none;">
                       <a>
                         <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
                         <span><strong>GCash</strong></span>
                       </a>
                     </li>
-                    <li class="top-up-tab" data-tab="6">
+                    <li class="top-up-tab is-active" data-tab="6">
                       <a>
                         <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
                         <span><strong>Direct Deposit</strong></span>
@@ -130,7 +133,7 @@ if(session()->forget('merchId') != ""){
 
                 {{-- START OF TAB CONTENT--}}
                 <div id="tab-content">
-                  <div class="is-active" data-content="1">
+                  <div class="" data-content="1">
                     <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/cc-badges-ppppcmcvdam.png" alt="payment" width="300px" height="155px">
                         @csrf
                         {{-- <input class="button is-link" type="submit" value="Top Up"> --}}
@@ -266,7 +269,7 @@ if(session()->forget('merchId') != ""){
                             </div>                                        
                   </div>
                 </form>
-                  <div data-content="6">
+                  <div class="is-active" data-content="6">
                       <div class="box">
                         <p><b>
                           
