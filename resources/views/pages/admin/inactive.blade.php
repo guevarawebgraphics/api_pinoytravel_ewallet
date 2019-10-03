@@ -66,6 +66,10 @@
 
     function activate(id){
         var userId = id;
+        var btn = "btn"+id;
+        var x = document.getElementById(btn);
+        x.innerHTML = "Loading...";
+        document.getElementById(btn).disabled = true;
         $.ajax({
             headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             url: "{{ route('activateAccount') }}",

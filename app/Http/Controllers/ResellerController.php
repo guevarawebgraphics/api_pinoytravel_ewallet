@@ -11,6 +11,8 @@ use DB;
 use App\Models\UserBalance;
 use App\Models\ViewTotalUserBalance;
 use App\Models\Users;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
 
 class ResellerController extends Controller
 {
@@ -107,6 +109,15 @@ class ResellerController extends Controller
         // $resellers->password = \Hash::make('*pass@csi');
         // $resellers->profile_pic = 'profile_pic';
         $user->save();
+
+        $data = array(
+            'name'  => $request->input('Name'),
+            'email'   =>  $request->input('Email'),
+            'type'  => 'New',
+            'password' => $request->input('password'),
+            'remarks'   => 'Donec rutrum, risus vitae aliquet fringilla, velit ligula placerat ligula, eget dapibus velit lacus et nibh. Nulla non lorem eget erat iaculis egestas a sed felis. Ut nec semper nisi. Cras in hendrerit lorem. Integer iaculis ex diam'
+        );
+        Mail::to($request->input('Email'))->send(new SendMail($data));
 
         // return 123;
 
@@ -237,6 +248,15 @@ class ResellerController extends Controller
             // echo $resellers; die;
             //DELETE (Will Block Reseller Account)
             $reseller->save();
+
+            $data = array(
+                'name'  => $reseller->name,
+                'email'   =>  $reseller->email,
+                'type'  => 'Deleted',
+                'remarks'   => 'Donec rutrum, risus vitae aliquet fringilla, velit ligula placerat ligula, eget dapibus velit lacus et nibh. Nulla non lorem eget erat iaculis egestas a sed felis. Ut nec semper nisi. Cras in hendrerit lorem. Integer iaculis ex diam'
+            );
+            Mail::to($reseller->email)->send(new SendMail($data));
+            
             return back()->with('error', 'Reseller '. $reseller->name. ' Deleted');
             // return redirect('reseller/delete')->with('error', 'Reseller Deleted');
 
@@ -248,6 +268,15 @@ class ResellerController extends Controller
             // echo $resellers; die;
             //DELETE (Will Block Reseller Account)
             $reseller->save();
+
+            $data = array(
+                'name'  => $reseller->name,
+                'email'   =>  $reseller->email,
+                'type'  => 'On Hold',
+                'remarks'   => 'Donec rutrum, risus vitae aliquet fringilla, velit ligula placerat ligula, eget dapibus velit lacus et nibh. Nulla non lorem eget erat iaculis egestas a sed felis. Ut nec semper nisi. Cras in hendrerit lorem. Integer iaculis ex diam'
+            );
+            Mail::to($reseller->email)->send(new SendMail($data));
+
             return back()->with('hold', 'Reseller ' . $reseller->name .' On Hold');
             // return redirect('/reseller/hold')->with('error', 'Reseller ' . $reseller->name .' On Hold');
 
@@ -259,6 +288,15 @@ class ResellerController extends Controller
             // echo $resellers; die;
             //DELETE (Will Block Reseller Account)
             $reseller->save();
+
+            $data = array(
+                'name'  => $reseller->name,
+                'email'   =>  $reseller->email,
+                'type'  => 'Active',
+                'remarks'   => 'Donec rutrum, risus vitae aliquet fringilla, velit ligula placerat ligula, eget dapibus velit lacus et nibh. Nulla non lorem eget erat iaculis egestas a sed felis. Ut nec semper nisi. Cras in hendrerit lorem. Integer iaculis ex diam'
+            );
+            Mail::to($reseller->email)->send(new SendMail($data));
+
             return back()->with('hold', 'Reseller ' . $reseller->name .' is active');
             // return redirect('/reseller/hold')->with('error', 'Reseller ' . $reseller->name .' is active');
 
@@ -1036,6 +1074,7 @@ class ResellerController extends Controller
 
 
         if($request->userId != ""){
+
             DB::table('users')
             ->where('id', $request->userId)
             ->update([
@@ -1043,6 +1082,14 @@ class ResellerController extends Controller
             'is_blocked'=>0,
             'updated_at' => now()
             ]);
+
+            $data = array(
+                'name'  => $users[0]->name,
+                'email'   =>  $users[0]->email,
+                'type'  => 'Active',
+                'remarks'   => 'Donec rutrum, risus vitae aliquet fringilla, velit ligula placerat ligula, eget dapibus velit lacus et nibh. Nulla non lorem eget erat iaculis egestas a sed felis. Ut nec semper nisi. Cras in hendrerit lorem. Integer iaculis ex diam'
+            );
+            Mail::to($users[0]->email)->send(new SendMail($data));
 
             $messages = "Account: ".$users[0]->name." Successfully Activated";
             $success[] = $messages;
