@@ -121,12 +121,16 @@
                                             </header>
                                             <section class="modal-card-body">
                                             The account of <p class="has-text-weight-bold is-inline">{{$reseller->name}}</p> will not be able to perform any transactions.
+                                                
+
+                                            <textarea class="textarea" onkeyup="holdText({{$reseller->id}})" id="holdID{{$reseller->id}}" placeholder="Remarks" style="margin-top: 1.5em;"></textarea>
                                         </section>
                                         <footer class="modal-card-foot">
                                             <form id="form{{$reseller->id}}" method="post" action="/admin/update/{{$reseller->id}}">
                                             @method('PUT')
                                             @csrf                                            
                                             <input type="hidden" name="Edit" value="3">
+                                            <input type="hidden" name="holdText" id="holdText{{$reseller->id}}" value="" required>
                                         </form>
                                             <button class="button is-success is-warning has-text-weight-bold" onclick="$('#form{{$reseller->id}}').submit();">Hold</button>
                                             <button class="button">Cancel</button>
@@ -138,12 +142,16 @@
                                     </header>
                                     <section class="modal-card-body">
                                     The account of <p class="has-text-weight-bold is-inline">{{$reseller->name}}</p> will be able to perform transactions immediately.
+                                
+                                        
+                                    <textarea class="textarea" onkeyup="unholdText({{$reseller->id}})" id="unholdID{{$reseller->id}}" placeholder="Remarks" style="margin-top: 1.5em;"></textarea>
                                 </section>
                                 <footer class="modal-card-foot">
                                     <form id="form{{$reseller->id}}" method="post" action="/admin/update/{{$reseller->id}}">
                                     @method('PUT')
                                     @csrf                                            
                                     <input type="hidden" name="Edit" value="4">
+                                    <input type="hidden" name="unholdText" id="unholdText{{$reseller->id}}" value="" required>
                                     </form>
                                 <button class="button is-success is-warning has-text-weight-bold" onclick="$('#form{{$reseller->id}}').submit();">Unhold</button>
                                     <button class="button">Cancel</button>
@@ -164,13 +172,16 @@
                                             Delete the account of <p class="has-text-weight-bold is-inline">{{$reseller->name}}</p>?
                                             <p class="has-text-danger has-text-weight-bold">Warning!</p> This action is irreversible.
                                             
+
+                                            <textarea class="textarea" onkeyup="deltxtArea({{$reseller->id}})" id="txtID{{$reseller->id}}" placeholder="Remarks" style="margin-top: 1.5em;"></textarea>
                                         </section>
                                         <footer class="modal-card-foot">
                                                 <form id="form{{$reseller->id}}Delete" method="post" action="/admin/update/{{$reseller->id}}">
                                                 @method('PUT')
-                                                @csrf                                            
+                                                @csrf       
+                                                                                    
                                                 <input type="hidden" name="Edit" value="2">
-                                                <input type="hidden" name="Textarea" id="txtArea" value="">
+                                                <input type="hidden" name="Textarea" id="txtArea{{$reseller->id}}" value="" required>
                                                 
                                                 </form>
                                             <button class="button is-danger has-text-weight-bold" onclick="$('#form{{$reseller->id}}Delete').submit();">Delete</button>
@@ -207,6 +218,26 @@
         "ordering": false
     });
     </script>
+
+    <script type="text/javascript">
+        function deltxtArea(id){
+            var txtAreaValue = $('#txtID'+id).val();
+            // alert(txtAreaValue);
+            $('#txtArea'+id).val(txtAreaValue);
+        }
+
+        function holdText(id){
+            var txtAreaValue = $('#holdID'+id).val();
+            // alert(txtAreaValue);
+            $('#holdText'+id).val(txtAreaValue);
+        }
+
+        function unholdText(id){
+            var txtAreaValue = $('#unholdID'+id).val();
+            // alert(txtAreaValue);
+            $('#unholdText'+id).val(txtAreaValue);
+        }
+    </script> 
         
 @endsection
 

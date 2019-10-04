@@ -342,7 +342,13 @@
         <b>Reseller Password: </b> {{ $data['password'] }}
         @endif
         <br>
-        {{-- <b>Remarks: </b><em> {{ $data['remarks'] }}</em> --}}
+        @if($data['type'] == "Deleted")
+        <b>Remarks: </b><em> {{ $data['remarks'] }}</em>
+        @elseif($data['type'] == "On Hold")
+        <b>Remarks: </b><em> {{ $data['remarks'] }}</em>
+        @elseif($data['HType'] != "" && $data['HType'] == "UNHOLD")
+        <b>Remarks: </b><em> {{ $data['remarks'] }}</em>
+        @endif
 
     </span></p>
     </div>

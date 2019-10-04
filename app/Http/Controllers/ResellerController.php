@@ -10,6 +10,7 @@ use App\Models\TopUpHistory;
 use DB;
 use App\Models\UserBalance;
 use App\Models\ViewTotalUserBalance;
+use App\Models\AdminHistory;
 use App\Models\Users;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
@@ -207,6 +208,9 @@ class ResellerController extends Controller
 
         //GET HIDDEN FORM INPUT NAMED EDIT
         $edit = $request->input('Edit'); 
+        $textarea = $request->input('Textarea'); 
+        $holdText = $request->input('holdText'); 
+        $unholdText = $request->input('unholdText'); 
         // echo $edit; die;
 
         if ($edit == 1)
@@ -253,9 +257,19 @@ class ResellerController extends Controller
                 'name'  => $reseller->name,
                 'email'   =>  $reseller->email,
                 'type'  => 'Deleted',
-                'remarks'   => 'Donec rutrum, risus vitae aliquet fringilla, velit ligula placerat ligula, eget dapibus velit lacus et nibh. Nulla non lorem eget erat iaculis egestas a sed felis. Ut nec semper nisi. Cras in hendrerit lorem. Integer iaculis ex diam'
+                'remarks'   => $textarea
             );
             Mail::to($reseller->email)->send(new SendMail($data));
+
+            $AdminHistory = new AdminHistory;
+            $AdminHistory->userId = $reseller->id;
+            $AdminHistory->type = "DELETED";
+            $AdminHistory->description = $textarea;
+            $AdminHistory->updated_by_id = auth()->user()->id;
+            $AdminHistory->updated_by = auth()->user()->name;
+            $AdminHistory->created_at = now();
+            $AdminHistory->updated_at = now();
+            $AdminHistory->save();
             
             return back()->with('error', 'Reseller '. $reseller->name. ' Deleted');
             // return redirect('reseller/delete')->with('error', 'Reseller Deleted');
@@ -273,9 +287,19 @@ class ResellerController extends Controller
                 'name'  => $reseller->name,
                 'email'   =>  $reseller->email,
                 'type'  => 'On Hold',
-                'remarks'   => 'Donec rutrum, risus vitae aliquet fringilla, velit ligula placerat ligula, eget dapibus velit lacus et nibh. Nulla non lorem eget erat iaculis egestas a sed felis. Ut nec semper nisi. Cras in hendrerit lorem. Integer iaculis ex diam'
+                'remarks'   =>  $holdText
             );
             Mail::to($reseller->email)->send(new SendMail($data));
+
+            $AdminHistory = new AdminHistory;
+            $AdminHistory->userId = $reseller->id;
+            $AdminHistory->type = "ONHOLD";
+            $AdminHistory->description = $holdText;
+            $AdminHistory->updated_by_id = auth()->user()->id;
+            $AdminHistory->updated_by = auth()->user()->name;
+            $AdminHistory->created_at = now();
+            $AdminHistory->updated_at = now();
+            $AdminHistory->save();
 
             return back()->with('hold', 'Reseller ' . $reseller->name .' On Hold');
             // return redirect('/reseller/hold')->with('error', 'Reseller ' . $reseller->name .' On Hold');
@@ -293,9 +317,20 @@ class ResellerController extends Controller
                 'name'  => $reseller->name,
                 'email'   =>  $reseller->email,
                 'type'  => 'Active',
-                'remarks'   => 'Donec rutrum, risus vitae aliquet fringilla, velit ligula placerat ligula, eget dapibus velit lacus et nibh. Nulla non lorem eget erat iaculis egestas a sed felis. Ut nec semper nisi. Cras in hendrerit lorem. Integer iaculis ex diam'
+                'HType' => 'UNHOLD',
+                'remarks'   => $unholdText
             );
             Mail::to($reseller->email)->send(new SendMail($data));
+
+            $AdminHistory = new AdminHistory;
+            $AdminHistory->userId = $reseller->id;
+            $AdminHistory->type = "UNHOLD";
+            $AdminHistory->description = $unholdText;
+            $AdminHistory->updated_by_id = auth()->user()->id;
+            $AdminHistory->updated_by = auth()->user()->name;
+            $AdminHistory->created_at = now();
+            $AdminHistory->updated_at = now();
+            $AdminHistory->save();
 
             return back()->with('hold', 'Reseller ' . $reseller->name .' is active');
             // return redirect('/reseller/hold')->with('error', 'Reseller ' . $reseller->name .' is active');
