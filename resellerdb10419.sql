@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 27, 2019 at 12:30 PM
+-- Generation Time: Oct 04, 2019 at 12:28 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.2.20
 
@@ -21,6 +21,44 @@ SET time_zone = "+00:00";
 --
 -- Database: `resellerdb`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_history`
+--
+
+CREATE TABLE `admin_history` (
+  `id` bigint(11) NOT NULL,
+  `userId` bigint(11) NOT NULL,
+  `type` varchar(191) NOT NULL,
+  `description` varchar(191) DEFAULT NULL,
+  `updated_by_id` bigint(11) NOT NULL,
+  `updated_by` varchar(191) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `admin_history`
+--
+
+INSERT INTO `admin_history` (`id`, `userId`, `type`, `description`, `updated_by_id`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 28, 'DELETED', 'asdasdasd', 22, 'Super Admin', '2019-10-04 07:03:50', '2019-10-04 07:03:50'),
+(2, 28, 'DELETED', 'Suspicious payment method', 22, 'Super Admin', '2019-10-04 07:07:43', '2019-10-04 07:07:43'),
+(3, 3, 'DELETED', NULL, 22, 'Super Admin', '2019-10-04 07:11:21', '2019-10-04 07:11:21'),
+(4, 28, 'UNHOLD', 'Wow', 22, 'Super Admin', '2019-10-04 07:37:51', '2019-10-04 07:37:51'),
+(5, 28, 'ONHOLD', 'Heybaby', 22, 'Super Admin', '2019-10-04 07:39:20', '2019-10-04 07:39:20'),
+(6, 9, 'DELETED', 's', 22, 'Super Admin', '2019-10-04 07:54:30', '2019-10-04 07:54:30'),
+(7, 28, 'DELETED', 'asdasd', 22, 'Super Admin', '2019-10-04 08:05:30', '2019-10-04 08:05:30'),
+(8, 3, 'DELETED', 'dasd', 22, 'Super Admin', '2019-10-04 08:36:19', '2019-10-04 08:36:19'),
+(9, 28, 'DELETED', 'qweqweqwe', 22, 'Super Admin', '2019-10-04 09:37:34', '2019-10-04 09:37:34'),
+(10, 28, 'DELETED', 'asdasd', 22, 'Super Admin', '2019-10-04 09:38:13', '2019-10-04 09:38:13'),
+(11, 28, 'DELETED', 'asdasdasd', 22, 'Super Admin', '2019-10-04 09:45:01', '2019-10-04 09:45:01'),
+(12, 3, 'DELETED', 'asdasd', 22, 'Super Admin', '2019-10-04 09:46:38', '2019-10-04 09:46:38'),
+(13, 28, 'DELETED', 'trytryrtyrty', 22, 'Super Admin', '2019-10-04 09:48:04', '2019-10-04 09:48:04'),
+(14, 3, 'DELETED', 'popopo', 22, 'Super Admin', '2019-10-04 09:48:23', '2019-10-04 09:48:23'),
+(15, 28, 'REACTIVATE', 'FUCK', 22, 'Super Admin', '2019-10-04 10:24:05', '2019-10-04 10:24:05');
 
 -- --------------------------------------------------------
 
@@ -224,9 +262,15 @@ INSERT INTO `top_up_history` (`id`, `userId`, `txnid`, `dpRefNO`, `status`, `dpP
 (2, 3, 'WNUXI5RYK1TB', 'NEW', 'NEW', 'BYAD', 'UAEHR5SL', 'keighdee@gmail.com', 'DPAY', '50.00', 1, '2019-09-20 10:09:34', '2019-09-20 10:11:10'),
 (3, 3, 'UC3YHACQ2MJY', NULL, NULL, NULL, 'NZXIZRB6', 'keighdee@gmail.com', 'DPAY', '50.00', 1, '2019-09-20 10:09:34', '2019-09-27 09:58:28'),
 (4, 3, 'GVFHSSTBOLS4', NULL, NULL, NULL, '93MMH1MQ', 'keighdee@gmail.com', 'RCBC', '50.00', 1, '2019-09-23 02:53:28', '2019-09-27 08:42:52'),
-(5, 3, NULL, NULL, NULL, NULL, NULL, 'keighdee@gmail.com', 'DIRECTD', '50.00', 1, '2019-09-27 07:12:24', '2019-09-27 08:36:49'),
-(6, 3, NULL, NULL, NULL, NULL, NULL, 'keighdee@gmail.com', 'DIRECTD', '50.00', 1, '2019-09-27 07:15:07', '2019-09-27 08:33:53'),
-(17, 3, NULL, NULL, NULL, NULL, NULL, 'keighdee@gmail.com', 'DIRECTD', '50.00', 0, '2019-09-27 10:24:49', '2019-09-27 10:24:49');
+(18, 3, 'QUU4NO23GV0N', NULL, NULL, NULL, 'TQ8TPCRK', 'keighdee@gmail.com', 'DPAY', '50.00', 1, '2019-09-27 10:35:04', '2019-09-27 10:54:47'),
+(19, 3, '9U4ODJALWXHZ', NULL, NULL, NULL, 'LQ4GJ65E', 'keighdee@gmail.com', 'DIRECTD', '50.00', 1, '2019-09-27 10:35:14', '2019-09-27 10:54:35'),
+(20, 3, 'FPSZV8TY24XJ', NULL, NULL, NULL, 'NHCUPB2M', 'keighdee@gmail.com', 'DIRECTD', '10000.00', 1, '2019-09-27 10:55:37', '2019-09-27 11:02:25'),
+(21, 3, 'MIQ581VVULPK', NULL, NULL, NULL, 'T2RBQVJZ', 'keighdee@gmail.com', 'DIRECTD', '10000.00', 1, '2019-09-27 10:55:37', '2019-09-27 10:58:04'),
+(22, 3, 'IAUP3XRSPDZY', NULL, NULL, NULL, 'DL4JUV8A', 'keighdee@gmail.com', 'DIRECTD', '150.00', 0, '2019-09-27 10:56:07', '2019-09-27 10:56:07'),
+(23, 3, 'MDP7L2DWVB4Y', NULL, NULL, NULL, 'AQQXGTHC', 'keighdee@gmail.com', 'DIRECTD', '300.00', 0, '2019-09-27 10:56:32', '2019-09-27 10:56:32'),
+(24, 3, 'H2C8ALVF7KGC', NULL, NULL, NULL, 'K3WEPIIP', 'keighdee@gmail.com', 'DIRECTD', '2500.00', 0, '2019-09-27 10:57:25', '2019-09-27 10:57:25'),
+(25, 3, 'GUY9GKA2YDWT', NULL, NULL, NULL, 'YVB8W3GP', 'keighdee@gmail.com', 'DIRECTD', '50.00', 0, '2019-09-27 11:00:59', '2019-09-27 11:00:59'),
+(26, 3, '0ILOYCWJU2UM', NULL, NULL, NULL, 'DFULHKOL', 'keighdee@gmail.com', 'DIRECTD', '50.00', 0, '2019-09-27 11:01:16', '2019-09-27 11:01:16');
 
 -- --------------------------------------------------------
 
@@ -263,10 +307,22 @@ INSERT INTO `total_userbalance` (`id`, `userId`, `txhistoryId`, `tophistoryId`, 
 (8, 9, NULL, NULL, '123.00', '123.00', NULL, 'Juan Dela Cruz', 'ADD', '2019-09-20 10:20:16', '2019-09-20 10:20:16'),
 (9, 23, NULL, NULL, '150.99', '150.99', NULL, 'Juan Dela Cruz', 'ADD', '2019-09-23 09:42:45', '2019-09-23 09:42:45'),
 (10, 9, NULL, NULL, '118.00', '5.00', NULL, 'Reseller Super', 'DEDUCT', '2019-09-27 06:11:44', '2019-09-27 06:11:44'),
-(11, 3, NULL, 6, '11000.00', '50.00', NULL, NULL, 'TOPUP', '2019-09-27 08:33:53', '2019-09-27 08:33:53'),
-(12, 3, NULL, 5, '11050.00', '50.00', NULL, NULL, 'TOPUP', '2019-09-27 08:36:49', '2019-09-27 08:36:49'),
-(13, 3, NULL, 4, '11100.00', '50.00', NULL, NULL, 'TOPUP', '2019-09-27 08:42:52', '2019-09-27 08:42:52'),
-(14, 3, NULL, 3, '11150.00', '50.00', NULL, NULL, 'TOPUP', '2019-09-27 09:58:28', '2019-09-27 09:58:28');
+(15, 3, NULL, 19, '11000.00', '50.00', NULL, NULL, 'TOPUP', '2019-09-27 10:54:35', '2019-09-27 10:54:35'),
+(16, 3, NULL, 18, '11050.00', '50.00', NULL, NULL, 'TOPUP', '2019-09-27 10:54:47', '2019-09-27 10:54:47'),
+(17, 3, NULL, 21, '21050.00', '10000.00', NULL, NULL, 'TOPUP', '2019-09-27 10:58:04', '2019-09-27 10:58:04'),
+(18, 3, NULL, 20, '31050.00', '10000.00', NULL, NULL, 'TOPUP', '2019-09-27 11:02:25', '2019-09-27 11:02:25'),
+(19, 3, 2, NULL, '30680.00', '370.00', NULL, NULL, 'TXN', '2019-09-30 09:42:14', '2019-09-30 09:42:14'),
+(20, 3, 3, NULL, '30405.00', '275.00', NULL, NULL, 'TXN', '2019-09-30 10:00:15', '2019-09-30 10:00:15'),
+(21, 3, 4, NULL, '30130.00', '275.00', NULL, NULL, 'TXN', '2019-10-01 01:51:00', '2019-10-01 01:51:00'),
+(23, 3, 6, NULL, '29760.00', '370.00', NULL, NULL, 'TXN', '2019-10-01 02:12:20', '2019-10-01 02:12:20'),
+(24, 3, 7, NULL, '29390.00', '370.00', NULL, NULL, 'TXN', '2019-10-01 02:22:01', '2019-10-01 02:22:01'),
+(25, 3, 8, NULL, '29115.00', '275.00', NULL, NULL, 'TXN', '2019-10-01 02:22:44', '2019-10-01 02:22:44'),
+(26, 3, 9, NULL, '28840.00', '275.00', NULL, NULL, 'TXN', '2019-10-01 02:30:05', '2019-10-01 02:30:05'),
+(27, 3, 10, NULL, '28515.00', '325.00', NULL, NULL, 'TXN', '2019-10-01 02:34:09', '2019-10-01 02:34:09'),
+(28, 3, 11, NULL, '28240.00', '275.00', NULL, NULL, 'TXN', '2019-10-01 07:11:20', '2019-10-01 07:11:20'),
+(29, 3, 12, NULL, '27965.00', '275.00', NULL, NULL, 'TXN', '2019-10-01 07:18:22', '2019-10-01 07:18:22'),
+(30, 3, NULL, NULL, '27966.00', '1.00', 'refund', 'Admin', 'ADD', '2019-10-02 05:57:06', '2019-10-02 05:57:06'),
+(31, 3, NULL, NULL, '27962.00', '4.00', 'wrong refund', 'Super Admin', 'DEDUCT', '2019-10-02 09:22:26', '2019-10-02 09:22:26');
 
 -- --------------------------------------------------------
 
@@ -293,7 +349,17 @@ CREATE TABLE `transaction_details` (
 --
 
 INSERT INTO `transaction_details` (`id`, `userId`, `merchId`, `transId`, `amount`, `refCode`, `transEmail`, `procId`, `deleted`, `created_at`, `updated_at`) VALUES
-(1, 3, 'PINOYTRAVEL-EWALLET', 'IDGTXOJSXHOX', '275.00', 'IDGTXOJS', 'guevara.richard17@gmail.com', 'EWALLET', 0, '2019-09-20 07:36:12', '2019-09-20 07:36:12');
+(1, 3, 'PINOYTRAVEL-EWALLET', 'IDGTXOJSXHOX', '275.00', 'IDGTXOJS', 'guevara.richard17@gmail.com', 'EWALLET', 0, '2019-09-20 07:36:12', '2019-09-20 07:36:12'),
+(2, 3, 'PINOYTRAVEL-EWALLET', 'YXRAGZGD2GLI', '370.00', 'YXRAGZGD', 'guevara.richard17@gmail.com', 'EWALLET', 0, '2019-09-30 09:42:14', '2019-09-30 09:42:14'),
+(3, 3, 'PINOYTRAVEL-EWALLET', 'RZDZT2LPYITG', '275.00', 'RZDZT2LP', 'sample@csi.com', 'EWALLET', 0, '2019-09-30 10:00:15', '2019-09-30 10:00:15'),
+(4, 3, 'PINOYTRAVEL-EWALLET', '2DXGVFSOTEVD', '275.00', '2DXGVFSO', 'guevara.richard17@gmail.com', 'EWALLET', 0, '2019-10-01 01:51:00', '2019-10-01 01:51:00'),
+(6, 3, 'PINOYTRAVEL-EWALLET', 'DMUF3ZPQFR6R', '370.00', 'DMUF3ZPQ', 'guevara.richard17@gmail.com', 'EWALLET', 0, '2019-10-01 02:12:20', '2019-10-01 02:12:20'),
+(7, 3, 'PINOYTRAVEL-EWALLET', 'OEQARIE2TIVM', '370.00', 'OEQARIE2', 'guevara.richard17@gmail.com', 'EWALLET', 0, '2019-10-01 02:22:01', '2019-10-01 02:22:01'),
+(8, 3, 'PINOYTRAVEL-EWALLET', 'OJFRWOI7MYQJ', '275.00', 'OJFRWOI7', 'guevara.richard17@gmail.com', 'EWALLET', 0, '2019-10-01 02:22:44', '2019-10-01 02:22:44'),
+(9, 3, 'PINOYTRAVEL-EWALLET', 'LPQTSH3BWBHG', '275.00', 'LPQTSH3B', 'guevara.richard17@gmail.com', 'EWALLET', 0, '2019-10-01 02:30:05', '2019-10-01 02:30:05'),
+(10, 3, 'PINOYTRAVEL-EWALLET', 'C3QCTZOYDOA0', '325.00', 'C3QCTZOY', 'guevara.richard17@gmail.com', 'EWALLET', 0, '2019-10-01 02:34:09', '2019-10-01 02:34:09'),
+(11, 3, 'PINOYTRAVEL-EWALLET', 'KTQ3C4QLNVF1', '275.00', 'KTQ3C4QL', 'guevara.richard17@gmail.com', 'EWALLET', 0, '2019-10-01 07:11:20', '2019-10-01 07:11:20'),
+(12, 3, 'PINOYTRAVEL-EWALLET', 'JMD420CXGXCW', '275.00', 'JMD420CX', 'guevara.richard17@gmail.com', 'EWALLET', 0, '2019-10-01 07:18:22', '2019-10-01 07:18:22');
 
 -- --------------------------------------------------------
 
@@ -337,14 +403,15 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `address`, `contact_no`, `is_blocked`, `on_hold`, `wallet_bal`, `is_admin`, `remember_token`, `deleted`, `created_at`, `updated_at`) VALUES
-(1, 'Sample One', 'sampOne@gmail.com', '2019-06-05 06:45:56', '123qwe', 'Sample Onee', '09184352441', 1, 0, '0.00', 1, NULL, 0, '2019-06-05 06:48:09', '2019-06-05 06:48:09'),
-(2, 'Juan Dela Cruz', 'juandelacruz@gmail.com', NULL, '$2y$10$2Fgnu7sK0STxr9IuNHjz5u42/8dmBSvEO0NtViUZBbVQ5XvmMQ2qq', 'Sample Twoo', '09852421542', 0, 0, '0.00', 1, NULL, 0, '2019-06-05 07:16:18', '2019-06-05 07:16:18'),
-(3, 'Keigh Dee', 'keighdee@gmail.com', NULL, '$2y$10$2Fgnu7sK0STxr9IuNHjz5u42/8dmBSvEO0NtViUZBbVQ5XvmMQ2qq', 'JRU', '09776927838', 0, 0, '3000.00', 0, 'y1XwoVi30zE4Lm7Gajf2hdFdS37tL8KQn1BWGAHG1pF4YVcC8QCEW1tnhtF8', 0, '2019-06-06 02:27:19', '2019-09-18 10:38:14'),
-(9, 'King RG', 'kingrgdev@gmail.com', NULL, '$2y$10$aeySRF7/h1VOrc6B6gZoK.xNIel0Wq/8d5g.xGS8VC4fobUPD61IK', 'Stratford, Ontario', '09254214520', 0, 1, '0.00', 0, '4UYxuZ3eH0NL2d3wA7Zhq0RQ11g4kV1oEPqs7baIRkk8aXXS1ZvfsxEuiTsd', 0, '2019-06-09 05:38:04', '2019-09-24 08:15:25'),
+(1, 'Sample One', 'sampOne@gmail.com', '2019-06-05 06:45:56', '$2y$10$2Fgnu7sK0STxr9IuNHjz5u42/8dmBSvEO0NtViUZBbVQ5XvmMQ2qq', 'Sample Onee', '09184352441', 0, 0, '0.00', 1, NULL, 0, '2019-06-05 06:48:09', '2019-10-04 08:03:53'),
+(2, 'Admin', 'admin@pinoytravel.com.ph', NULL, '$2y$10$2Fgnu7sK0STxr9IuNHjz5u42/8dmBSvEO0NtViUZBbVQ5XvmMQ2qq', 'Sample Twoo', '09852421542', 0, 0, '0.00', 1, NULL, 0, '2019-06-05 07:16:18', '2019-06-05 07:16:18'),
+(3, 'Reseller Acct1', 'reselleract1@pinoytravel.com.ph', NULL, '$2y$10$2Fgnu7sK0STxr9IuNHjz5u42/8dmBSvEO0NtViUZBbVQ5XvmMQ2qq', 'JRU', '09776927838', 1, 0, '3000.00', 0, 'KB3NQNIFuf0gwRg12eQuCr093L1tox3hBrukTwdaXNO6MRwuyLLiFxlky5Kr', 1, '2019-06-06 02:27:19', '2019-10-04 09:48:20'),
+(9, 'Reseller Acct2', 'reselleract2@pinoytravel.com.ph', NULL, '$2y$10$aeySRF7/h1VOrc6B6gZoK.xNIel0Wq/8d5g.xGS8VC4fobUPD61IK', 'Stratford, Ontario', '09254214520', 0, 1, '0.00', 0, '93NUbs4dhxFPlTjYLINxVNDYJyP5tjzcrANoGOkDsPMG3Fo1eNAs73zI3jiT', 0, '2019-06-09 05:38:04', '2019-10-04 09:37:58'),
 (10, 'Kay Louise Diaz', 'kaydiaz@gmail.com', NULL, '$2y$10$bQoCj9I8Yk88sJarnMySh.y1TAMUJDgKaIuMMWtUOq.7rGkgCNNju', 'Mandaluyong', '09776927838', 0, 0, '0.00', 1, NULL, 0, '2019-09-19 06:05:32', '2019-09-24 08:10:56'),
 (16, 'Richard Guevara', 'guevara.richard17@gmail.com', NULL, '$2y$10$nG8tk6VyX8ah.EoeRZnkCekktp2Rdrwx74YXE/DDXT6hTdqxRKuZO', '49 Peralta compound san miguel pasig city, NCR Manila Philippines Asia', '12341234', 0, 0, '0.00', 1, NULL, 0, '2019-09-19 08:45:05', '2019-09-19 08:45:05'),
-(22, 'Reseller Super', 'superreseller@mail.com', NULL, '$2y$10$NUsyGO0RH3bK/.0xJE/AQugSsvNTCwrwAdgjKpmCUVU0t6yRoDi4O', '49 Peralta compound san miguel pasig city, NCR Manila Philippines Asia', '09776927838', 0, 0, '0.00', 2, NULL, 0, '2019-09-23 03:44:51', '2019-09-23 03:44:51'),
-(23, 'Post Malone', 'postmalone@pm.com', NULL, '$2y$10$LGg0E2b4Q6WdlmqUOU0hEusjxJfXhS7XfuXxmrWLxuCfxa5pA7vuG', '49 Peralta compound san miguel pasig city, NCR Manila Philippines Asia', '09776927838', 1, 0, '0.00', 0, NULL, 1, '2019-09-23 09:36:19', '2019-09-27 05:52:27');
+(22, 'Super Admin', 'superadmin@pinoytravel.com.ph', NULL, '$2y$10$NUsyGO0RH3bK/.0xJE/AQugSsvNTCwrwAdgjKpmCUVU0t6yRoDi4O', 'Ortigas', '09776927838', 0, 0, '0.00', 2, NULL, 0, '2019-09-23 03:44:51', '2019-09-23 03:44:51'),
+(23, 'Post Malone', 'postmalone@pm.com', NULL, '$2y$10$LGg0E2b4Q6WdlmqUOU0hEusjxJfXhS7XfuXxmrWLxuCfxa5pA7vuG', '49 Peralta compound san miguel pasig city, NCR Manila Philippines Asia', '09776927838', 0, 0, '0.00', 0, NULL, 0, '2019-09-23 09:36:19', '2019-10-04 09:38:00'),
+(28, 'Richard Guevara', 'kingrgdev@gmail.com', NULL, '$2y$10$wjc5qFhQYQUeqb/690B.FOWFfQvuLFMfhwJafSCcH.WQ3ssgUcW2K', '49 Peralta Compound San Miguel Pasig City, NCR Manila Philippines Asia', '09776927838', 0, 1, '0.00', 0, NULL, 0, '2019-10-03 07:22:02', '2019-10-04 10:24:02');
 
 -- --------------------------------------------------------
 
@@ -482,6 +549,12 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
+-- Indexes for table `admin_history`
+--
+ALTER TABLE `admin_history`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -557,6 +630,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `admin_history`
+--
+ALTER TABLE `admin_history`
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -578,25 +657,25 @@ ALTER TABLE `oauth_personal_access_clients`
 -- AUTO_INCREMENT for table `top_up_history`
 --
 ALTER TABLE `top_up_history`
-  MODIFY `id` bigint(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `total_userbalance`
 --
 ALTER TABLE `total_userbalance`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `transaction_details`
 --
 ALTER TABLE `transaction_details`
-  MODIFY `id` bigint(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
