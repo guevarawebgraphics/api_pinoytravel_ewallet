@@ -94,6 +94,8 @@ Route::group(['middleware'=> ['auth']], function(){
 
     Route::get('/reseller/unpaid/getUnpaidReseller', 'ResellerUnpaid@getUnpaidReseller')->name('getUnpaidReseller');
     Route::get('/reseller/unpaid','ResellerUnpaid@index');
+
+    Route::get('/reseller/profile','ProfileController@index');
     
     // Route::post('/reseller/topup/payment','TopupController@topupPayment')->name('/reseller/topup/payment');
     // Route::get('/reseller/topup/success','TopupController@executePayment')->name('/reseller/topup/success');

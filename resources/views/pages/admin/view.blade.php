@@ -106,7 +106,7 @@
                                             @endif
                                         </div>
                                         <div class="control">
-                                            <a class="button is-rounded modal-button" data-target="modalDelete{{$reseller->id}}">Delete</a>
+                                        <a class="button is-rounded modal-button" data-target="modalDelete{{$reseller->id}}">Delete</a>
                                         </div>
                                       </div>     
                                    
@@ -163,12 +163,15 @@
                                             <section class="modal-card-body">
                                             Delete the account of <p class="has-text-weight-bold is-inline">{{$reseller->name}}</p>?
                                             <p class="has-text-danger has-text-weight-bold">Warning!</p> This action is irreversible.
+                                            
                                         </section>
                                         <footer class="modal-card-foot">
                                                 <form id="form{{$reseller->id}}Delete" method="post" action="/admin/update/{{$reseller->id}}">
                                                 @method('PUT')
                                                 @csrf                                            
                                                 <input type="hidden" name="Edit" value="2">
+                                                <input type="hidden" name="Textarea" id="txtArea" value="">
+                                                
                                                 </form>
                                             <button class="button is-danger has-text-weight-bold" onclick="$('#form{{$reseller->id}}Delete').submit();">Delete</button>
                                             <button class="button">Cancel</button>
