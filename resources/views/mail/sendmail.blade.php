@@ -348,6 +348,8 @@
         <b>Remarks: </b><em> {{ $data['remarks'] }}</em>
         @elseif(!empty($data['HType']) && $data['HType'] == "UNHOLD")
         <b>Remarks: </b><em> {{ $data['remarks'] }}</em>
+        @elseif(!empty($data['RType']) && $data['RType'] == "REACTIVATE")
+        <b>Remarks: </b><em> {{ $data['remarks'] }}</em>
         @endif
 
     </span></p>

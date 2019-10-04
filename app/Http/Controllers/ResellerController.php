@@ -199,6 +199,7 @@ class ResellerController extends Controller
         //EDIT (2) = Delete(Block Reseller)
         //EDIT (3) = Hold Reseller
         //EDIT (4) = Unhold? Reseller haha
+        //EDIT (5) = Reactivate
         
         //CUSTOM MESSAGE FOR CONTACT VALIDATION
         $messages = [
@@ -211,6 +212,7 @@ class ResellerController extends Controller
         $textarea = $request->input('Textarea'); 
         $holdText = $request->input('holdText'); 
         $unholdText = $request->input('unholdText'); 
+        $reactText = $request->input('reactText'); 
         // echo $edit; die;
 
         if ($edit == 1)
@@ -335,7 +337,37 @@ class ResellerController extends Controller
             return back()->with('hold', 'Reseller ' . $reseller->name .' is active');
             // return redirect('/reseller/hold')->with('error', 'Reseller ' . $reseller->name .' is active');
 
-        }   
+        }
+        else if($edit == 5){
+
+            // $resellers = Reseller::findOrFail($id);
+            $reseller->is_blocked = 0;
+            $reseller->deleted = 0;
+            $reseller->save();
+
+            $data = array(
+                'name'  => $reseller->name,
+                'email'   =>  $reseller->email,
+                'type'  => 'Active',
+                'RType' => 'REACTIVATE',
+                'remarks'   => $reactText
+            );
+            Mail::to($reseller->email)->send(new SendMail($data));
+
+            $AdminHistory = new AdminHistory;
+            $AdminHistory->userId = $reseller->id;
+            $AdminHistory->type = "REACTIVATE";
+            $AdminHistory->description = $reactText;
+            $AdminHistory->updated_by_id = auth()->user()->id;
+            $AdminHistory->updated_by = auth()->user()->name;
+            $AdminHistory->created_at = now();
+            $AdminHistory->updated_at = now();
+            $AdminHistory->save();
+            
+            return back()->with('success', 'Reseller '. $reseller->name. ' Reactivated');
+            // return redirect('reseller/delete')->with('error', 'Reseller Deleted');
+
+        }
     }
 
     /**
@@ -1090,7 +1122,7 @@ class ResellerController extends Controller
                             <td> '.$field->contact_no.'</td>
                             <td> ₱ '.number_format((float)$field->total_balance, 2, '.', ',').'</td>
                             <td>
-                            <button id="btn'.$field->id.'" onClick="activate(\''.$field->id.'\')" data-target="'.$field->id.'" class="button is-rounded modal-button" data-id="'.$field->id.'">Activate</button>
+                            <button id="btn'.$field->id.'" onClick="activateModal(\''.$field->id.'\',\''.$field->name.'\')" data-target="'.$field->id.'" class="button is-rounded modal-button" data-id="'.$field->id.'">Activate</button>
                             </td>
                             
                         </tr>
