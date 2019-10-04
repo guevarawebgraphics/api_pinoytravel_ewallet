@@ -19,7 +19,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th style="width: 346px;">Email</th>
+                            <th>Email</th>
                             <th style="width: 346px;">Address</th>
                             <th>Contact</th>
                             <th>Account Balance</th>
@@ -36,6 +36,7 @@
                             <td></td>
                             <td></td>
                         </tr>
+                        
                     </tbody>
                 </table>
             </div>

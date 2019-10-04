@@ -346,7 +346,7 @@
         <b>Remarks: </b><em> {{ $data['remarks'] }}</em>
         @elseif($data['type'] == "On Hold")
         <b>Remarks: </b><em> {{ $data['remarks'] }}</em>
-        @elseif($data['HType'] != "" && $data['HType'] == "UNHOLD")
+        @elseif(!empty($data['HType']) && $data['HType'] == "UNHOLD")
         <b>Remarks: </b><em> {{ $data['remarks'] }}</em>
         @endif
 

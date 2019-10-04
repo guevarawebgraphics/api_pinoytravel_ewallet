@@ -1066,7 +1066,9 @@ class ResellerController extends Controller
         if(auth()->user()->is_admin == 2){
             $sumBal = DB::connection('mysql')->select("SELECT sum(total_balance) as total_balance FROM view_total_userbalance");
             
-            return view('pages.admin.inactive', compact('sumBal'));
+            $delRmrks = DB::connection('mysql')->select("SELECT * FROM admin_history WHERE type = 'DELETED'");
+            
+            return view('pages.admin.inactive', compact('sumBal','delRmrks'));
         }else{
             return view('/');
         }
