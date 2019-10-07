@@ -99,13 +99,10 @@
                             
                             <div class="navbar-dropdown">
                                 Logged in as
-                                <a class="navbar-item has-text-link has-text-weight-bold">
+                                <a href="/reseller/profile" class="navbar-item has-text-link has-text-weight-bold">
                                    Reseller
                                 </a>
                                 <hr class="navbar-divider">
-                                {{-- <a class="navbar-item" href="/reseller/profile">
-                                    Profile
-                                </a> --}}
                                 <a class="navbar-item" href="/reseller/top_up_history">
                                     Top Up History
                                 </a>
