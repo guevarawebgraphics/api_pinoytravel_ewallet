@@ -170,71 +170,86 @@
                                             <a class="button is-rounded modal-button" data-target="modalDelete{{$reseller->id}}">Delete</a>
                                         </div>
                                       </div>  
-                            {{-- MODAL FOR HOLD --}}
-                            <div class="modal animated fadeIn" id="modalHold{{$reseller->id}}">
-                                <div class="modal-background"></div>
-                                    <div class="modal-card">
-                                        <header class="modal-card-head is-warning">
-                                            @if($reseller->on_hold == 0)
-                                            <p class="modal-card-title"><span class="file-icon is-inline"><i class="fas fa-lock"></i></span>Hold Account</p>
-                                            <button class="delete" aria-label="close"></button>
-                                        </header>
-                                        <section class="modal-card-body">
-                                        The account of <p class="has-text-weight-bold is-inline">{{$reseller->name}}</p> will not be able to perform any transactions.
-                                    </section>
-                                    <footer class="modal-card-foot">
-                                        <form id="form{{$reseller->id}}" method="post" action="/admin/update/{{$reseller->id}}">
-                                            @method('PUT')
-                                            @csrf                                            
-                                            <input type="hidden" name="Edit" value="3">
-                                        </form>                                      
-                                        <button class="button is-success is-warning has-text-weight-bold" onclick="$('#form{{$reseller->id}}').submit();">Hold</button>
-                                        <button class="button">Cancel</button>
-                                        @else
-                                        <p class="modal-card-title"><span class="file-icon is-inline"><i class="fas fa-lock"></i></span>Unhold Account</p>
-                                        <button class="delete" aria-label="close"></button>
-                                    </header>
-                                    <section class="modal-card-body">
-                                    The account of <p class="has-text-weight-bold is-inline">{{$reseller->name}}</p>  will be able to perform transactions immediately.
-                                </section>
-                                <footer class="modal-card-foot">
-                                    <form id="form{{$reseller->id}}" method="post" action="/admin/update/{{$reseller->id}}">
-                                        @method('PUT')
-                                        @csrf                                            
-                                        <input type="hidden" name="Edit" value="4">
-                                    </form> 
-                                    <button class="button is-success is-warning has-text-weight-bold" onclick="$('#form{{$reseller->id}}').submit();">Unhold</button>
-                                    <button class="button">Cancel</button>
+                          {{-- MODAL FOR HOLD --}}
+                          <div class="modal animated fadeIn" id="modalHold{{$reseller->id}}">
+                              <div class="modal-background"></div>
+                                  <div class="modal-card">
+                                      <header class="modal-card-head is-warning">
+                                              @if($reseller->on_hold == 0)
+                                          <p class="modal-card-title"><span class="file-icon is-inline"><i class="fas fa-lock"></i></span>Hold Account</p>
+                                          <button class="delete" aria-label="close"></button>
+                                      </header>
+                                      <section class="modal-card-body">
+                                      The account of <p class="has-text-weight-bold is-inline">{{$reseller->name}}</p> will not be able to perform any transactions.
+                                          
 
-                                        @endif
-                                    </footer>
-                                    </div>
-                                </div>
-                                {{-- END OF MODAL FOR HOLD --}}
-                            {{-- MODAL FOR DELETE --}}
-                            <div class="modal animated fadeIn" id="modalDelete{{$reseller->id}}">
-                                <div class="modal-background"></div>
-                                    <div class="modal-card">
-                                        <header class="modal-card-head">
-                                        <p class="modal-card-title"><span class="file-icon is-inline"><i class="fas fa-trash"></i></span>Delete Account</p> 
-                                            <button class="delete" aria-label="close"></button>
-                                        </header>
-                                        <section class="modal-card-body">
-                                        Delete the account of <p class="has-text-weight-bold is-inline">{{$reseller->name}}</p>?
-                                        <p class="has-text-danger has-text-weight-bold">Warning!</p> This action is irreversible.
-                                    </section>
-                                    <footer class="modal-card-foot">
-                                        <form id="form{{$reseller->id}}Delete" method="post" action="/admin/update/{{$reseller->id}}">
-                                            @method('PUT')
-                                            @csrf                                            
-                                            <input type="hidden" name="Edit" value="2">
-                                            </form>
-                                        <button class="button is-danger has-text-weight-bold" onclick="$('#form{{$reseller->id}}Delete').submit();">Delete</button>
-                                        <button class="button">Cancel</button>                                        
-                                    </footer>
-                                    </div>
-                                </div>
+                                      <textarea class="textarea" onkeyup="holdText({{$reseller->id}})" id="holdID{{$reseller->id}}" placeholder="Remarks" style="margin-top: 1.5em;"></textarea>
+                                  </section>
+                                  <footer class="modal-card-foot">
+                                      <form id="form{{$reseller->id}}" method="post" action="/admin/update/{{$reseller->id}}">
+                                      @method('PUT')
+                                      @csrf                                            
+                                      <input type="hidden" name="Edit" value="3">
+                                      <input type="hidden" name="holdText" id="holdText{{$reseller->id}}" value="" required>
+                                  </form>
+                                      <button class="button is-success is-warning has-text-weight-bold" onclick="$('#form{{$reseller->id}}').submit();">Hold</button>
+                                      <button class="button">Cancel</button>
+                                  </footer>
+                                  @else
 
+                                  <p class="modal-card-title"><span class="file-icon is-inline"><i class="fas fa-lock"></i></span>Unhold Account</p>
+                                  <button class="delete" aria-label="close"></button>
+                              </header>
+                              <section class="modal-card-body">
+                              The account of <p class="has-text-weight-bold is-inline">{{$reseller->name}}</p> will be able to perform transactions immediately.
+                          
+                                  
+                              <textarea class="textarea" onkeyup="unholdText({{$reseller->id}})" id="unholdID{{$reseller->id}}" placeholder="Remarks" style="margin-top: 1.5em;"></textarea>
+                          </section>
+                          <footer class="modal-card-foot">
+                              <form id="form{{$reseller->id}}" method="post" action="/admin/update/{{$reseller->id}}">
+                              @method('PUT')
+                              @csrf                                            
+                              <input type="hidden" name="Edit" value="4">
+                              <input type="hidden" name="unholdText" id="unholdText{{$reseller->id}}" value="" required>
+                              </form>
+                          <button class="button is-success is-warning has-text-weight-bold" onclick="$('#form{{$reseller->id}}').submit();">Unhold</button>
+                              <button class="button">Cancel</button>
+
+                                  @endif
+                                  </div>
+                              </div>
+                  {{-- END OF MODAL FOR HOLD --}}
+                  {{-- MODAL FOR DELETE --}}
+                          <div class="modal animated fadeIn" id="modalDelete{{$reseller->id}}">
+                              <div class="modal-background"></div>
+                                  <div class="modal-card">
+                                      <header class="modal-card-head">
+                                      <p class="modal-card-title"><span class="file-icon is-inline"><i class="fas fa-trash"></i></span>Delete Account</p> 
+                                          <button class="delete" aria-label="close"></button>
+                                      </header>
+                                      <section class="modal-card-body">
+                                      Delete the account of <p class="has-text-weight-bold is-inline">{{$reseller->name}}</p>?
+                                      <p class="has-text-danger has-text-weight-bold">Warning!</p> This action is irreversible.
+                                      
+
+                                      <textarea class="textarea" onkeyup="deltxtArea({{$reseller->id}})" id="txtID{{$reseller->id}}" placeholder="Remarks" style="margin-top: 1.5em;"></textarea>
+                                  </section>
+                                  <footer class="modal-card-foot">
+                                          <form id="form{{$reseller->id}}Delete" method="post" action="/admin/update/{{$reseller->id}}">
+                                          @method('PUT')
+                                          @csrf       
+                                                                              
+                                          <input type="hidden" name="Edit" value="2">
+                                          <input type="hidden" name="Textarea" id="txtArea{{$reseller->id}}" value="" required>
+                                          
+                                          </form>
+                                      <button class="button is-danger has-text-weight-bold" onclick="$('#form{{$reseller->id}}Delete').submit();">Delete</button>
+                                      <button class="button">Cancel</button>
+                                  </footer>
+                                  </div>
+                              </div>
+                  {{-- END OF MODAL FOR DELETE --}}
                             </tr>
                         @endforeach
                         
@@ -267,6 +282,26 @@
         "ordering": false
     });
   </script>
+
+<script type="text/javascript">
+  function deltxtArea(id){
+      var txtAreaValue = $('#txtID'+id).val();
+      // alert(txtAreaValue);
+      $('#txtArea'+id).val(txtAreaValue);
+  }
+
+  function holdText(id){
+      var txtAreaValue = $('#holdID'+id).val();
+      // alert(txtAreaValue);
+      $('#holdText'+id).val(txtAreaValue);
+  }
+
+  function unholdText(id){
+      var txtAreaValue = $('#unholdID'+id).val();
+      // alert(txtAreaValue);
+      $('#unholdText'+id).val(txtAreaValue);
+  }
+</script> 
 @endsection
 
 

@@ -26,7 +26,7 @@
           <a href="/admin/create/reseller" class="button is-success"><span class="file-icon"><i class="fas fa-plus"></i></span>Create</a>    
           <br>
           <br>
-            {{-- start of search bar--}}    
+            {{-- start of search bars--}}    
             <div class="field has-addons is-grouped is-grouped-right">
                 @if($searched == 0)                   
                     <div class="control"> 
@@ -110,7 +110,7 @@
                                         </div>
                                       </div>     
                                    
-                            {{-- MODAL FOR HOLD --}}
+                        {{-- MODAL FOR HOLD --}}
                             <div class="modal animated fadeIn" id="modalHold{{$reseller->id}}">
                                     <div class="modal-background"></div>
                                         <div class="modal-card">
@@ -159,8 +159,8 @@
                                         @endif
                                         </div>
                                     </div>
-                                    {{-- END OF MODAL FOR HOLD --}}
-                                {{-- MODAL FOR DELETE --}}
+                        {{-- END OF MODAL FOR HOLD --}}
+                        {{-- MODAL FOR DELETE --}}
                                 <div class="modal animated fadeIn" id="modalDelete{{$reseller->id}}">
                                     <div class="modal-background"></div>
                                         <div class="modal-card">
@@ -189,7 +189,7 @@
                                         </footer>
                                         </div>
                                     </div>
-                                    {{-- END OF MODAL FOR DELETE --}}
+                        {{-- END OF MODAL FOR DELETE --}}
                             </tr>
                         @endforeach
                         
