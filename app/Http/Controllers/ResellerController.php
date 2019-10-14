@@ -734,6 +734,11 @@ class ResellerController extends Controller
             $messages = "Invalid deduction already ₱0.00 balance. ";
             $error[] = $messages;
 
+        }else if(count($viewBal) > 0 && number_format((float)$viewBal[0]->total_balance, 2, '.', '') < number_format((float)$request->amount, 2, '.', '') && ($request->radio == "deduct")){
+            //Deduction amount must be lower than current balance
+            $messages = "Deduction amount must be lower than current balance";
+            $error[] = $messages;
+
         }else if(empty($viewBal) && ($request->radio == "deduct")){
 
             $messages = "Invalid deduction already ₱0.00 balance..";
