@@ -36,6 +36,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/search_user','Auth\Api\AuthController@search_user');
     
-    // Route::post('/dragonpay','Auth\Api\AuthController@dragonpay');
+    Route::post('/showPendingTopup','Auth\Api\AuthController@showPendingTopup');
 
+    Route::post('/showTransaction','Auth\Api\AuthController@showTransaction');
 });
